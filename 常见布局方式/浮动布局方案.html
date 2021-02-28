@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>浮动布局方案</title>
+	<style type="text/css">
+		*{
+			margin: 0;
+			padding: 0;
+			text-align: center;
+			color: #fff;
+			font-size: 30px;
+		}
+		.box{
+			width: 1200px;
+			margin: 0 auto;
+			border: 1px solid blue;
+			height: 800px;
+		}
+		.left{
+			width: 200px;
+			height: 400px;
+			background-color: red;
+			float: left;
+		}
+		.content{
+			height: 500px;
+			background-color: blue;
+			line-height: 30px;
+			text-align: left;
+			/*padding margin overflow解决内容被左右浮动覆盖的问题*/
+			/*padding: 0 200px;*/
+			/*margin: 0 200px;*/
+
+			overflow: hidden;
+			/*width: 100%;*/ /*给了宽度，我们的padding会撑大盒子*/
+		}
+		.right{
+			background-color: orange;
+			width: 200px;
+			height: 400px;
+			float: right;
+		}
+		.footer{
+			width: 800px;
+			height: 100px;
+			background-color: palevioletred;
+			margin: 50px auto;
+		}
+	</style>
+</head>
+<body>
+	<div class="box">
+		<div class="left">我是左边</div>
+		<div class="right">我是右边</div>
+		<div class="content">
+			我是中间部分 <br /><br /><br />
+			我是中间部分 <br /><br /><br />
+			我是中间部分 <br /><br /><br />
+			我是中间部分 <br /><br /><br />
+			我是中间部分 <br /><br /><br />
+			我是中间部分 <br /><br /><br />
+		</div>
+		<div class="footer">我是页脚</div>
+	</div>
+
+</body>
+</html>
+<!-- 
+	浮动解决：
+	先将左右浮动元素先写，然后再写不浮动的内容区域，内容区域会自动上去，因为浮动元素不占位置
+	遮挡问题：
+	        padding: 0 200px;
+			margin: 0 200px;
+
+			overflow: hidden;
+			切记：不要给内容区域加上宽度
+ -->
