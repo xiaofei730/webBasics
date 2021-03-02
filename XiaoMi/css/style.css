@@ -1,0 +1,56 @@
+/*公共样式*/
+body{
+	font-size: 12px;
+	color: #333;
+}
+.container{
+	width: 1206px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+/*顶部代码*/
+.page-top{
+	height: 38px;
+	background-color: #323232;
+}
+.page-top .top-lt{
+	color: #a2a2a2;
+	line-height: 38px;
+}
+.page-top .top-lt span{
+	color: #3f3f3f;
+	padding: 0 3px;
+}
+.page-top .top-lt a:hover{
+	color: #fff;
+}
+
+.page-top .top-lt .download{
+	position: relative;
+}
+.page-top .top-lt .down-box{
+	width: 126px;
+	background-color: #fff;
+	position: absolute;
+	left: 50%;
+	top: 38px;
+	margin-left: -63px;
+	padding-top: 20px;
+	box-shadow: rgb(170, 170, 170) 0px 1px 5px;
+}
+.page-top .top-lt .down-box img{
+	width: 88px;
+	height: 88px;
+	display: block;
+	margin: 0 auto;
+}
+
+.page-top .top-lt .down-box b{
+	width: 20px;
+	height: 13px;
+	position: absolute;
+	background-image: url(../img/sjx.png);
+	left: 50%;
+	
+}

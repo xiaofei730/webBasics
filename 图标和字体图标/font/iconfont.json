@@ -1,0 +1,30 @@
+{
+  "id": "2394078",
+  "name": "common",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "20114112",
+      "name": "管理",
+      "font_class": "guanli",
+      "unicode": "e6f8",
+      "unicode_decimal": 59128
+    },
+    {
+      "icon_id": "20114536",
+      "name": "图片",
+      "font_class": "tupian",
+      "unicode": "e702",
+      "unicode_decimal": 59138
+    },
+    {
+      "icon_id": "20114583",
+      "name": "刷新",
+      "font_class": "shuaxin",
+      "unicode": "e703",
+      "unicode_decimal": 59139
+    }
+  ]
+}
