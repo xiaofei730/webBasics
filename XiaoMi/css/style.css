@@ -18,6 +18,11 @@ body{
 	color: #a2a2a2;
 	line-height: 38px;
 }
+
+.page-top .top-lt a{
+	display: inline-block;
+}
+
 .page-top .top-lt span{
 	color: #3f3f3f;
 	padding: 0 3px;
