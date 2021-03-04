@@ -154,8 +154,64 @@ body{
 .page-top .userinfo .user:hover ul{
 	display: block;
 }
+.page-top .car-box{
+	float: right;
+	position: relative;
+}
+.page-top .car-box .tit{
+	display: block;
+	width: 118px;
+	height: 38px;
+	text-align: center;
+	line-height: 38px;
+	background-color: #424242;
+	color: #a2a2a2;
+	position: relative;
+	z-index: 1000;
+}
+
+.page-top .car-box .pop{
+	width: 316px;
+	position: absolute;
+	top: 38px;
+	right: 0;
+	padding: 40px 0;
+	box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 10px;
+	/*display: none; */
+}
+.page-top .car-box .pop .no-good{
+	text-align: center;
+	font-size: 13px;
+}
+.page-top .pop .list{
+	border: 1px solid red;
+	padding: 0 20px;
+}
+.page-top .pop .list li{
+	border-bottom: 1px solid #e0e0e0;
+	padding: 10px 0;
+	overflow: hidden;
+}
+.page-top .pop .list pic{
+	float: left;
+}
+.page-top .pop .list img{
+	width: 60px;
+	height: 60px;
+}
+.page-top .pop .list .text{
+	width: 120px;
+	float: left;
+}
 
 
+.page-top .car-box:hover .tit{
+	background-color: #fff;
+	color: #FF6700;
+}
+.page-top .car-box:hover .pop{
+	display: block;
+}
 
 
 
