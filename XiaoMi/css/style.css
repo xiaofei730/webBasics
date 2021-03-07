@@ -175,17 +175,19 @@ body{
 	position: absolute;
 	top: 38px;
 	right: 0;
-	padding: 40px 0;
 	box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 10px;
-	/*display: none; */
+	display: none; 
 }
 .page-top .car-box .pop .no-good{
 	text-align: center;
 	font-size: 13px;
+	padding: 40px 0;
 }
 .page-top .pop .list{
-	border: 1px solid red;
 	padding: 0 20px;
+	margin-top: 15px;
+	max-height: 450px;
+	overflow-y: scroll;
 }
 .page-top .pop .list li{
 	border-bottom: 1px solid #e0e0e0;
@@ -195,16 +197,70 @@ body{
 .page-top .pop .list .pic{
 	float: left;
 }
-.page-top .pop .list img{
-	width: 60px;
-	height: 60px;
+.page-top .pop .list li:last-child,
+.page-top .pop .list li.last{
+	border: none;
 }
-.page-top .pop .list .text{
+.page-top .pop .list img{
+	width: 70px;
+	height: 70px;
+}
+.page-top .pop .list .txt{
 	width: 120px;
 	float: left;
+	line-height: 70px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
-
-
+.page-top .pop .list .txt:hover{
+	color:#FF6700;
+}
+.page-top .pop .list .num{
+	float: right;
+	text-align: right;
+}
+.page-top .pop .list .num h4{
+	margin-top: 12px;
+	font-weight: normal;
+	font-size: 12px;
+	margin-bottom: 10px;
+}
+.page-top .pop .list .num i{
+	font-style: normal;
+	cursor: pointer;
+	color: #aaa;
+}
+.page-top .pop .list .num i:hover{
+	color:#333;
+}
+.page-top .pop .total{
+	background-color: #fafafa;
+	padding: 15px 10px;
+	overflow: hidden;
+}
+.page-top .pop .total .price{
+	float: left;
+}
+.page-top .pop .total .price p{
+	color: #7e7e7e;
+}
+.page-top .pop .total .price h3{
+	font-size: 20px;
+	color: #FF6700;
+	font-weight: normal;
+	margin-top: 5px;
+}
+.page-top .pop .total .btn{
+	width: 132px;
+	height: 40px;
+	background-color: #FF6700;
+	color: #fff;
+	text-align: center;
+	line-height: 40px;
+	float: right;
+	display: block;
+}
 .page-top .car-box:hover .tit{
 	background-color: #fff;
 	color: #FF6700;
@@ -213,9 +269,103 @@ body{
 	display: block;
 }
 
+/*导航样式*/
+.page-nav{
+	height: 96px;
+	position: relative;
+}
+.page-nav .logo{
+	display: block;
+	float: left;
+	width: 54px;
+	height: 54px;
+	margin-top: 21px;
+	background: #FF6700 url(../img/mi-logo.png) center center no-repeat;
+	margin-right: 45px;
+}
+.page-nav .nav .nav-item{
+	margin-left: 16px;
+	float: left;
+	margin-top: 24px;
+	padding: 12px 4px 0;
+	height: 62px;
+}
+.page-nav .nav .nav-item .tit{
+	font-size: 16px;
+	color: #666;
+}
+.page-nav .nav .nav-item:hover .tit{
+	color: #FF6700;
+}
+.page-nav .nav-item .pop{
+	position: absolute;
+	width: 100%;
+	height: 230px;
+	left: 0;
+	top: 96px;
+	background-color: #fff; 
+	box-shadow: 0 3px 4px rgba(0, 0, 0, 0.18);
+	border-top: 1px solid #e0e0e0;
+	z-index: 10;
+	display: none;
+}
+.page-nav .down-ul{
+	/*overflow: hidden;*/
+}
+.page-nav .down-li{
+	width: 241px;
+	float: left;
+	padding-top: 30px;
+	text-align: center;
+	position: relative;
+}
+.page-nav .down-li .pic img{
+	width: 160px;
+	height: 110px;
+}
+.page-nav .down-li .name{
+	font-weight: normal;
+	font-size: 13px;
+	margin-top: 23px;
+
+}
+.page-nav .down-li .price{
+	color: #FF6700;
+	margin-top: 5px;
+}
+.page-nav .down-li .tags{
+	width: 64px;
+	height: 20px;
+	border: 1px solid #FF6700;
+	line-height: 20px;
+	position: absolute;
+	left: 50%;
+	margin-left: -32px;
+	top: -1px;
+	color: #FF6700;
+	z-index: 100;
+}
+.page-nav .down-li i{
+	background-color: #e0e0e0;
+	width: 1px;
+	height: 100px;
+	position: absolute;
+	right: 0;
+	top: 36px;
+}
+
+.page-nav .down-li.last i,
+.page-nav .down-li:last-child i{
+	display: none;
+}
+.page-nav .nav .nav-item:hover .pop{
+	display: block;
+}
 
 
-
+#navCategory{
+	visibility: hidden;
+}
 
 
 
