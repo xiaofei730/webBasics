@@ -273,6 +273,7 @@ body{
 .page-nav{
 	height: 96px;
 	position: relative;
+	background-color: #eee;
 }
 .page-nav .logo{
 	display: block;
@@ -362,14 +363,66 @@ body{
 	display: block;
 }
 
-
-#navCategory{
-	visibility: hidden;
+/*全部分类菜单样式*/
+#page-all-nav{
+	/*visibility: hidden;*/
+	position: relative;
+}
+.slider-nav{
+	position: absolute;
+	width: 232px;
+	height: 418px;
+	border: 1px solid #FF6700;
+	right: -15px;
+	top: 72px;
+	padding: 20px 0 ;
+}
+.slider-nav .slider-li{
+	line-height: 42px;
+}
+.slider-nav .slider-li .name{
+	font-size: 13px;
+	display: block;
+	padding: 0 24px 0 30px;
+}
+.slider-nav .slider-li .name span{
+	margin-right: 5px;
 }
 
+.slider-nav .slider-li i{
+	float: right;
+}
+.slider-nav .slider-li:hover .name{
+	background-color: #FF6700;
+	color: #fff;
+}
 
-
-
-
+.slider-nav .slider-pop{
+	position: absolute;
+	border: 1px solid #e0e0e0;
+	width: 992px;
+	height: 460px;
+	left: 233px;
+	top: -1px;
+	box-shadow: 0 8px 16px rgba(0, 0, 0, 0.18);
+}
+.slider-nav .pop-li{
+	float: left;
+	width: 223px;
+	padding-left: 24px;
+	overflow: hidden;
+	height: 56px;
+	margin-bottom: 10px;
+	padding-top: 20px;
+}
+.slider-nav .pop-li img{
+	width: 40px;
+	height: 40px;
+	float: left;
+	margin-right: 16px;
+}
+.slider-nav .pop-li:hover p{
+	color: #FF6700;
+}
 
 
