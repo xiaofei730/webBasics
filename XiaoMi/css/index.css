@@ -1,0 +1,14 @@
+/*全部分类菜单*/
+.slider-nav{
+	background-color: rgba(0, 0, 0, 0.6);
+	width: 234px;
+	height: 420px;
+	border: none;
+}
+
+.slider-nav .slider-li .name{
+	color: #fff;
+}
+#page-all-nav .slider-nav{
+	visibility: visible;
+}

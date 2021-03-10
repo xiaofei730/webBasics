@@ -46,6 +46,7 @@ body{
 	box-shadow: rgb(170, 170, 170) 0px 1px 5px;
 	text-align: center;
 	display: none;
+	z-index: 1000;
 }
 .page-top .top-lt .down-box img{
 	width: 88px;
@@ -176,7 +177,9 @@ body{
 	top: 38px;
 	right: 0;
 	box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 10px;
-	display: none; 
+	display: none;
+	z-index: 1000;
+	background-color: #fff; 
 }
 .page-top .car-box .pop .no-good{
 	text-align: center;
@@ -273,7 +276,6 @@ body{
 .page-nav{
 	height: 96px;
 	position: relative;
-	background-color: #eee;
 }
 .page-nav .logo{
 	display: block;
@@ -288,7 +290,7 @@ body{
 	margin-left: 16px;
 	float: left;
 	margin-top: 24px;
-	padding: 12px 4px 0;
+	padding: 12px 2px 0;
 	height: 62px;
 }
 .page-nav .nav .nav-item .tit{
@@ -365,7 +367,7 @@ body{
 
 /*全部分类菜单样式*/
 #page-all-nav{
-	/*visibility: hidden;*/
+	visibility: hidden;
 	position: relative;
 }
 .slider-nav{
@@ -373,7 +375,7 @@ body{
 	width: 232px;
 	height: 418px;
 	border: 1px solid #FF6700;
-	right: -15px;
+	right: -19px;
 	top: 72px;
 	padding: 20px 0 ;
 }
@@ -400,11 +402,13 @@ body{
 .slider-nav .slider-pop{
 	position: absolute;
 	border: 1px solid #e0e0e0;
+	border-left: none;
 	width: 992px;
 	height: 460px;
 	left: 233px;
-	top: -1px;
+	top: 0;
 	box-shadow: 0 8px 16px rgba(0, 0, 0, 0.18);
+	display: none;
 }
 .slider-nav .pop-li{
 	float: left;
@@ -424,5 +428,100 @@ body{
 .slider-nav .pop-li:hover p{
 	color: #FF6700;
 }
+.slider-nav .slider-li:hover .slider-pop{
+	display: block;
+}
+
+/*搜索框*/
+.page-nav .search{
+	float: right;
+	position: relative;
+	margin-top: 24px;
+}
+.page-nav .search .q{
+	width: 227px;
+	height: 48px;
+	border: 1px solid #e0e0e0;
+	border-right: none;
+	outline: none;
+	line-height: 48px;
+	padding-left: 8px;
+	float: left;
+}
+.page-nav .search .tags{
+	position: absolute;
+	top: 17px;
+	right: 58px;
+	width: 130px;
+	text-align: right;
+}
+.page-nav .search .tags span{
+	line-height: 18px;
+	padding: 0 5px;
+	background-color: #eee;
+	font-size: 12px;
+	cursor: pointer;
+}
+.page-nav .search .tags span:hover{
+	background-color: #FF6700;
+	color: #fff;
+}
+.page-nav .search .btn{
+	width: 50px;
+	height: 50px;
+	border: 1px solid #e0e0e0;
+	float: left;
+	background: #fff url(../img/sousuo-2.png) center center no-repeat;
+	background-size: 16px 16px;
+}
+.page-nav .search .btn:hover{
+	background-color: #FF6700;
+	background-image: url(../img/sousuo.png);
+	border-color: #FF6700;
+}
+.search:hover .q,
+.search:hover .btn{
+	border-color: #b0b0b0;
+}
+.search.active .q,
+.search.active .btn{
+	border-color: #FF6700;
+}
+
+.search .hot{
+	width: 234px;
+	border: 1px solid #FF6700;
+	border-top: none;
+	position: absolute;
+	left: 0;
+	top: 50px;
+	display: none;
+}
+.search .hot li{
+	line-height: 30px;
+}
+.search .hot li a{
+	display: block;
+	padding: 0 15px;
+	color: #535353;
+}
+.search .hot li:hover{
+	background-color: #fafafa;
+}
+.search .hot li i{
+	float: right;
+	font-style: normal;
+	color: #b0b0b0;
+}
+
+
+
+
+
+
+
+
+
+
 
 
