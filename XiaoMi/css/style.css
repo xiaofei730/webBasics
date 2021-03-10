@@ -291,7 +291,7 @@ body{
 	float: left;
 	margin-top: 24px;
 	padding: 12px 2px 0;
-	height: 62px;
+	height: 60px;
 }
 .page-nav .nav .nav-item .tit{
 	font-size: 16px;
@@ -309,7 +309,7 @@ body{
 	background-color: #fff; 
 	box-shadow: 0 3px 4px rgba(0, 0, 0, 0.18);
 	border-top: 1px solid #e0e0e0;
-	z-index: 10;
+	z-index: 1000;
 	display: none;
 }
 .page-nav .down-ul{
@@ -378,6 +378,7 @@ body{
 	right: -19px;
 	top: 72px;
 	padding: 20px 0 ;
+	z-index: 1000;
 }
 .slider-nav .slider-li{
 	line-height: 42px;
@@ -403,12 +404,14 @@ body{
 	position: absolute;
 	border: 1px solid #e0e0e0;
 	border-left: none;
-	width: 992px;
+	width: 975px;
 	height: 460px;
 	left: 233px;
 	top: 0;
 	box-shadow: 0 8px 16px rgba(0, 0, 0, 0.18);
 	display: none;
+	z-index: 100;
+	background-color: #fff;
 }
 .slider-nav .pop-li{
 	float: left;
