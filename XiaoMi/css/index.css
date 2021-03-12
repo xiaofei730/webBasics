@@ -99,19 +99,67 @@
 .idx-menu-adv{
 	overflow: hidden;
 	margin-top: 20px;
-	margin-bottom: 20px
+	margin-bottom: 20px;
 }
 .idx-menu-adv .menu{
-	width: 234px;
-	height: 165px;
+	width: 228px;
+	height: 159px;
 	background-color: #5f5750;
 	float: left;
+	padding: 3px;
 }
 .idx-menu-adv .menu li{
-	width: 71px;
-	height: 71px;
+	width: 70px;
+	height: 80px;
+	padding: 0 3px;
 	float: left;
+	text-align: center;
+	color: #c8c5c3;
+	position: relative;
 }
+
+.idx-menu-adv .menu li:before {
+    top: -1px;
+    left: 6px;
+    width: 64px;
+    height: 1px;
+}
+
+.idx-menu-adv .menu li:after {
+    top: 6px;
+    left: 0;
+    width: 1px;
+    height: 70px;
+}
+
+.idx-menu-adv .menu li:after, 
+.idx-menu-adv .menu li:before {
+    position: absolute;
+    content: "";
+    background: #665e57;
+}
+
+.idx-menu-adv .menu li a{
+	display: block;
+	width: 70px;
+	height: 45px;
+	padding: 16px 0 0;
+	color: #fff;
+	opacity: .7;
+	transition: opacity .2s;
+}
+.idx-menu-adv .menu li a:hover{
+	color: #fff;
+	opacity: 1;
+
+}
+.idx-menu-adv .menu li img{
+	width: 24px;
+	height: 24px;
+	display: block;
+	margin: 0 auto 4px;
+}
+
 .idx-menu-adv .pic{
 	display: block;
 	width: 304px;
