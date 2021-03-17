@@ -520,6 +520,155 @@ body{
 	color: #b0b0b0;
 }
 
+/*页脚代码*/
+.page-foot .ts{
+	overflow: hidden;
+	margin: 30px auto;
+}
+.page-foot .ts li{
+	width: 240px;
+	border-right: 1px solid #b0b0b0;
+	line-height: 25px;
+	float: left;
+	font-size: 16px;
+	text-align: center;
+	color: #616161;
+}
+.page-foot .ts li i{
+	font-size: 22px;
+	margin-right: 5px;
+	position: relative;
+	top: 3px;
+}
+.page-foot .ts li a:hover{
+	color: #FF6700;
+}
+
+.page-foot .ts li:last-child{
+	border-right: none;
+}
+.page-foot .nav{
+	border-top: 1px solid #e0e0e0;
+	padding-top: 40px;
+	overflow: hidden;
+}
+.page-foot .nav .lt{
+	float: left;
+	width: 964px;
+	overflow: hidden;
+	border-right: 1px solid #e0e0e0;
+
+}
+.page-foot .nav .lt dl{
+	width: 160px;
+	float: left;
+}
+.page-foot .nav .lt dt{
+	color: #424242;
+	font-size: 14px;
+	line-height: 40px;
+}
+.page-foot .nav .lt dd{
+	color: #757575;
+	line-height: 30px;
+}
+.page-foot .nav .lt dd:hover{
+	color: #FF6700;
+}
+.page-foot .nav .gt{
+	width: 240px;
+	float: right;
+	text-align: center;
+}
+
+.page-foot .nav .gt h3{
+	font-weight: normal;
+	color: #FF6700;
+	font-size: 22px;
+}
+.page-foot .nav .gt h4{
+	font-size: 12px;
+	font-weight: normal;
+	color: #757575;
+	line-height: 30px;
+}
+.page-foot .nav .gt .concat{
+	display: block;
+	width: 128px;
+	height: 28px;
+	line-height: 28px;
+	text-align: center;
+	border: 1px solid #FF6700;
+	color: #FF6700;
+	margin: 0 auto;
+}
+.page-foot .nav .gt .concat i{
+	margin-right: 3px;
+	margin-top: 6px;
+}
+.page-foot .nav .gt .concat:hover{
+	color: #fff;
+	background-color: #FF6700;
+}
+.page-foot .bot{
+	height: 230px;
+	padding-top: 30px;
+	margin-top: 40px;
+	overflow: hidden;
+	background:#fafafa url(../img/slogan2020.png) center 230px no-repeat;
+}
+.page-foot .bot .logo{
+	display: block;
+    float: left;
+    width: 54px;
+    height: 54px;
+    background: #FF6700 url(../img/mi-logo.png) center center no-repeat;
+}
+.page-foot .bot .txt{
+	width: 1142px;
+	float: right;
+}
+.page-foot .bot .txt h3{
+	font-weight: normal;
+	color: #757575;
+	line-height: 20px;
+}
+.page-foot .bot .txt span{
+	padding: 0 3px;
+	color: #e0e0e0;
+}
+.page-foot .bot .txt p{
+	color: #b0b0b0;
+	line-height: 18px;
+}
+.page-foot .bot .txt a{
+	margin: 0 3px;
+}
+.page-foot .bot .txt a:hover{
+	color: #FF6700;
+}
+.page-foot .bot .txt ul{
+/*	overflow: hidden;*/
+	margin-top: 8px;
+}
+.page-foot .bot .txt li img,
+.page-foot .bot .txt li{
+	width: auto;
+	height: 33px;
+	display: block;
+}
+.page-foot .bot .txt li{
+	float: left;
+	margin-right: 10px;
+}
+
+
+
+
+
+
+
+
 
 
 
