@@ -2,6 +2,7 @@
 body{
 	font-size: 12px;
 	color: #333;
+	min-width: 1206px;
 }
 .container{
 	width: 1206px;
@@ -662,10 +663,112 @@ body{
 	margin-right: 10px;
 }
 
+/*侧边栏样式*/
+.page-slider{
+	position: fixed;
+	right: 0;
+	bottom: 70px;
+	z-index: 99;
+}
+.page-slider li{
+	height: 90px;
+	width: 82px;
+	background-color: #fff;
+	text-align: center;
+	margin-top: -1px;
+	border: 1px solid #f5f5f5;
+}
+.page-slider li .icon{
+	position: relative;
+	width: 30px;
+	height: 30px;
+	margin: 0 auto 8px;
+	padding-top: 18px;
+}
+.page-slider .icon .static,
+.page-slider .icon .hover{
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	width: 30px;
+	height: 30px;
+	-webkit-transition: opacity .3s;
+	transition: opacity .3s;
+	opacity: 1;
+}
+.page-slider .icon .hover{
+	opacity: 0;
+}
+.page-slider li .pop-content{
+	position: absolute;
+	left: 0;
+	top: 0;
+	padding: 14px;
+	background: #fff;
+	border: 1px solid #f5f5f5;
+	-webkit-transition: opacity .3s;
+	transition: opacity .3s;
+	-webkit-transform: translateZ(0);
+	transform: translateZ(0);
+	opacity: 1;
+	visibility: hidden;
+}
+.page-slider li .pop-content:before{
+	right: -19px;
+	border-color: rgba(0,0,0,0) rgba(0,0,0,0) rgba(0,0,0,0) #f5f5f5;
+	z-index: 1;
+}
+.page-slider li .pop-content:before,
+.page-slider li .pop-content:after{
+	content: "";
+	position: absolute;
+	top: 21%;
+	width: 0;
+	height: 0;
+	border-width: 10px;
+	border-style: solid;
+	overflow: hidden;
+}
+.page-slider li .pop-content:after{
+	right: -18px;
+	border-color: rgba(0,0,0,0) rgba(0,0,0,0) rgba(0,0,0,0) #fff;
+	z-index: 2;
+}
 
+.page-slider .pop-content img{
+	display: block;
+	width: 100px;
+	height: 100px;
+	margin: 6px auto;
+}
+.page-slider .pop-content .desc{
+	display: block;
+	width: 82px;
+	margin: 14px auto 0;
+	color: #757575;
+	text-align: center;
+}
 
+.page-slider li.last{
+	margin-top: 14px;
+}
 
+.page-slider li:hover .pop-content{
+	transform: translate3d(-110%,0,0);
+	opacity: 1;
+	visibility: visible;
+}
+.page-slider li:hover span{
+	color: #FF6700;
+	transition: color .3s;
+}
+.page-slider li:hover .static{
+	opacity: 0;
+}
 
+.page-slider li:hover .hover{
+	opacity: 1;
+}
 
 
 
