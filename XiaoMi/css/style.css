@@ -21,6 +21,7 @@ body{
 .page-top .top-lt{
 	color: #a2a2a2;
 	line-height: 38px;
+	line-height: 37px\9; /*IE6 - IE10*/
 	float: left;
 }
 
@@ -419,7 +420,7 @@ body{
 }
 .slider-nav .pop-li{
 	float: left;
-	width: 223px;
+	width: 219px;
 	padding-left: 24px;
 	overflow: hidden;
 	height: 56px;
@@ -480,6 +481,7 @@ body{
 	float: left;
 	background: #fff url(../img/sousuo-2.png) center center no-repeat;
 	background-size: 16px 16px;
+	outline: none;
 }
 .page-nav .search .btn:hover{
 	background-color: #FF6700;

@@ -1,5 +1,6 @@
 /*全部分类菜单*/
 .slider-nav{
+	background-color: #000\9; /*或者用图像重叠*/
 	background-color: rgba(0, 0, 0, 0.6);
 	width: 234px;
 	height: 420px;
@@ -787,6 +788,248 @@
 }
 .video .item h3 a:hover{
 	color: #FF6700;
+}
+
+/*视频弹框效果*/
+.idx-video-bg{
+	width: 100%;
+	height: 100%;
+	position: fixed;
+	left: 0;
+	top: 0;
+	z-index: 1010;
+	/*会有兼容问题，可以使用background设置背景图片（小图片）*/
+	background-color: rgba(0, 0, 0, 0.3);
+	display: none;
+}
+
+.idx-video-box{
+	width: 880px;
+	height: 596px;
+	position: fixed;
+	left: 50%;
+	top: 50%;
+	background-color: #000;
+	z-index: 1100;
+	margin-top: -298px;
+	margin-left: -440px;
+	box-shadow: 0 18px 30px rgba(0, 0, 0, 0.18);
+	overflow: hidden;
+	display: none;
+}
+.idx-video-box .tit{
+	height: 60px;
+	background-color: #f5f5f5;
+	padding: 0 20px;
+	position: relative;
+}
+.idx-video-box .tit span{
+	font-size: 18px;
+	line-height: 60px;
+	color: #424242;
+}
+.idx-video-box .tit .close{
+	position: absolute;
+    right: 14px;
+    top: 14px;
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    color: #757575;
+    cursor: pointer;
+    -webkit-transition: all .2s;
+    transition: all .2s;
+    z-index: 1110;
+    border-radius: 15px;
+}
+.idx-video-box .tit i{
+	vertical-align: middle;
+    font-size: 16px;
+    font-weight: 400;
+}
+.idx-video-box .tit .close:hover{
+	color: #fff;
+    background-color: #e53935;
+}
+.idx-video-box .video-box{
+	position: relative;
+}
+.idx-video-box .video-box video{
+	height: 536px;
+	width: 880px;
+}
+.idx-video-box .video-box .video-play-btn{
+	position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 90px;
+    height: 90px;
+    margin-top: -45px;
+    margin-left: -45px;
+    cursor: pointer;
+    z-index: 1112;
+    background: url(../img/big_play_btn.png) no-repeat;
+}
+
+.idx-video-box .controller{
+	position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 50px;
+    /*-webkit-transition: all .3s;*/
+    transition: all .3s;
+    /*-webkit-transform: translate3d(0,30%,0);*/
+    /*transform: translate3d(0,30%,0);*/
+    transform: translateZ(0);
+    z-index: 1103;
+    background: rgba(0,0,0,.6);
+    opacity: 1;
+}
+
+.clearfix:after, .clearfix:before {
+    content: " ";
+    display: table;
+}
+.clearfix:after {
+    clear: both;
+}
+.idx-video-box .controller.active{
+	transform: translateZ(0);
+	opacity: 1;
+}
+.idx-video-box .controller .video-progress{
+	width: 100%;
+    height: 4px;
+    background-color: rgba(51,51,51,.6);
+    cursor: pointer;
+    position: relative;
+    z-index: 1102;
+}
+.idx-video-box .controller .video-progress-loaded{
+	position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background-color: #5c5c5c;
+    background-color: rgba(92,92,92,.6);
+    z-index: 1101;
+}
+
+.idx-video-box .controller .video-progress-played{
+	position: absolute;
+    top: 0;
+    left: 0;
+    height: 4px;
+    background-color: #ff6a03;
+    z-index: 1102;
+}
+
+.idx-video-box .controller .lfPlayerVideoPointer{
+	position: absolute;
+    left: 0;
+    top: 50%;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    -webkit-transform: translate3d(0,-50%,0);
+    transform: translate3d(0,-50%,0);
+    z-index: 1108;
+    background: #fff;
+    cursor: pointer;
+}
+.controller .control-item.control-btns{
+	float: left;
+    width: 20px;
+    margin-left: 30px;
+    margin-top: 10px;
+}
+.controller .control-btn{
+	display: block;
+    width: 20px;
+    height: 20px;
+    background-image: url(../img/btns.png);
+    background-repeat: no-repeat;
+    -webkit-transition: background .3s;
+    transition: background .3s;
+    overflow: hidden;
+    cursor: pointer;
+}
+.controller .control-btn .play{
+	background-position: center 0;
+}
+.controller .control-btn .pause{
+	background-position: center -20px;;
+}
+.controller .control-item.control-times{
+	float: left;
+    margin-left: 30px;
+    line-height: 46px;
+    color: #fff;
+    font-family: sans-serif;
+}
+.control-times .sep{
+	margin: 0 .2em;
+    font-style: normal;
+    font-family: sans-serif;
+}
+.controller .control-full-screen{
+	float: right;
+    margin: 13px 20px 0 20px;
+}
+.control-full-screen .full{
+	background-position: center -100px;
+}
+.control-full-screen .reset{
+	background-position: center -120px;
+}
+
+.controller .control-volume{
+	float: right;
+    width: 140px;
+    height: 20px;
+    margin-top: 13px;
+    -webkit-transition: all .5s;
+    transition: all .5s;
+    overflow: hidden;
+}
+.control-volume .control-btn{
+	float: left;
+    margin-right: 10px;
+    background-position: center -40px;
+}
+.control-volume .volume-progress{
+	float: left;
+    position: relative;
+    width: 100px;
+    height: 4px;
+    margin-top: 8px;
+    border-radius: 2px;
+    background-color: #2c2c2c;
+    cursor: pointer;
+}
+.control-volume .volume-progress .volume-progress-current{
+	width: 100%;
+    height: 4px;
+    background-color: #ff6a03;
+    border-radius: 2px 0 0 2px;
+}
+.control-volume .volume-pointer{
+	width: 10px;
+    height: 10px;
+    position: absolute;
+    left: 0;
+    top: -3px;
+    border-radius: 50%;
+    z-index: 8;
+    background: #fff;
+    cursor: pointer;
+}
+.controller .control-btn:hover{
+	background-image: url(../img/btns-hover.png);
 }
 /*hover样式*/
 .idx-box .good-item:hover,
