@@ -30,13 +30,13 @@
 	float: left;
 	position: relative;
 }
-.idx-banner li a{
+/*.idx-banner li a{
 	position: absolute;
 	width: 972px;
 	height: 460px;
 	top: 0;
 	right: 0;
-}
+}*/
 .idx-banner img{
 	width: 1206px;
 	height: 460px;
