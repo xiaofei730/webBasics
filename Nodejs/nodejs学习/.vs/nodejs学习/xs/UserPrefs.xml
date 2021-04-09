@@ -1,0 +1,26 @@
+﻿<Properties StartupConfiguration="{5A8035D6-3456-47A8-BD24-A9430277824D}|Default">
+  <MonoDevelop.Ide.ItemProperties.nodejs学习 FirstBuild="True" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="http.js">
+    <Files>
+      <File FileName="test.js" Line="20" Column="15" />
+      <File FileName="http.js" Line="5" Column="31" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="nodejs学习" expanded="True">
+            <Node name="nodejs学习" expanded="True">
+              <Node name="http.js" selected="True" />
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Default" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+</Properties>
