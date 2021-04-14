@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input type="button" value="按钮1" class="btn">
+    <!-- HTML标签中，凡是原生有src属性的，都具有http请求的能力，且不受跨域影响 -->
+    <img src="http://127.0.0.1:9000/img/good1.jpg">
+</body>
+<script src="./ajax.js"></script>
+<script src="./test.jssss"></script>
+<script>
+    var btn = document.getElementsByClassName('btn');
+    btn[0].onclick = function(){
+        //跨域有三个条件，满足任何一个条件就是跨域
+        //1、服务器端口不一致 8000 8080
+        //2、协议不一致 https http ftp
+        //3、域名不一致
+        window.myajax.get('http://127.0.0.1:9000/gets', (resp) => {
+            console.log('111' + resp);
+         });
+
+    };
+</script>
+</html>

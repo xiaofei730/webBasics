@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>POST请求</title>
+</head>
+<body>
+    姓名 <input type="text" name="name" id="inp">
+    <input type="button" value="发送" id="btn"> 
+</body>
+<script>
+    var inp = document.getElementById('inp');
+    var btn = document.getElementById('btn');
+    inp.onblur = function (){
+        //发送http请求
+        var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function(){
+            if (xhr.readyState == 4) {
+                // alert(xhr.responseText);
+                // alert(xhr.status);
+            }
+        };
+        xhr.open('post', 'http://127.0.0.1:8000/gets');
+        // xhr.setRequestHeader('Content-type', 'mm/form-data');
+        xhr.send('name=' + inp.value);
+        
+    }
+    btn.onclick = function(){
+        //发送http请求
+        var xhr = new XMLHttpRequest();
+
+        xhr.onreadystatechange = function(){
+            if (xhr.readyState == 4) {
+                alert(xhr.responseText);
+                alert(xhr.status);
+            }
+        };
+        xhr.open('get', 'http://127.0.0.1:8000/gets');
+        // xhr.setRequestHeader('Content-type', 'mm/form-data');
+        xhr.send();
+        
+    }
+</script>
+</html>

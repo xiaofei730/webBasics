@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/main.js" type="text/javascript" charset="utf-8"></script>
+</head>
+<body>
+    <div class="box">
+        <h3 class="title">用户注册</h3>
+        <hr>
+        <form action="#" method="" onsubmit="return formValiad.checkForm()" onreset="formValiad.reset()">
+            <div class="row">
+                <label>用户名</label>
+                <input type="text" id="user" onblur="formValiad.checkUserName()">
+                <span id="userInfo">请输入至少6位用户名</span>
+            </div>
+            <div class="row">
+                <label>密码</label>
+                <input type="password" id="pwd" onblur="formValiad.checkPassword()">
+                <span id="pwdInfo">请输入6-10位密码</span>
+            </div>
+            <div class="row">
+                <label>确认密码</label>
+                <input type="password" id="agpwd" onblur="formValiad.checkConfirmPassword()">
+                <span id="agpwdInfo">请输入6-10位密码</span>
+            </div>
+            <div class="row">
+                <label>手机号码</label>
+                <input type="text" id="phone" onblur="formValiad.checkPhone()">
+                <span id="phoneInfo">请输入11位手机号码</span>
+            </div>
+            <div class="row tc">
+                <input type="submit" class="submit" >
+                <input type="reset" class="reset">
+            </div>
+        </form>
+    </div>
+    
+</body>
+</html>

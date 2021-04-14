@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input type="button" value="按钮1" id="btn1">
+    <input type="button" value="按钮2" id="btn2">
+    <input type="button" value="按钮3" id="btn3">
+</body>
+<script>
+    //函数的作用域永远在它声明的地方
+    // function f1(k){
+    //     var a = 1;
+    //     k();
+    // }
+
+    // var a = 2;
+    // function f2(){
+    //     console.log(a);
+    // }
+
+    // f1(f2);
+
+    var ajax = {
+        getxhr: function(){
+            return new XMLHttpRequest();
+        },
+        get: function(url, callback, sync = true){
+            var xhr = this.getxhr();
+            xhr.onreadystatechange = function(){
+                if (xhr.readyState == 4) {
+                    callback(xhr.responseText);
+                }
+            };
+            xhr.open('get', url, sync);
+            xhr.send();
+        },
+        post: function(url, post_data, callback, sync = true){
+            var xhr = this.getxhr();
+            xhr.onreadystatechange = function(){
+                if (xhr.readyState == 4) {
+                    callback(xhr.responseText);
+                }
+            };
+            xhr.open('post', url, sync);
+            xhr.send(post_data);
+        }
+    }
+
+    document.getElementById('btn1').onclick = function() {
+         ajax.get('http://127.0.0.1:8000/gets?name=sansansan', (resp) => {
+            console.log('111' + resp);
+         });
+
+         ajax.post('http://127.0.0.1:8000/gets', 'name=lisi', (resp) => {
+            console.log('post--' + resp);
+         });
+    };
+
+</script>
+</html>

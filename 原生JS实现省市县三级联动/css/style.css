@@ -1,0 +1,11 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+.box{
+    margin: 100px 0 0 200px;
+}
+select{
+    width: 120px;
+    height: 30px;
+}

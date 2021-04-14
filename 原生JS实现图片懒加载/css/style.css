@@ -1,0 +1,19 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+ul{
+    list-style: none;
+    border: 1px solid blue;
+    width: 400px;
+    margin: 0 auto;
+    position: relative;
+}
+li{
+    margin: 10px;
+}
+li img{
+    width: 100%;
+    min-height: 300px;
+    border: 0;
+}
