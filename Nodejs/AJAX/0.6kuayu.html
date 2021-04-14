@@ -12,7 +12,19 @@
     <img src="http://127.0.0.1:9000/img/good1.jpg">
 </body>
 <script src="./ajax.js"></script>
-<script src="./test.jssss"></script>
+
+<script>
+    function kk(data){
+        alert(data[0].id);
+        alert(data[0].name);
+    }
+</script>
+
+<!-- script 标签中的内容，实际需要的就是一段js代码  (JSONP方法解决跨域问题)-->
+<!-- 使用src 发送请求， 服务器接受并返回一段js代码（这段代码通常情况下是一个函数调用）函数调用会以实参传值的方式。传递数据 -->
+<script src="http://127.0.0.1:9000/kuayus?callback=kk"></script>
+<!-- kk('["id": "2", "name": "lisi"]') -->
+
 <script>
     var btn = document.getElementsByClassName('btn');
     btn[0].onclick = function(){
@@ -20,6 +32,7 @@
         //1、服务器端口不一致 8000 8080
         //2、协议不一致 https http ftp
         //3、域名不一致
+        //跨域请求本身有返回数据，只是被浏览器拦截了
         window.myajax.get('http://127.0.0.1:9000/gets', (resp) => {
             console.log('111' + resp);
          });
