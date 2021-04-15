@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./jquery-3.6.js"></script>
+</head>
+<body>
+    <p id="p1">底层封装</p>
+    <input type="button" value="发射">
+</body>
+
+<script>
+    $('#p1').css('background', 'red');
+
+    $('input').click(function(){
+        //底层封装，参数是一个对象，属性及属性值就是具体的设置项
+        $.ajax('http://127.0.01:8000/ajaxs', {
+            type: 'POST',
+            //同步 false 与异步true
+            async: false,
+            //请求成功的回调
+            success: function(back_data){
+                alert(back_data);
+            }
+        });
+        alert(3);
+    });
+</script>
+
+</html>

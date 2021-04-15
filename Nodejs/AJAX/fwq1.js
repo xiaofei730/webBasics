@@ -16,7 +16,11 @@ server.on('request', (req, resp) => {
     if (req.method == 'GET') {
         if (myURL.pathname == '/') {
             
-        } else {
+        }else if (myURL.pathname == '/ajaxs'){
+            resp.end('789');
+        } else if (myURL.pathname == '/jq_ajax'){
+            resp.end('blue');
+        }else {
             //myURL.pathname 或者req.url
             fs.readFile('.' + myURL.pathname, (err, data_str) => {
                 if(!err) {
@@ -27,7 +31,15 @@ server.on('request', (req, resp) => {
                 }
             });
         }
-    } else {
+    }else if(req.method == 'POST') {
+        if (myURL.pathname == '/') {
+            
+        } else if (myURL.pathname == '/jq_ajax'){
+            resp.end('blue');
+        }else if (myURL.pathname == '/ajaxs'){
+            resp.end('green');
+        }
+    }  else {
         
     }
 });
