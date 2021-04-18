@@ -14,14 +14,18 @@ module.exports = {
         });
     },
 
-    index: function (res) {
-        fs.readFile('./db.json', 'utf8', (err, json_str) => {
-            var json_arr = JSON.parse(json_str);
-            var obj = { dt: json_str};
-            var htmls = template('./index.html', obj);
-            resp.end(htmls);
+    index: function (resp) {
+        fs.readFile('./index.html', (err, html_data) => {
+            resp.end(html_data);
         });
     },
+
+    getall: function (req, resp){
+        fs.readFile('./db.json', 'utf8', function(err, json_data){
+            resp.setHeader('Content-Type', 'text/plain;charset=utf-8')
+            resp.end(json_data);
+        });
+    }, 
 
     getone: function (req, resp, id) {
         fs.readFile('./db.json', 'utf8', (err, json_str) => {
@@ -65,12 +69,12 @@ module.exports = {
                             json_arr[i].jituan = filds.jituan;
                             break;
                         }
+                        var newData = JSON.stringify(json_arr);
+                        //直接覆盖原先的数据不好，后续可以用数据库处理，更新某条记录即可
+                        fs.writeFile('./db.json', (err) => {
+                            console.log('修改成功！');
+                        });
                     }
-                    var newData = JSON.stringify(json_arr);
-                    //直接覆盖原先的数据不好，后续可以用数据库处理，更新某条记录即可
-                    fs.writeFile('./db.json', (err) => {
-                        console.log('修改成功！');
-                    });
                 });
             });
         })
@@ -105,6 +109,12 @@ module.exports = {
     }
 }
 
+
+// var hzwArr = [{id: 1, name: '路飞', nengli: '超人系橡胶果实', jituan: '草帽海贼团', img: './img/dongman1.jpeg'},
+// {id: 2, name: '苍井空', nengli: '美颜', jituan: '东京凉', img: './img/dongman2.jpeg'},
+// {id: 3, name: '罗宾', nengli: '超人系花花果实', jituan: '草帽海贼团', img: './img/dongman3.jpeg'},
+// {id: 4, name: '波导结衣', nengli: '霸王霸气色', jituan: '红发海贼团', img: './img/dongman4.jpeg'},
+// {id: 5, name: '女帝-波雅', nengli: '超人系甜甜果实', jituan: '九蛇海贼团', img: './img/dongman5.jpeg'}]
 
 
 

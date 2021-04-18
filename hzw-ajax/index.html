@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hero - Admin</title>
+    <link rel="stylesheet" href="/css/bootstrap.css">
+    <style>
+        .hero-list img{
+            width: 50px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="page-header container">
+            <h1>海贼王<small>角色管理器</small></h1>
+        </div>
+    </header>
+    <div class="container hero-list">
+        <a class="addBtn" href="/add">添加英雄</a>
+        <table class="table table-hover">
+            <tr class="theader">
+                <th>编号</th>
+                <th>名称</th>
+                <th>能力</th>
+                <th>团体</th>
+                <th>头像</th>
+                <th>操作</th>
+            </tr>
+        </table>
+    </div>
+</body>
+<script>
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function(){
+        if (xhr.readyState == 4) {
+            var listData = JSON.parse(xhr.responseText);
+            console.log(listData);
+            var tbody = document.querySelector('.table.table-hover');
+            for (let i = 0; i < listData.length; i++) {
+                //创建节点
+                var tr = document.createElement('tr');
+                //采用模版字符
+                var htmls = `
+                    <td>${ listData[i].id }</td>
+                    <td>${ listData[i].name }</td>
+                    <td>${ listData[i].nengli }</td>
+                    <td>${ listData[i].jituan }</td>
+                    <td><img src="${ listData[i].img }" alt="" srcset=""></td>
+                    <td>
+                        <a href="/getone?id=${ listData[i].id }">查看</a>
+                        <a href="/edituser?id=${ listData[i].id }">修改</a>
+                        <a href="/deluser?id=${ listData[i].id }">删除</a>
+                    </td>
+                `;
+                //添加节点内容
+                tr.innerHTML = htmls;
+                //添加子节点
+                tbody.appendChild(tr);
+
+                var htmls_two = '<tr>';
+                    htmls_two += '<td>' + listData[i].id + '</td>';
+                    htmls_two += '<td>' + listData[i].name + '</td>';
+                    htmls_two += '<td>' + listData[i].nengli + '</td>';
+                    htmls_two += '<td>' + listData[i].jituan + '</td>';
+                    htmls_two += '<td><img src="' + listData[i].img + '" alt="" srcset=""></td>';
+                    htmls_two += '<td><a href="/getone">查看</a>';
+                    htmls_two += '</tr>';
+            }
+        }
+    };
+    xhr.open('get','/getall');
+    xhr.send();
+
+    //绑定删除事件 第一种方式：给删除按钮添加click事件属性(但是获取不到id)
+    //第二种方式： 设置class 绑定事件在循环中，不优美
+    //第三种方式： 事件委托代理（事件的捕获、冒泡、目标原理） 
+    //将事件绑定到父级节点上，由于事件冒泡所以事件能够被触发
+    //所以，我们可以通过对象的target属性获取到具体触发此事件的节点对象
+</script>
+</html>

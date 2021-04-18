@@ -1,0 +1,50 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+.container{
+    width: 720px;
+    margin: 0 auto;
+}
+a{
+    text-decoration: none;
+}
+.page-header h1{
+    font-weight: normal;
+}
+.page-header small{
+    margin-left: 10px;
+}
+.hero-list .addBtn{
+    background-color: rgb(50, 160,60);
+    color: white;
+    text-align: center;
+    padding: 5px;
+    font-size: 13px;
+    border-radius: 5px;
+    display: block;
+    width: 60px;
+}
+table{
+    width: 100%;
+    border-collapse: collapse;
+}
+table .theader{
+    border-top: 1px solid rgb(222, 223,222);
+    border-bottom: 2px solid rgb(222, 223,222);
+}
+table .theader tr{
+    font-size: 18px;
+    font-weight: 1px;
+    font-style: normal;
+}
+
+th, td {
+    padding: 15px;
+    text-align: left;
+}
+table td a{
+    color: rgb(74, 145,246);
+}
+
+
