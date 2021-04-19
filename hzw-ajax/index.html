@@ -33,51 +33,81 @@
     </div>
 </body>
 <script>
-    var xhr = new XMLHttpRequest();
-    xhr.onreadystatechange = function(){
-        if (xhr.readyState == 4) {
-            var listData = JSON.parse(xhr.responseText);
-            console.log(listData);
-            var tbody = document.querySelector('.table.table-hover');
-            for (let i = 0; i < listData.length; i++) {
-                //创建节点
-                var tr = document.createElement('tr');
-                //采用模版字符
-                var htmls = `
-                    <td>${ listData[i].id }</td>
-                    <td>${ listData[i].name }</td>
-                    <td>${ listData[i].nengli }</td>
-                    <td>${ listData[i].jituan }</td>
-                    <td><img src="${ listData[i].img }" alt="" srcset=""></td>
-                    <td>
-                        <a href="/getone?id=${ listData[i].id }">查看</a>
-                        <a href="/edituser?id=${ listData[i].id }">修改</a>
-                        <a href="/deluser?id=${ listData[i].id }">删除</a>
-                    </td>
-                `;
-                //添加节点内容
-                tr.innerHTML = htmls;
-                //添加子节点
-                tbody.appendChild(tr);
+    function getAllData(){
+        var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function(){
+            if (xhr.readyState == 4) {
+                var listData = JSON.parse(xhr.responseText);
+                console.log(listData);
+                var tbody = document.querySelector('.table.table-hover');
+                // tbody.children = tbody.children.slice(0,1);
+                // console.log(tbody.children);
+                for (let i = 0; i < listData.length; i++) {
+                    //创建节点
+                    var tr = document.createElement('tr');
+                    //采用模版字符
+                    var htmls = `
+                        <td>${ listData[i].id }</td>
+                        <td>${ listData[i].name }</td>
+                        <td>${ listData[i].nengli }</td>
+                        <td>${ listData[i].jituan }</td>
+                        <td><img src="${ listData[i].img }" alt="" srcset=""></td>
+                        <td>
+                            <a href="/getone?id=${ listData[i].id }">查看</a>
+                            <a href="/edituser?id=${ listData[i].id }">修改</a>
+                            <a href="" user_id='${ listData[i].id }'>删除</a>
+                        </td>
+                    `;
+                    //添加节点内容
+                    tr.innerHTML = htmls;
+                    //添加子节点
+                    tbody.appendChild(tr);
 
-                var htmls_two = '<tr>';
-                    htmls_two += '<td>' + listData[i].id + '</td>';
-                    htmls_two += '<td>' + listData[i].name + '</td>';
-                    htmls_two += '<td>' + listData[i].nengli + '</td>';
-                    htmls_two += '<td>' + listData[i].jituan + '</td>';
-                    htmls_two += '<td><img src="' + listData[i].img + '" alt="" srcset=""></td>';
-                    htmls_two += '<td><a href="/getone">查看</a>';
-                    htmls_two += '</tr>';
+                    var htmls_two = '<tr>';
+                        htmls_two += '<td>' + listData[i].id + '</td>';
+                        htmls_two += '<td>' + listData[i].name + '</td>';
+                        htmls_two += '<td>' + listData[i].nengli + '</td>';
+                        htmls_two += '<td>' + listData[i].jituan + '</td>';
+                        htmls_two += '<td><img src="' + listData[i].img + '" alt="" srcset=""></td>';
+                        htmls_two += '<td><a href="/getone">查看</a>';
+                        htmls_two += '</tr>';
+                }
             }
-        }
-    };
-    xhr.open('get','/getall');
-    xhr.send();
+        };
+        xhr.open('get','/getall');
+        xhr.send();
+    }
+
+    window.onload = function(){
+        getAllData();
+    }
 
     //绑定删除事件 第一种方式：给删除按钮添加click事件属性(但是获取不到id)
     //第二种方式： 设置class 绑定事件在循环中，不优美
     //第三种方式： 事件委托代理（事件的捕获、冒泡、目标原理） 
     //将事件绑定到父级节点上，由于事件冒泡所以事件能够被触发
     //所以，我们可以通过对象的target属性获取到具体触发此事件的节点对象
+    var table = document.querySelector('.table.table-hover');
+    table.onclick = function(ev){
+        //获取节点对象的自定义属性值
+        //console.log(ev.target.getAttribute('user_id')); 
+        // return false;
+        //阻止浏览器默认行为
+        ev.preventDefault();
+
+        var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function(){
+            if (xhr.readyState == 4) {
+                
+                if (xhr.responseText == 1) {
+                    //将节点移除
+                    table.removeChild(ev.target.parentNode.parentNode);
+                }
+            }
+        };
+        xhr.open('delete', 'http://127.0.0.1:9000/del?id=' + ev.target.getAttribute('user_id'));
+        xhr.send();
+        
+    };
 </script>
 </html>

@@ -5,21 +5,28 @@ module.exports = {
         server.on('request', (req, resp) => {
             var baseURL = 'http://' + req.headers.host + '/';
             const myURL = new URL(req.url, baseURL);
-            if (myURL.pathname == '/') {
-                controller.index(resp);
-            } else if(myURL.pathname == '/getall'){
-                controller.getall(req, resp);
-            } else if(myURL.pathname == '/getone'){
-                controller.getone(req, resp, myURL.searchParams.get('id'));
-            } else if(myURL.pathname == '/edituser'){
-                controller.getedit(req, resp, myURL.searchParams.get('id'));
-            } else if(myURL.pathname == '/editpost'){
-                controller.editpost(req, resp, myURL.searchParams.get('id'));
-            } else if(myURL.pathname == '/deluser'){
-                controller.deluser(req, resp, myURL.searchParams.get('id'));
+            if (req.method == 'DELETE' ) {
+                //处理ajax的删除
+                console.log(myURL.searchParams.get('id'));
+                controller.ajaxDel(req, resp, myURL.searchParams.get('id'));
             } else {
-                controller.other(req, resp);
+                if (myURL.pathname == '/') {
+                    controller.index(resp);
+                } else if(myURL.pathname == '/getall'){
+                    controller.getall(req, resp);
+                } else if(myURL.pathname == '/getone'){
+                    controller.getone(req, resp, myURL.searchParams.get('id'));
+                } else if(myURL.pathname == '/edituser'){
+                    controller.getedit(req, resp, myURL.searchParams.get('id'));
+                } else if(myURL.pathname == '/editpost'){
+                    controller.editpost(req, resp, myURL.searchParams.get('id'));
+                } else if(myURL.pathname == '/deluser'){
+                    controller.deluser(req, resp, myURL.searchParams.get('id'));
+                } else {
+                    controller.other(req, resp);
+                }
             }
+            
         });
     }
 }

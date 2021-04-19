@@ -27,6 +27,36 @@ module.exports = {
         });
     }, 
 
+    ajaxDel: function(req, resp, id){
+        fs.readFile('./db.json', 'utf8', function (err, data) {
+            if (err) {
+                console.error(err);
+                return;
+            }
+        
+            var arr = JSON.parse(data);
+            var newArr = [];
+            for (let i = 0; i < arr.length; i++) {
+                if (arr[i].id != id) {
+                    newArr.push(arr[i]);
+                }
+            }
+        
+            var appendStr = JSON.stringify(newArr);
+            //直接覆盖原先的数据不好，后续可以用数据库处理，删除某条记录即可
+            fs.writeFile('./db.json', appendStr, (err) => {
+                if (err) {
+                    console.log(err);
+                    console.error(err);
+                    resp.end('0');
+                    return;
+                }
+                console.log("删除成功");
+                resp.end('1');
+            });
+        })
+    },
+
     getone: function (req, resp, id) {
         fs.readFile('./db.json', 'utf8', (err, json_str) => {
             var json_arr = JSON.parse(json_str);
@@ -97,14 +127,17 @@ module.exports = {
         
             var appendStr = JSON.stringify(newArr);
             //直接覆盖原先的数据不好，后续可以用数据库处理，删除某条记录即可
-            fs.writeFile('./db.json', appendStr, err => {
+            fs.writeFile('./db.json', appendStr, (err) => {
+                resp.setHeader('Content-type', 'text/html;charset=utf-8');
                 if (err) {
                     console.log(err);
                     console.error(err);
+                    resp.end('<script>alert("删除失败");location.href="/"</script>');
                     return;
                 }
                 console.log("删除成功");
-            })
+                resp.end('<script>alert("删除成功");location.href="/"</script>');
+            });
         })
     }
 }
