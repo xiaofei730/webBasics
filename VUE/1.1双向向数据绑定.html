@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./vue.js"></script>
+
+</head>
+<body>
+    <div id="app">
+        <!-- v-model 不能用在展示标签中 -->
+        <!-- <p v-model='t'>123</p> -->
+
+        <!-- v-model 只能绑定在用户可操作的元素上 -->
+        <!-- 用户可操作的是什么，v-model代表的就是什么 -->
+        <input type="text" v-model="val">
+
+        <textarea v-model="val" name="" id="" cols="30" rows="10"></textarea>
+
+        吃饭：<input type="checkbox" name="ss" id="" value="eat" v-model="ched">
+        睡觉：<input type="checkbox" name="" id="" value="sleep" v-model="ched">
+        打豆豆：<input type="checkbox" name="" id="" value="ddd" v-model="ched">
+
+        {{ ched }}
+
+        男：<input type="radio" name="sex" id="" value="男" >
+        女：<input type="radio" name="sex" id="" value="女" >
+    </div>
+</body>
+
+<!-- vue对象中的数据发生改变，页面中的也会跟着改变 -->
+<!-- 页面中的内容发生改变 vue对象中的数据也跟着改变-->
+<!-- 这种情况称为 双向数据绑定 -->
+<script>
+
+    var app = new Vue({
+        el: '#app',
+        data:{
+            t: '5657',
+            s: '7889',
+            val: 'hehhisie',
+            ched: []
+        }
+    });
+
+</script>
+</html>

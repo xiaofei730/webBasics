@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <!-- v-text和v-html都是替换标签内容 -->
+        <!-- v-text原样展示内容 -->
+        <p v-text="s"></p>
+        <!-- v-html会解析并展示内容  -->
+        <p v-html="n"></p>
+         
+        <!-- 插值表达式与v-text类似，都是原样展示内容 -->
+        <p>{{ k }}</p>
+
+        <!-- 插值表达式与v-text的区别 -->
+        <!-- v-text会替换标签内的全部内容 -->
+        <p v-text="s">ooo</p>
+        <!-- 插值表达式替换局部内容 -->
+        <p>ooo{{ k }}</p>
+    </div>
+</body>
+<script>
+    var app = new Vue({
+        el: '#app',
+        data:{
+            s: '<s>123</s>',
+            n: '<s>345</s>',
+            k: '<s>567</s>'
+        }
+    });
+</script>
+</html>

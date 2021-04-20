@@ -6,20 +6,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <script src="./vue.js"></script>
+    <style>
+        .s{
+            background-color: red;
+        }
+        .g{
+            background-color: green;
+        }
+        .k{
+            font-size: 30px;
+        }
+    </style>
 </head>
 <body>
     <div id="app">
-        <p id="sdwe" v-if="kk">
-            123
-        </p>
+        <div v-bind:class="[isg, isk]">sdsfaaw</div>
     </div>
 </body>
 <script>
+
     var app = new Vue({
         el: '#app',
         data:{
-            kk: 0
+            isg: 'g',
+            isk: 'k'
         }
     });
+
 </script>
 </html>

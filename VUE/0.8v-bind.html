@@ -6,20 +6,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <script src="./vue.js"></script>
+
 </head>
 <body>
     <div id="app">
-        <p id="sdwe" v-if="kk">
-            123
-        </p>
+        <!-- v-bind简写形式 -->
+        <div :style="{color:c, fontSize:s+'px'}">sdsfaaw</div>
+        <div :style="[n,b]">sdsfaaw</div>
     </div>
 </body>
 <script>
+
     var app = new Vue({
         el: '#app',
         data:{
-            kk: 0
+            s: 40,
+            c: 'red',
+            n: {
+                color: 'green'
+            },
+            b:{
+                fontSize: '50px'
+            }
         }
     });
+
 </script>
 </html>

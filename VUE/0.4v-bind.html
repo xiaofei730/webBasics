@@ -9,17 +9,21 @@
 </head>
 <body>
     <div id="app">
-        <p id="sdwe" v-if="kk">
-            123
-        </p>
+        <!-- v-bind 绑定属性值的 v-bind:属性名字 -->
+        <img v-bind:src="img_path" alt="">
+
+        <a v-bind:href="'http://127.0.01:9000/getone?id='+ids"></a>
     </div>
 </body>
 <script>
+
     var app = new Vue({
         el: '#app',
         data:{
-            kk: 0
+            img_path: './dong.jpeg',
+            ids: '1'
         }
     });
+
 </script>
 </html>

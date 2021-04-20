@@ -6,20 +6,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <script src="./vue.js"></script>
+
 </head>
 <body>
     <div id="app">
-        <p id="sdwe" v-if="kk">
-            123
-        </p>
+        <p v-text='t'>3456</p>
+        {{s}}
+
+        <input type="text" :value="val">
     </div>
 </body>
+
+<!-- vue对象中的数据发生改变，页面中的也会跟着改变 页面中的值改变无法影响到vue对象属性的值-->
+<!-- 这种情况称为 单向数据绑定 -->
 <script>
+
     var app = new Vue({
         el: '#app',
         data:{
-            kk: 0
+            t: '5657',
+            s: '7889',
+            val: 'hehhisie'
         }
     });
+
+    console.log(app.t);
+
 </script>
 </html>
