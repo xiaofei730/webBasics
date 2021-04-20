@@ -14,6 +14,10 @@ module.exports = {
                     controller.index(resp);
                 } else if(myURL.pathname == '/getall'){
                     controller.getall(req, resp);
+                } else if(myURL.pathname == '/add'){
+                    controller.getAddHtml(req, resp);
+                } else if(myURL.pathname == '/ajaxAdd'){
+                    controller.ajaxAdd(req, resp);
                 } else if(myURL.pathname == '/getone'){
                     controller.getone(req, resp, myURL.searchParams.get('id'));
                 } else if(myURL.pathname == '/edituser'){

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        table{
+            margin: 0 auto;
+            border-collapse: collapse;
+            width: 800px;
+            height: 500px;
+        }
+        td{
+            border: 1px solid #ccc;
+        }
+    </style>
+</head>
+<body>
+    <form action="/" method="post" id="fm" enctype="multipart/form-data">
+        <table>
+            <tr>
+                <td>姓名</td>
+                <td><input name="name" type="text"></td>
+            </tr>
+            <tr>
+                <td>能力</td>
+                <td><input name="nengli" type="text"></td>
+            </tr>
+            <tr>
+                <td>集团</td>
+                <td><input name="jituan" type="text"></td>
+            </tr>
+            <tr>
+                <td>上传图片</td>
+                <td><input name="img" type="file"></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><input value="确认修改" type="button" class="sureBtn"></td>
+            </tr>
+        </table>
+    </form>
+</body>
+<script>
+    document.querySelector('.sureBtn').onclick = function(){
+        //发送AJAX请求
+        //请求方式是POST
+        //要将请求的数据放入send方法中（http只支持字符串数据传输）
+        //服务器需要接收post请求（直接使用formidable就可以了）
+        //服务器接收数据后，写入json文件，然后返回1或0
+        //ajax 接收1或0后判断并跳转到首页展示
+        var xhr = new XMLHttpRequest();
+
+        xhr.onreadystatechange = function(){
+            if(xhr.readyState == 4){
+                alert(xhr.responseText);
+                if(xhr.responseText == 1){
+                     location.href = '/';
+                }
+            }
+        };
+        
+        var fm = document.getElementById('fm');
+        var fd = new FormData(fm);
+
+        xhr.open('post', 'http://127.0.0.1:9000/ajaxAdd');
+        xhr.send(fd);
+   
+    }
+
+    //该方式不支持文件上传，需要通过FORMDATA
+    function formidablePost(){
+        //发送AJAX请求
+        //请求方式是POST
+        //要将请求的数据放入send方法中（http只支持字符串数据传输）
+        //服务器需要接收post请求（直接使用formidable就可以了）
+        //服务器接收数据后，写入json文件，然后返回1或0
+        //ajax 接收1或0后判断并跳转到首页展示
+        var xhr = new XMLHttpRequest();
+
+        xhr.onreadystatechange = function(){
+            if(xhr.readyState == 4){
+                alert(xhr.responseText);
+                if(xhr.responseText == 1){
+                     location.href = '/';
+                }
+            }
+        };
+        //组装send要发送的数据
+        var inps = document.getElementsByTagName('input');
+        var inpData = 'name='+inps[0].value+'&nengli='+inps[1].value+'&jituan='+inps[2].value;
+        // console.log(inpData);
+        inpData = encodeURI(inpData);
+        xhr.open('post', 'http://127.0.0.1:9000/ajaxAdd');
+        //使用formidable需要设置请求头   application/x-www-form-urlencoded意思是URL编码的类型
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xhr.send(inpData);
+    }
+
+    //原生AJAX请求
+    function ajaxPost(){
+        //发送AJAX请求
+        //请求方式是POST
+        //要将请求的数据放入send方法中（http只支持字符串数据传输）
+        //服务器需要接收post请求（直接使用formidable就可以了）
+        //服务器接收数据后，写入json文件，然后返回1或0
+        //ajax 接收1或0后判断并跳转到首页展示
+        var xhr = new XMLHttpRequest();
+
+        xhr.onreadystatechange = function(){
+            if(xhr.readyState == 4){
+                alert(xhr.responseText);
+                if(xhr.responseText == 1){
+                     location.href = '/';
+                }
+            }
+        };
+        //组装send要发送的数据
+        var inps = document.getElementsByTagName('input');
+        var inpData = 'name='+inps[0].value+'&nengli='+inps[1].value+'&jituan='+inps[2].value;
+        xhr.open('post', 'http://127.0.0.1:9000/ajaxAdd');
+        xhr.send(inpData);
+    }
+</script>
+</html>

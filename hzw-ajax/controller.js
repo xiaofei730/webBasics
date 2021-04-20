@@ -27,6 +27,121 @@ module.exports = {
         });
     }, 
 
+    getAddHtml: function(req, resp){
+        fs.readFile('./add.html', function(err, html_data){
+            resp.end(html_data);
+        });
+    },
+
+    ajaxAdd: function(req, resp){
+        var fd = require('formidable');
+        var form = new fd.IncomingForm();
+        form.parse(req, (err, filds, files) => {
+            console.log(files);
+            console.log(filds);
+            fs.rename(files.img.path, './img/' + files.img.name, function (err) {
+                fs.readFile('./db.json', 'utf8', function(err, json_str){
+                    var json_arr = JSON.parse(json_str);
+                    filds.id = json_arr[json_arr.length-1].id + 1;
+                    filds.img = '/img/' + files.img.name;
+                    json_arr.push(filds);
+                    var newData = JSON.stringify(json_arr);
+                    //直接覆盖原先的数据不好，后续可以用数据库处理，更新某条记录即可
+                    fs.writeFile('./db.json', newData,(err) => {
+                        resp.setHeader('Content-type', 'text/html;charset=utf-8');
+                        if(!err){
+                            resp.end('1');
+                        }else{
+                            resp.end('0');
+                        }
+                        console.log('修改成功！');
+                    });
+                });
+            });
+        });
+    },
+
+    //formidable方式
+    // ajaxAdd: function(req, resp){
+    //     var fd = require('formidable');
+    //     var form = new fd.IncomingForm();
+    //     // form.uploadDir = "";
+    //     form.parse(req, (err, filds, files) => {
+    //         if(err){
+    //             console.log(err);
+    //             return;
+    //         }
+    //         console.log(filds);
+    //         fs.readFile('./db.json', 'utf8', function (err, data) {
+    //             if (err) {
+    //                 console.error(err);
+    //                 return;
+    //             }
+            
+    //             var arr = JSON.parse(data);
+    //             filds.id = arr[arr.length-1].id + 1;
+    //             filds.img = '';
+    //             arr.push(filds);
+
+    //             var appendStr = JSON.stringify(arr);
+    //             //直接覆盖原先的数据不好，后续可以用数据库处理，删除某条记录即可
+    //             fs.writeFile('./db.json', appendStr, (err) => {
+    //                 if (err) {
+    //                     console.log(err);
+    //                     console.error(err);
+    //                     resp.end('0');
+    //                     return;
+    //                 }
+    //                 console.log("添加成功");
+    //                 resp.end('1');
+    //             });
+    //         })
+    //     });
+    // },
+
+    //原生的POST请求
+    // ajaxAdd: function(req, resp){
+    //     var pd = '';
+    //     req.on('data',function(post_data){
+    //         pd += post_data;
+    //     });
+
+    //     req.on('end', function(){
+    //         // console.log(pd);
+    //         // var pushData = require('querystring').parse(pd);
+    //         // console.log(k);
+    //         // pushData.id = '';
+    //         // pushData.img = '';
+
+    //         fs.readFile('./db.json', 'utf8', function (err, data) {
+    //             if (err) {
+    //                 console.error(err);
+    //                 return;
+    //             }
+            
+    //             var arr = JSON.parse(data);
+    //             var pushData = require('querystring').parse(pd);
+    //             pushData.id = arr[arr.length-1].id + 1;
+    //             pushData.img = '';
+    //             arr.push(pushData);
+
+    //             var appendStr = JSON.stringify(arr);
+    //             //直接覆盖原先的数据不好，后续可以用数据库处理，删除某条记录即可
+    //             fs.writeFile('./db.json', appendStr, (err) => {
+    //                 if (err) {
+    //                     console.log(err);
+    //                     console.error(err);
+    //                     resp.end('0');
+    //                     return;
+    //                 }
+    //                 console.log("添加成功");
+    //                 resp.end('1');
+    //             });
+    //         })
+    //     });
+    //     // resp.end('3');
+    // },
+
     ajaxDel: function(req, resp, id){
         fs.readFile('./db.json', 'utf8', function (err, data) {
             if (err) {
@@ -101,7 +216,8 @@ module.exports = {
                         }
                         var newData = JSON.stringify(json_arr);
                         //直接覆盖原先的数据不好，后续可以用数据库处理，更新某条记录即可
-                        fs.writeFile('./db.json', (err) => {
+                        fs.writeFile('./db.json', newData, (err) => {
+                            resp.setHeader('Content-type', 'text/html;charset=utf-8');
                             console.log('修改成功！');
                         });
                     }
