@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <!-- 插值 插值表达式 -->
+        {{ user_data }}
+        {{ kk }}
+        <s>{{ us }}</s>
+        <!-- 插值表达式可以使用运算符 -->
+        {{us>3?'大':'小'}}
+
+        <!-- 函数调用 -->
+        {{hh()}}
+
+        <!-- 对象的调用 -->
+        {{obj.name}}
+
+        <!-- 不能写逻辑代码 -->
+        <!-- {{if(us>1){
+            console.log(1)
+        }else{
+            console.log(1)
+        }}} -->
+    </div>
+</body>
+<script>
+    //vue 一旦被引入，就会在全局作用域中声明一个构造函数 名字就是Vue（注意大小写）
+    //new 这个构造函数得到 vue 实例对象
+    var app = new Vue({
+        el: '#app',
+        data:{
+            user_data: 'hhh',
+            kk: '哈哈哈',
+            us:1,
+            obj:{
+                name: '李四'
+            },
+            hh: function(){
+                return 4+3;
+            }
+        }
+    });
+    //以$开头的都是vue对象中的公有属性
+    //以_开头的是vue实例对象的私有属性
+    //代码中的data对象中的全部内容，都会放入vue实例对象
+    console.log(app);
+    console.log(app.kk);
+</script>
+</html>
