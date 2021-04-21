@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <input type="text" v-model="type">
+        <!-- 绝对字符串使用单引号 -->
+        <div v-if="type === 'A'"> 我是A</div>
+        <div v-else-if="type === 'B'"> 我是B</div>
+        <div v-else-if="type === 'C'"> 我是C</div>
+        <div v-else-if="type === 'D'"> 我是D</div>
+        <div v-else> 我什么都没有</div>
+    </div>
+</body>
+<script>
+     var app = new Vue({
+         el: '#app',
+         data:{
+            type: ''
+         }
+     });
+</script>
+</html>

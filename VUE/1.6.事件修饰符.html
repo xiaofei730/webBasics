@@ -9,13 +9,17 @@
 </head>
 <body>
     <div id="app">
-        <a href="http:www.baidu.com" v-on:click.prevent="cli">点击测试</a>
+        <!-- vue事件绑定阻止浏览器默认行为 使用修饰符 -->
+        <!-- <a href="http:www.baidu.com" v-on:click.prevent="cli">点击测试</a> -->
 
-        <a href="http:www.baidu.com">点击测试</a>
+        <!-- 原生事件绑定阻止浏览器默认行为 -->
+        <a href="http://www.baidu.com">点击测试</a>
     </div>
 </body>
 <script>
-    document.getElementsByTagName('a')[1].onclick = function (ev){
+
+    //原生事件绑定
+    document.getElementsByTagName('a')[0].onclick = function (ev){
         
         
         alert(3);
@@ -23,19 +27,19 @@
         // return false;
     }
 
-     var app = new Vue({
-         el: '#app',
-         data:{
-            //  只存放vue数据
+    //  var app = new Vue({
+    //      el: '#app',
+    //      data:{
+    //         //  只存放vue数据
 
-         },
-         //methods 专门用于存放vue的处理方法
-         methods: {
-            cli:function(){
-                alert('测试通过');
-            }
+    //      },
+    //      //methods 专门用于存放vue的处理方法
+    //      methods: {
+    //         cli:function(){
+    //             alert('测试通过');
+    //         }
 
-         },
-     });
+    //      },
+    //  });
 </script>
 </html>

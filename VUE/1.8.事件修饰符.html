@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <!-- <input type="button" value="按钮" v-on:click.middle="cli"> -->
+        <input type="button" value="按钮" v-on:click.ctrl="cli">
+    </div>
+</body>
+<script>
+
+     var app = new Vue({
+         el: '#app',
+         data:{
+            //  只存放vue数据
+
+         },
+         //methods 专门用于存放vue的处理方法
+         methods: {
+            cli:function(){
+                alert('测试通过');
+            }
+
+         },
+     });
+</script>
+</html>
