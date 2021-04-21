@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <a href="http:www.baidu.com" v-on:click.prevent="cli">点击测试</a>
+
+        <a href="http:www.baidu.com">点击测试</a>
+    </div>
+</body>
+<script>
+    document.getElementsByTagName('a')[1].onclick = function (ev){
+        
+        
+        alert(3);
+        ev.preventDefault();
+        // return false;
+    }
+
+     var app = new Vue({
+         el: '#app',
+         data:{
+            //  只存放vue数据
+
+         },
+         //methods 专门用于存放vue的处理方法
+         methods: {
+            cli:function(){
+                alert('测试通过');
+            }
+
+         },
+     });
+</script>
+</html>

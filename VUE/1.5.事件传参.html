@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <!-- 事件传值 -->
+        <!-- <input type="button" value="查看" v-on:click="ffunc(1,2)"> -->
+
+        <!-- 事件对象 -->
+        <!-- <input type="button" value="查看" v-on:click="ffunc"> -->
+
+        <!-- 如果事件绑定时需要传参和获取事件对象，在绑定事件时必须手动传入公用属性$event -->
+        <input type="button" value="查看" v-on:click="ffunc(3,4,$event)">
+    </div>
+</body>
+<script>
+     var app = new Vue({
+         el: '#app',
+         data:{
+            //  只存放vue数据
+            // ffunc: function(){
+            //     alert(this.value);
+            // }
+         },
+         //methods 专门用于存放vue的处理方法
+         methods: {
+            //  事件传值
+            // ffunc: function(a, b){
+            //     alert(a+b);
+            // }
+            // 事件对象
+            // ffunc: function(ev){
+            //     alert(ev.target.value);
+            // }
+
+            // 事件传值 和 事件对象一起用 形参冲突 事件对象无法获取
+            // 如果在事件绑定时有传参，那么事件处理的函数就会认为所有数据都应该以实参的方式传入
+            ffunc: function(a,b,c){
+                console.log(a);
+                console.log(b);
+                console.log(c);
+            }
+
+         },
+     });
+</script>
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <input type="number" v-model.number="val">
+
+        <!-- 在“change”时而非“input”时更新 -->
+        <!-- input有两个内容改变事件，一个是input事件 内容只要改变，事件就会触发 
+            一个是change事件 内容改变并失去焦点时触发 -->
+        <input v-model.lazy="val">
+        {{ val }}
+    </div>
+</body>
+<script>
+     var app = new Vue({
+         el: '#app',
+         data:{
+            val: 123
+         }
+     });
+</script>
+</html>
