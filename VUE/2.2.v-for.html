@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <!-- 数组 -->
+        <ul>
+            <!-- v-for 循环的语法规则参考 js 的 for in 循环 -->
+            <!-- 循环中可以得到值和下标 -->
+            <!-- 值和下标完全当做data中的数据使用即可 -->
+            <li v-for="(v, k) in arr" v-bind:id="v" v-if="k%2 !== 0">{{v}}-----{{k}}</li>
+        </ul>
+
+        <ul>
+            <li v-for="(v,k) in oop">{{v}}----{{k}}</li>
+        </ul>
+    </div>
+</body>
+<script>
+     var app = new Vue({
+         el: '#app',
+         data:{
+            arr: ['ff', 'hh4', 'liunenng', 'Tesla', '马斯克'],
+            oop: {name:'刘能', guinv:'刘英', tubie:'赵玉田'}
+         }
+     });
+</script>
+</html>
