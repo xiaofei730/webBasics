@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <input type="text" v-model="x"> <br>
+        <input type="text" v-model="y"> <br>
+        {{ das }}
+    </div>
+</body>
+<script>
+     var app = new Vue({
+         el: '#app',
+         data:{
+             x: 'ws',
+             y: '',
+             das:''
+         },
+        //  侦听器 侦听的是data里面的数据变化
+        watch:{
+            //侦听谁就以谁的名字命名方法
+            //一旦数据有变化，就会将新值与旧值共同传入方法中
+            x:function(newAal, oldVal){
+                var that = this;
+                var xhr = new XMLHttpRequest();
+                xhr.onreadystatechange = function(){
+                    if (xhr.readyState == 4) {
+                        if (xhr.responseText == 0) {
+                            that.das = oldVal;
+                        }else{
+                            that.das = newAal;
+                        }
+                    }
+                }
+                xhr.open('get', 'http://127.0.0.1:8000?name=' + newAal);
+                xhr.send();
+            }
+        }
+     });
+</script>
+</html>

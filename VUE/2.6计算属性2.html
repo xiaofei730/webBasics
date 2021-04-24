@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <input type="text" v-model="x"> <br>
+        <input type="text" v-model="y"> <br>
+        <!-- 插值表达式尽可能避免直接运算，性能较低 -->
+        <!-- {{x+y}} -->
+        {{kks}}
+        {{kks}}
+        {{kks}}
+        {{kks}}
+        {{kks}}
+        {{kks}}
+        {{kks}}
+        {{kks}}
+        {{kks}}
+        {{kks}}
+        {{kks}}
+        {{kks}}
+        {{kks}}
+        {{kks}}
+        {{kks}}
+        {{kks}}
+        {{kks}}
+        {{kks}}
+        {{kks}}
+        {{kks}}
+        {{kks}}
+        {{kks}}
+        {{kks}}
+        {{kks}}
+        {{kks}}
+        {{kks}}
+        {{kks}}
+        {{kks}}
+        {{kks}}
+        {{kks}}
+        {{kks}}
+        {{kks}}
+        {{kks}}
+        {{kks}}
+        {{kks}}
+        {{kks}}
+        {{kks}}
+        {{kks}}
+        {{kks}}
+        {{kks}}
+        {{kks}}
+        {{kks}}
+        {{kks}}
+        {{kks}}
+        {{kks}}
+        {{kks}}
+        {{kks}}
+        {{kks}}
+        {{kks}}
+        {{kks}}
+        {{kks}}
+        {{kks}}
+        {{kks}}
+        {{kks}}
+        {{kks}}
+        {{kks}}
+        {{kks}}
+        {{kks}}
+        {{kks}}
+        {{kks}}
+        {{kks}}
+        {{kks}}
+        {{kks}}
+        {{kks}}
+        {{kks}}
+        {{kks}}
+        {{kks}}
+        {{kks}}
+        {{kks}}
+        {{kks}}
+        {{kks}}
+        {{kks}}
+        {{kks}}
+        {{kks}}
+        {{kks}}
+        {{kks}}
+        {{kks}}
+        {{kks}}
+        {{kks}}
+        {{kks}}
+        {{kks}}
+        {{kks}}
+        {{kks}}
+        {{kks}}
+        {{kks}}
+        {{kks}}
+        {{kks}}
+        {{kks}}
+        {{kks}}
+    </div>
+</body>
+<script>
+     var app = new Vue({
+         el: '#app',
+         data:{
+             x: '',
+             y: ''
+         },
+        //  methods: {
+        //      adds: function(){
+        //          return this.x + this.y + Date.now();
+        //      }
+        //  }
+        //计算属性
+        computed:{
+            kks: function(){
+                //调用一次后，如果在其它地方使用，其它地方的数据都是在第一次使用后被缓存下来的数据
+                return this.x + this.y + Date.now();
+            }
+        }
+     });
+</script>
+</html>
