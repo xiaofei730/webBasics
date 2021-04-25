@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <p v-red>12324</p>
+        <div v-red>hhhhsafhewh</div>
+
+        <!-- 会报错 -->
+        <!-- <p v-color="red">12324</p> -->
+        <p v-color="pink">12324</p>
+        <input type="tex" v-model="msg">
+        <!-- 自定义指令的值需要先有数据才能使用，无双向和单向绑定的效果 类似单向绑定 -->
+        <!-- <p v-color="msg">12324</p> -->
+        
+    </div>
+</body>
+<script>
+    // 全局自定义指令
+    // Vue.directive('red',{
+    //     inserted: function (el) {
+    //         el.style.background = 'red';
+    //     }
+    // })
+
+    var app = new Vue({
+         el: '#app',
+         data:{
+             msg:'',
+            pink: 'red' 
+         },
+        //  局部自定义指令
+         directives: {
+             red:{
+                 inserted:function(el){
+                     el.style.color = 'green';
+                 }
+             },
+             color:{
+                 inserted: function(el, data){
+                     console.log(data);
+                    el.style.color = data.value;
+                 }
+             }
+         }
+     });
+</script>
+</html>

@@ -1,0 +1,24 @@
+{
+  "posts": [
+    {
+      "title": "heiehiwa",
+      "age": "123",
+      "id": 1
+    },
+    {
+      "id": 2,
+      "title": "sssswwww",
+      "author": "hhahahh哈"
+    }
+  ],
+  "comments": [
+    {
+      "id": 1,
+      "body": "some comment",
+      "postId": 1
+    }
+  ],
+  "profile": {
+    "name": "typicode"
+  }
+}
