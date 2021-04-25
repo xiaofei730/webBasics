@@ -121,6 +121,10 @@
             kks: function(){
                 //调用一次后，如果在其它地方使用，其它地方的数据都是在第一次使用后被缓存下来的数据
                 return this.x + this.y + Date.now();
+            },
+            kks2(){
+                //调用一次后，如果在其它地方使用，其它地方的数据都是在第一次使用后被缓存下来的数据
+                return this.x + this.y + Date.now();
             }
         }
      });
