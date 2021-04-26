@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script src="./axios.js"></script>
+<script>
+    // axios.get('http://localhost:3000/todoList/3').then(function(response){
+    //     console.log(response);
+    // }).catch(function(err){
+    //     console.log(err);
+    // });
+
+    // axios.post('http://localhost:3000/todoList',{
+    //     id:4,
+    //     title: '烫头',
+    //     status: false
+    // }).then(function(response){
+    //     console.log(response);
+    // }).catch(function(err){
+    //     console.log(err);
+    // });
+    // axios({
+    //     method: 'DELETE',
+    //     url: 'http://localhost:3000/todoList/4'
+    // }).then(function(response){
+    //     console.log(response);
+    // }).catch(function(err){
+    //     console.log(err);
+    // });
+    axios({
+        method: 'PUT',
+        url: 'http://localhost:3000/todoList/2',
+        //json-server会将数据全部覆盖
+        data:{
+            title: "健身",
+            status: true
+        }
+    }).then(function(response){
+        console.log(response);
+    }).catch(function(err){
+        console.log(err);
+    });
+</script>
+</html>
