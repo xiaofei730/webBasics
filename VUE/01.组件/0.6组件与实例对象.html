@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <mytemp></mytemp>
+    </div>
+</body>
+<script src="../vue.js"></script>
+<script>
+    //组件就是实例对象，vue实例对象就是一个组件
+    //new vue的组件和自定义组件有差异
+    //1、自定义组件没有 el
+    //2、自定义组件中的data必须是一个方法（函数）
+    //data方法必须使用返回值保存数据
+    var app = new Vue({
+        el: '#app',
+        data:{
+
+        },
+        // el会被template全部替换掉
+        // template:'<s>wewweffawefw</s>',
+        components:{
+            //组件是带有名字的可复用的Vue实例，所以它们与new Vue实例对象接收相同的参数选项data、computed、watch、methods，但el除外
+            //虽然组件和实例对象可以接收相同的参数选项，但在具体使用中，vue实例对象的data与组件中的data还是有差异的，在我们自己写的组件中，data必须是一个函数
+            //一个组件的data选项必须是一个函数，因此每个实例可以维护一份被返回的对象
+            mytemp:{
+                data(){
+                    return {
+                        msg:'124124'
+                    };
+                },
+                methods: {
+                    cli(){
+                        alert(this.msg);
+                    }
+                },
+                template:'<i @click="cli">是佛教哦滃i额</i>'
+            }
+        }
+    })
+</script>
+</html>

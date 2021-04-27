@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+
+    // var obj = {
+    //     a: 1
+    // }
+    // obj.k = {
+    //     f(){
+            //this指向的对象是k没有a属性
+    //         console.log(this.a);
+    //     }
+    // }
+
+    // obj.k.f();
+
+    var f = function () {
+        this.a = 1;
+        this.b = 3;
+    }
+
+    var obj1 = new f();
+
+    var obj2 = {
+        fun1(){
+            console.log(this.b);
+        }
+    }
+
+
+    //继承
+    obj2.__proto__ = obj1;
+
+    
+    obj2.fun1();
+
+    function Man(){
+        this.aa = 2;
+        this.fun1 = function(){
+            console.log(this.aa+this.bb);
+        }
+    }
+
+    var obj3 ={
+        bb:2
+    }
+
+    var m1 = new Man();
+    console.log(m1.constructor)
+
+    //修改构造函数的默认原型
+    Man.prototype = obj3;
+    var m = new Man();
+    //m.constructor会变成原型的原型，即obj3的原型
+    console.log(m.constructor)
+    m.fun1();
+
+    function Man2(){
+        //
+        // this.constructor = Man2;
+        this.aa = 2;
+        this.fun1 = function(){
+            console.log(this.aa+this.hh);
+        }
+    }
+
+    function Over(){
+        this.hh = 1;
+        this.ff = function(){
+            var f= 4;
+        }
+    }
+
+    Man2.prototype = new Over();
+    var m3 = new Man2();
+
+    console.log(m3.constructor);
+
+    m3.fun1()
+
+</script>
+</html>

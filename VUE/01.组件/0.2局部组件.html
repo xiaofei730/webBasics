@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        {{msg}}
+
+        <!-- 组件的名字当作成对标签来使用 -->
+        <myzujian></myzujian>
+
+        <mytemp></mytemp>
+    </div>
+</body>
+<script>
+    //声明一个全局组件
+    //方法的第一个参数是组件的名字
+    //第二个参数为对象
+    Vue.component('myzujian',{
+        //对象中的template属性的值是展示到页面的内容
+        template:"<h2>手机打几分朋克</h2>",
+    });
+    var app = new Vue({
+        el: '#app',
+        data:{
+            msg: '123'
+        },
+        //声明局部（私有）组件 值是一个对象
+        //对象中属性的名字就是组件的名字
+        components:{
+            mytemp:{
+                template: "<s>sdjfoiwejo</s>"
+            }
+        }
+    })
+</script>
+</html>

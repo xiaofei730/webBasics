@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../vue.js"></script>
+</head>
+<body>
+    <div id="vv">
+        <!-- html的标签是不区分大小写 -->
+        <!-- <myKo></myKo> -->
+        <!-- 组件的名字如果有大写，大写转小写后前面加-就可以了 -->
+        <!-- 如果首字母大写，直接转小写就可以了 -->
+        <my-ko></my-ko>
+    </div>
+</body>
+<script>
+    //js的变量名是区分大小写
+    var app = new Vue({
+        el: '#vv',
+        components:{
+            myKo:{
+                //template的内容有且只有一个根节点 多个根级别的同级节点报错
+                template:"<div><i>sjfiwalfjwioejiw</i><s>fjaowjeoijfoiao</s></div>"
+            },
+            myko:{
+                template:"<i>sjfiwalfjwioejiw</i>"
+            }
+        }
+    })
+</script>
+</html>
