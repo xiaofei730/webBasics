@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../vue.js"></script>
+    <script src="../vue-router-v3.5.1.js"></script>
+</head>
+<body>
+    <div id="app">
+        <ul>
+            <li><a href="#/login">登录</a></li>
+            <li><a href="#/reg">注册</a></li>
+            <li><a href="#/oooo">注册</a></li>
+        </ul>
+        <router-view></router-view>
+    </div>
+    
+</body>
+<script>
+    //获取路由对象
+    var ro = new VueRouter({
+        //定义路由规则
+        routes: [
+            //具体匹配规则
+            //{path: 匹配地址栏路由变化, component:要展示的组件}
+            {
+                path:'/reg',
+                component:{
+                    template:"<s>我是注册</s>"
+                }
+            },
+            {
+                path:'/login',
+                component:{
+                    template:"<s>我是登录</s>"
+                }
+            },
+            {
+                path:'/oooo',
+                component:{
+                    template:"<s>000000ooo</s>"
+                }
+            }
+        ]
+    })
+
+    var app = new Vue({
+        el: '#app',
+        data:{
+
+        },
+        router: ro
+    })
+</script>
+</html>
