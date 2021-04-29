@@ -16,7 +16,7 @@
 </template>
 
 <script>
-// import Axios from 'axios'
+import Axios from 'axios'
 
 export default {
   data () {
@@ -29,7 +29,7 @@ export default {
   },
   methods: {
     onSubmit () {
-      this.$axios.post('http://127.0.0.1/api/login', this.form).then((response) => {
+      Axios.post('http://127.0.0.1/api/login', this.form).then((response) => {
         var {data, meta} = response.data
         console.log(data)
         if (meta.status === 200) {
