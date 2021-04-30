@@ -90,6 +90,30 @@ export default {
     return {
       msg: 'Welcome to Your Vue.js App'
     }
+  },
+  methods: {
+    //  退出操作
+    logOut(){
+      // localStorage.clear
+      localStorage.removeItem('token')
+      this.$message({
+            message: '退出成功',
+            type: 'success'
+      })
+      this.$router.push({ name: 'Login' })
+    }
+  },
+  mounted () {
+    var Authorization = localStorage.getItem('token')
+    if (!Authorization) {
+      this.$router.push({ name: 'Login' })
+    } else {
+      this.$axios({
+        url: 'http://127.0.0.1/users?pagenum=1&pagesize=5',
+        method: 'get',
+        Headers: { Authorization }
+      }).then((response) => { console.log(response) })
+    }
   }
 }
 </script>
