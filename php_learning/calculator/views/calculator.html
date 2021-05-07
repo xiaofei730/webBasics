@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>计算器</title>
+	<link rel="stylesheet" type="text/css" href="../css/caculator.css">
+	<script type="text/javascript" src="../js/calculator.js"></script>
+	<script type="text/javascript"></script>
+<body>
+	<div id="container">
+		<div id="counter_top">
+			<input type="text" value="0" maxlength="17" readonly id="resultIpt">
+		</div>
+		<table id="counter_body">
+			<tbody>
+				<tr>
+					<td><input type="button" value="存储" class="baseBtnCommonCss" onclick="clickCounterKeyBoard(this.value)"></td>
+					<td><input type="button" value="取存" class="baseBtnCommonCss" onclick="clickCounterKeyBoard(this.value)"></td>
+					<td><input type="button" value="退格" class="baseBtnCommonCss baseBtnCss1" onclick="clickCounterKeyBoard(this.value)"></td>
+					<td><input type="button" value="清屏" class="baseBtnCommonCss baseBtnCss1" onclick="clickCounterKeyBoard(this.value)"></td>
+				</tr>
+				<tr>
+					<td><input type="button" value="累存" class="baseBtnCommonCss" onclick="clickCounterKeyBoard(this.value)"></td>
+					<td><input type="button" value="积存" class="baseBtnCommonCss" onclick="clickCounterKeyBoard(this.value)"></td>
+					<td><input type="button" value="清存" class="baseBtnCommonCss" onclick="clickCounterKeyBoard(this.value)"></td>
+					<td><input type="button" value="÷" class="baseBtnCommonCss baseBtnCss2" onclick="clickCounterKeyBoard(this.value)"></td>
+				</tr>
+				<tr>
+					<td><input type="button" value="7" class="baseBtnCommonCss baseBtnCss3" onclick="clickCounterKeyBoard(this.value)"></td>
+					<td><input type="button" value="8" class="baseBtnCommonCss baseBtnCss3" onclick="clickCounterKeyBoard(this.value)"></td>
+					<td><input type="button" value="9" class="baseBtnCommonCss baseBtnCss3" onclick="clickCounterKeyBoard(this.value)"></td>
+					<td><input type="button" value="×" class="baseBtnCommonCss baseBtnCss2" onclick="clickCounterKeyBoard(this.value)"></td>
+				</tr>
+				<tr>
+					<td><input type="button" value="4" class="baseBtnCommonCss baseBtnCss3" onclick="clickCounterKeyBoard(this.value)"></td>
+					<td><input type="button" value="5" class="baseBtnCommonCss baseBtnCss3" onclick="clickCounterKeyBoard(this.value)"></td>
+					<td><input type="button" value="6" class="baseBtnCommonCss baseBtnCss3" onclick="clickCounterKeyBoard(this.value)"></td>
+					<td><input type="button" value="-" class="baseBtnCommonCss baseBtnCss2" onclick="clickCounterKeyBoard(this.value)"></td>
+				</tr>
+				<tr>
+					<td><input type="button" value="1" class="baseBtnCommonCss baseBtnCss3" onclick="clickCounterKeyBoard(this.value)"></td>
+					<td><input type="button" value="2" class="baseBtnCommonCss baseBtnCss3" onclick="clickCounterKeyBoard(this.value)"></td>
+					<td><input type="button" value="3" class="baseBtnCommonCss baseBtnCss3" onclick="clickCounterKeyBoard(this.value)"></td>
+					<td><input type="button" value="+" class="baseBtnCommonCss baseBtnCss2" onclick="clickCounterKeyBoard(this.value)"></td>
+				</tr>
+				<tr>
+					<td><input type="button" value="0" class="baseBtnCommonCss baseBtnCss3" onclick="clickCounterKeyBoard(this.value)"></td>
+					<td><input type="button" value="." class="baseBtnCommonCss baseBtnCss3" onclick="clickCounterKeyBoard(this.value)"></td>
+					<td><input type="button" value="+/-" class="baseBtnCommonCss baseBtnCss3" onclick="clickCounterKeyBoard(this.value)"></td>
+					<td><input type="button" value="=" class="baseBtnCommonCss baseBtnCss4" onclick="clickCounterKeyBoard(this.value)"></td>
+				</tr>
+			</tbody>
+			
+		</table>
+	</div>
+</body>
+</html>
+

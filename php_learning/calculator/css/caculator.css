@@ -1,0 +1,89 @@
+body{
+	width: 100%;
+	height: 100%;
+}
+
+#container{
+	width: 437px;
+	height: 448px;
+	background-image: url(../resource/siverbg.png);
+	background-repeat: no-repeat;
+	left: 50%;
+	top: 50%;
+	position: absolute;
+	transform: translate(-50%,-50%);
+	border-radius: 5px;
+}
+
+#counter_top{
+	width: 100%;
+	height: 117px;
+}
+
+input{
+	width: 402px;
+	height: 53px;
+	font-size: 40px;
+	color: black;
+	text-align: right;
+	position: absolute;
+	margin: 15px 15px;
+}
+
+#counter_body{
+	width: 420px;
+	height: 318px;
+}
+
+tbody{
+	display: table-row-group;
+}
+
+tr{
+	display: table-row;
+}
+
+table td{
+	display: table-cell;
+	height: 50px;
+}
+
+.baseBtnCommonCss{
+	width: 94px;
+	height: 44px;
+	background-repeat: no-repeat;
+	background-image: url(../resource/d1btn.gif);
+	font-size: 14px;
+	position: relative;
+	margin: 0px 0px 0px 8px;
+	text-align: center;
+}
+
+#counter_body input {
+	text-align: center;
+	color: white;
+	cursor: pointer;
+	font-weight: 400;
+	border: 0px;
+	font-family: "microsoft yahei",Helvetica,sans-serif;
+}
+
+.baseBtnCss1{
+	background-image: url(../resource/d0btn.gif);
+}
+
+.baseBtnCss2{
+	background-image: url(../resource/d2btn.gif);
+	font-size: 20px;
+}
+
+.baseBtnCss3 {
+	background-image: url(../resource/d3btn.gif);
+	font-size: 16px;
+}
+
+.baseBtnCss4 {
+	background-image: url(../resource/d4btn.gif);
+	font-size: 20px;
+}
+
