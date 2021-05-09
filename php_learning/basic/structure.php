@@ -48,6 +48,7 @@ if ($score >= 80 && $score < 90) {
 $studentId = '2';
 $score = $data[$studentId][YUWEN];
 
+//elseif之间没有空格
 // if ($score >= 90) {
 // 	printf("学生 %d 的语文分数：%0.1f，对应等级是：%s\n",$studentId,$score,A);
 // }elseif ($score >= 80 && $score < 90) {

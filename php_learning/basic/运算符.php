@@ -36,6 +36,25 @@ if ($a<10 & ++$a<20) {
 
 echo $a;
 
+//字符串连接符
+echo 'a'.'b';
+
+//错误抑制符
+//错误抑制符只对表达式有效
+echo @($a+$b);
+
+//三元运算符
+//表达式？值1:值2
+
+//null合并运算符
+echo $name??'姓名不详';
+
+//isset判断变量是否被设置，并且设置的不是null
+//empty检查一个变量是否为空，能转成false全部是空['', 0,0.0,array(),null]
+echo isset($name)?$name:'姓名不详';
+
+$stu = array();
+echo empty($stu)?'空':'非空';
 
 
 

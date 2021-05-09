@@ -99,6 +99,12 @@ $float = 99.0;
 $bool = false;
 
 /**
+ * 特殊类型
+ * 1、资源
+ * 2、null 在PHP中null和NULL是一样的，不区分大小写
+ */
+
+/**
  * 自动类型转换: 当提供的类型和需要的类型不一致的时候会自动进行类型转换
  */
 $num2 = 10;
@@ -136,6 +142,7 @@ var_dump((bool)array()); echo '<br>';		//bool(false)
 var_dump((bool)array(1)); echo '<br>';		//bool(true)
 var_dump((bool)array(false)); echo '<br>';		//bool(true)
 var_dump((bool)null); echo '<br>';		//bool(false)
-exit();
+
+
 
  ?>
