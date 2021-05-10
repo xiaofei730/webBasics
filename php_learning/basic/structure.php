@@ -81,6 +81,12 @@ switch ($score) {
 
 printf("学生 %d 的语文分数：%0.1f，对应等级是：%s\n",$studentId,$score,$level);
 
+/**
+ * 1、for 、 while、 do-while可以相互替换
+ * 2、如果明确知道循环多少次首先for循环，如果循环到条件不成立为止选while或do-while
+ * 3、先判断在执行选while，先执行再判断do-while；
+ */
+
 $total = count($data);
 $i = 1;
 while ($i <= $total) {
@@ -100,6 +106,14 @@ for ($i=1; $i <= $total ; $i++) {
 	echo "第 $i 个学生的成绩信息：\n";
 	print_r($data[$i]);
 }
+
+
+/**
+ * 1、语法一
+ * foreach(数组 as 值){}
+ * 2、语法二
+ * foreach(数组 as 键=>值){}
+ */
 
 foreach ($data as $stId => $score) {
 	echo "第 {$stId} 个学生的成绩信息：\n";
@@ -138,5 +152,37 @@ for ($i=1; $i < 10 ; $i++) {
 		}
 	}
 }
+
+/**
+ * 替代语法
+ * PHP中出了do-while以外，其他的语法结构都有替代语法
+ * 规则：左大括号变冒号，右大括号变endXXX
+ */
+//if的替代语法
+// if():
+// endif
+
+// if():
+// elseif():
+// else:
+// endif
+
+//switch替代语法
+// switch():
+// endswitch;
+
+// for替代语法
+// for():
+// endfor;
+
+//while替代语法
+// while():
+// endwhile; 
+
+//foreach替代语法
+//foreach():
+//endforeach;
+
+//在混编的时候使用替代语法
 
 ?>
