@@ -83,7 +83,24 @@ echo '数学'.$_REQUEST['math'],'<br>';
 
 //参数传递
 //1、复选框值的传递 
+//表单提交到本页面需要判断一下是否有post提交
+//数组的提交表单元素的名字必须带有[]
 
+/*
+<?php
+    if(isset($_POST['button'])){
+        printr($_POST['hobby'])
+    }
+?>
+<form method="post" action="">
+    爱好：
+    <input type="checkbox" name="hobby[]" value="爬山">爬山
+    <input type="checkbox" name="hobby[]" value="抽烟">抽烟
+    <input type="checkbox" name="hobby[]" value="喝酒">喝酒
+    <input type="checkbox" name="hobby[]" value="烫头">烫头
+    <input type="submit" name="button" value="提交">
+</form>
+*/
 
 
 
