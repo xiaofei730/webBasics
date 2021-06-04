@@ -93,8 +93,83 @@ echo fread($fp, filesize($path));   //二进制读取
 header('content-type:image/jpeg');
 echo file_get_contents('./face.jpg');   //file_get_contents也可读取二进制流
 
+//文件上传
+//客户端上传文件
+//文件域
+// <input type="file" name="image">
+
+/**
+ * 表单的enctype属性
+ * 默认情况下，表单传递的是字符流，不能传递二进制刘，通过设置表单的enctype属性传递复合数据
+ * enctype属性的值有：
+ * 1、application/x-www-form-urlencoded:[默认]，表示传递的是带格式的文本数据
+ * 2、mutipart/form-data：复合的表单数据（字符串，文件），文件上传必须设置此值
+ * 3、text/plain ：用于向服务器传递无格式的文本数据，主要用于电子邮件
+ */
+
+ //与文件上传有关的配置
+//  post_max_size = 8M; 表单允许的最大值
+//upload_max_filesize = 2M;  允许上传的文件大小
+//upload_tmp_dir = "F:\wamp\tmp" ;  指定临时文件地址
+//file_uploads = on: 是否允许文件上传
+//max_file_uploads = 20; 允许同时上传20个文件
+
+/**
+ * 优化文件上传
+ * 1、更改文件名
+ */
+$path = 'face.stu.jpg';
+//strrchr($path, '.') 从最后一个点开始截取，一直截取到最后
+echo time().rand(100, 999).strrchr($path, '.');
+
+//方法二
+echo uniqid().strrchr($path, '.'),'<br>';     //生产唯一的ID
+echo uniqid('goods_').strrchr($path, '.'),'<br>';     //带有前缀
+echo uniqid('goods_', true).strrchr($path, '.'),'<br>';  //唯一ID + 随机数
 
 
+/**
+ * 验证文件格式
+ * 方法一：判断文件的扩展名（不能识别文件伪装）
+ */
+if(!empty($_POST)) {
+    $allow = array('.jpg', '.png', '.gif');  //允许的扩展名
+    $ext = strrchr($_FILES['face']['name'], '.'); //上传文件扩展名
+    if (in_array($ext, $allow)) {
+        echo '允许文件上传';
+    } else {
+        echo '不允许文件上传';
+    }
+}
+
+
+//方法二：判断mime类型（不能识别文件伪装）
+if(!empty($_POST)) {
+    $allow = array('image/jpeg', 'image/png', 'image/git');  //允许的扩展名
+    $mime = $_FILES['face']['type']; //上传文件扩展名
+    if (in_array($mime, $allow)) {
+        echo '允许文件上传';
+    } else {
+        echo '不允许文件上传';
+    }
+}
+
+//方法三：php_fileinfo扩展（可以防止文件伪装）
+//在php.ini中开启fileinfo扩展
+//extension = php_fileinfo.dll
+if (!empty($_POST)) {
+    //第一步：创建finfo资源
+    $info = finfo_open(FILEINFO_MIME_TYPE);
+    var_dump($info) 
+    //第二步：将finfo资源和文件比较
+    $mime = finfo_file($info, $_FILES['face']['tmp_name']);
+    $allow = array('image/jpeg', 'image/png', 'image/git');  //允许的扩展名
+    if (in_array($mime, $allow)) {
+        echo '允许文件上传';
+    } else {
+        echo '不允许文件上传';
+    }
+}
 
 
 
