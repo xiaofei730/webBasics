@@ -160,7 +160,7 @@ if(!empty($_POST)) {
 if (!empty($_POST)) {
     //第一步：创建finfo资源
     $info = finfo_open(FILEINFO_MIME_TYPE);
-    var_dump($info) 
+    var_dump($info);
     //第二步：将finfo资源和文件比较
     $mime = finfo_file($info, $_FILES['face']['tmp_name']);
     $allow = array('image/jpeg', 'image/png', 'image/git');  //允许的扩展名
