@@ -1386,14 +1386,109 @@
  * 
  * 
  * 2、字符串类
+ * （1）大小写转换
+ * select ucase('i name is tom') '转成大写',lcase(My Name IS TOM) '转成小写';
+ * 
+ * （2）截取字符串
+ * select left('abcdef', 3) '从左边截取',right('abcdef',3) '从右边截取',substring('abcdef', 2,3) '字符串';
+ * 
+ * (3)字符串连接
+ * select concat('中国','北京','顺义') '地址';
+ * 
+ * （4）coalesce(str1, str2);str1有值显示str1，如果str1为空就显示str2
+ * select stuname,coalesce(writtenexam,'缺考'),coalesce(labexam,'缺考') from stuinfo natural left join stumarks;
+ * 
+ * （5）length（）；字节长度，char_length（）；字符长度
+ * select length('锄禾日当午') 字节,char_length('锄禾日当午')字符;
  * 
  * 
+ * 3、时间类
+ * 时间戳
+ * select unix_timestamp()
+ * 
+ * 格式化时间戳
+ * select from_unixtime(unix_timestamp());
+ * 
+ * 获取当前格式化时间
+ * select now();
+ * 
+ * 获取年，月，日，时，分，秒
+ * select year(now()) 年,month(now()) 月,day(now()) 天,hour(now()) 时,minute(now()) 分,second(now()) 秒;
+ * 
+ * 星期，本能第几天；
+ * select dayname(now()) 星期,dayofyear(now()) 本年第几天；
+ * 
+ * 日期相减
+ * select datediff(now(), '2010-08-08') 相距天数；
  * 
  * 
+ * 4、加密函数
+ * (1)md5()
+ * (2)sha()
  * 
  * 
  */
 
+
+/**
+ * 
+ * 预处理
+ * 每个代码的段的执行都要经历：词法分析--语法分析---编译---执行
+ * 预编译一次，可以执行多次。用来解决一条SQL语句频繁执行的问题
+ * 预处理语句：prepare 预处理名字 from 'sql语句'
+ * 执行预处理：execute 预处理名字 [using 变量]
+ * 
+ * 不带参数
+ * prepare stmt from 'select * from stuinfo';
+ * 
+ * execute stmt;
+ * 
+ * 带参数
+ * 
+ * prepare stmt from 'select * from stuinfo where stuno=?';
+ * 
+ * delimiter //
+ * 
+ * set @id='s25301';
+ * 
+ * execute stmt using @id //
+ * 
+ * 
+ * 小结：
+ * 1、MySQL中变量以@开头
+ * 2、通过set给变量赋值
+ * 3、？是位置占位符
+ * 
+ */
+
+
+/**
+ * 数据备份与还原
+ * 数据库中的数据需要定期备份，数据量小的可以一周备份一次，数据量的可以一天备份一次
+ * 1、数据备份
+ * 利用mysqldump工具，语法：
+ * mysqldump 数据库连接 数据库>SQL文件数据备份地址
+ * 例题
+ * 将data数据库中所有的表导出到data.sql中
+ * F:\wamp\PHPTutorial\MySQL\bin\mysqldump -uroot -proot data>c:\data.sql
+ * 
+ * 将data数据库中tuinfo stumarks的表导出到data.sql中
+ * F:\wamp\PHPTutorial\MySQL\bin\mysqldump -uroot -proot data stuinfo stumarks>c:\data.sql
+ * 
+ * 导出data数据库，导出的语句中带有创建数据库的语法
+ * F:\wamp\PHPTutorial\MySQL\bin\mysqldump -uroot -proot  -B data>c:\data.sql
+ * 
+ * 2、数据还原
+ * 方法一：MySQL的source指令（需要登录MYSQL才能使用）
+ * mysql>source c:/data.sql;
+ * 
+ * 方法二：通过mysql指令数据还原（不需要登录）
+ * 语法：
+ * mysql 数据库连接 数据库>导入的SQL文件
+ * F:\wamp\PHPTutorial\MySQL\bin\mysql -uroot -proot data < c:\data.sql
+ * 
+ * 
+ */
 
 
 
