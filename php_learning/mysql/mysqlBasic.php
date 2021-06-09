@@ -837,7 +837,7 @@
 
 /**
  * 
- * 查询语句
+ * 查询语句   
  * 语法：select [选项] 列名 [from 表面] [where 条件] [group by 分组] [order by 排序][having 条件][limit 限制]
  * 
  * 1、字段表达式
@@ -851,6 +851,541 @@
  * 
  * 4、where子句
  * where后面跟的是条件，在数据源中进行筛选，返回条件为真记录
+ * MySQL支持的运算符
+ * ---比较运算符
+ * >
+ * <
+ * <=
+ * =
+ * !=
+ * ----逻辑运算符
+ * and
+ * or
+ * not
+ * ---其它
+ * in | not in                      字段值在枚举范围内
+ * between_and | not between_and    字段值在数字范围内
+ * is null | is not null            字段值不为空
+ * 
+ * 例子
+ * select * from stu where ch>=60;
+ * 
+ * select * from stu where ch>=60 and math>=60;
+ * 
+ * select * from stu where ch<60 or math<60;
+ * 
+ * select * from stu where 1;       --输出所有数据
+ * select * from stu where 0;       --不输出数据
+ * 
+ * select * from stu where stuaddress='北京' or  stuaddress='上海';
+ * 
+ * select * from stu where stuaddress in('北京','上海');
+ * 
+ * select * from stu where stuaddress not in('北京','上海');
+ * 
+ * select * from stu where stuage>=20 and stuage<=25;
+ * 
+ * select * from stu where not(stuage<20 or stuage>25);
+ * 
+ * select * from stu where between stuage>=20 and stuage<=25);
+ * 
+ * select * from stu where not between stuage>=20 and stuage<=25);
+ * 
+ * select * from stu where ch is null or math is null;
+ * 
+ * select * from stu where ch is not null or math is not null;
+ * 
+ * select * from stu where ch is null or math is null or ch<60 or math<60;
+ * 
+ * 
+ * 
+ * 5、group by [分组]
+ * 将查询的结果分组，分组查询目的在于统计数据
+ * ----查询男生和女生各自的平均分
+ *              
+ * selec stusex,avg(ch) '平均分' from stu group by stusex;
+ * 
+ * selec stusex,count(*) 人数 from stu group by stusex;
+ * 
+ * selec stuaddress,avg(math) 数学平均分 from stu group by stuaddress;
+ * 
+ * 
+ * （1）如果是分组查询，查询字段必须是分组字段和聚合函数
+ * （2）查询字段是普通字段，只取第一个值
+ * selec stuname,stusex,avg(math) 数学平均分 from stu group by stusex;
+ * 
+ * 通过group_concat()函数将同一组的值连接起来显示
+ * selec group_concat(stuname),stusex,avg(math) 数学平均分 from stu group by stusex;
+ * 
+ * 多列分组
+ * selec stuaddress,stusex,avg(math) 数学平均分 from stu group by stuaddress,stusex;
+ * 
+ * 
+ * 6、order by排序
+ * asc:升序（默认）
+ * desc：降序
+ * 
+ * select * from stu order by stuage asc;
+ * 
+ * select *,ch+math '总分' from stu order by ch+math desc;
+ * 
+ * 多列排序
+ * 年龄升序，如果年龄一样，按ch降序排列
+ * select * from stu order by stuage asc,ch desc;
+ * 
+ * select * from stu order by stuage,ch desc;
+ * 
+ * 7、having条件
+ * having：是结果集上进行条件筛选
+ * 
+ * having和where的区别
+ * where是对原始数据进行筛选，having是对记录进行筛选
+ * 
+ * 
+ * 8、limit
+ * 语法：limit起始位置，显示长度
+ * select * from stu limit 0,3;
+ * 
+ * 起始位置可以省略，默认是从0开始
+ * select * from stu limit 3;
+ * 
+ * 9、查询语句中的选项
+ * 查询语句中的选项有两个：
+ * 1、all：显示所有数据【默认】；
+ * 2、distinct：去除结果集中重复的数据
+ * 
+ * select all stuaddress from stu;
+ * 
+ * select distinct stuaddress from stu;
+ * 
+ * 
+ * 
+ */
+
+
+/**
+ * 
+ * 聚合函数
+ * sum()    求和
+ * 
+ * avg()    求平均值
+ * 
+ * max()    求最大值
+ * 
+ * min()    求最小值
+ *   
+ * count()  求记录数
+ * 
+ * 
+ * 例子
+ * select max(ch) '语文最大值' from stu
+ * 
+ * select max(ch) '语文最大值',min(ch) 语文最小值,sum(ch) 语文总分,avg(ch) 语文平均分,count(*) 总人数 from stu
+ * 
+ * 
+ * 
+ */
+
+
+/**
+ * 
+ * 模糊查询
+ * 一、通配符
+ * （1）_[下划线]表示任意一个字符
+ * （2）%表示任意字符
+ * 
+ * 练习
+ * 1、满足“T_m”的有（A、C）A、Tom   B、Toom     C：Tam      D：Tm       E：Tmo
+ * 
+ * 2、满足“T_m_”的有（B C）A：Tmom      B:Tmmm      C:T1m2      D:Tmm   E:Tm
+ * 
+ * 3、满足“张%”的是（ABCD） A：张三     B：张三丰       C：张牙舞爪     D：张   E：小张
+ * 
+ * 二、模糊查询（like）
+ * 模糊查询的条件不能用“=”，要使用like
+ * 
+ * select * from stu where stuname like 'T_m';
+ * 
+ * select * from stu where stuname like '张%';
+ * 
+ * 
+ */
+
+
+/**
+ * 
+ * union(联合)
+ * 
+ * 1、union的使用
+ * 作用：将多个select语句结果集纵向联合起来
+ * 语法：select 语句 union [选项] select 语句 union [选项] select 语句
+ * 
+ * 查询stu表中的姓名和emp表中的姓名，结果自动合并的重复的记录
+ * selec stuname from stu union select name from emp;
+ * 
+ * select * from stu where (stuaddress='上海' and stusex='男') or (stuaddress='上海' and stusex='女');
+ * 
+ * select * from stu where stuaddress='上海' and stusex='男' union select * from stu where stuaddress='上海' and stusex='女';
+ * 结论：union可以将一个复杂的条件转成两个简单的条件
+ * 
+ * 
+ * 2、union的选项
+ * union的选项两个
+ * （1）all：显示所有数据               selec stuname from stu union all select name from emp;
+ * （2）distinct：去除重复的数据【默认】    selec stuname from stu union select name from emp;
+ * 
+ * 
+ * 3、union的注意事项
+ * （1）union两边的select语句的字段个数必须一致
+ * （2）union两边的select语句的字段名可以不一致，最终按第一个select语句的字段名
+ * （3）union两边的select语句中的数据类型可以不一致
+ * 
+ * 
+ * 
+ * 
+ * 
+ */
+
+
+/**
+ * 
+ * 多表查询
+ * 
+ * 一、内连接
+ * 规则：返回两个表的公共记录
+ * 
+ * 语法一
+ * select * from 表1 inner join 表2 on 表1.公共字段=表2.公共字段
+ * 语法二
+ * select * from 表1,表2 where 表1.公共字段=表2.公共字段
+ * 
+ * 
+ * 
+ * select * from stuinfo inner join stumarks on stuinfo.stuno=stumarks.stuno;
+ * 
+ * 相同的字段值只显示一次
+ * select s.stuno,stuname,stusex,writtenexam,labexam from stuinfo s inner join stumarks m on s.stuno=m.stuno;
+ * 
+ * select * from stuinfo,stumarks where stuinfo.stuno=stumarks.stuno;
+ * 
+ * 如何实现三表查询
+ * select * from 表1 inner join 表2 on 表1.公共字段=表2.公共字段 inner join 表3 on 表2.公共字段=表3.公共字段
+ * 
+ * 表连接越多，效率越低
+ * 
+ * 
+ * 多学一招
+ * （1）内连接中inner可以省略
+ * select * from 表1 join 表2 on 表1.公共字段=表2.公共字段
+ * 
+ * 
+ * 问：select * from 表1 join 表2 on 表1.公共字段=表2.公共字段和select * from 表2 join 表1 on 表1.公共字段=表2.公共字段一样吗？
+ * 答：一样
+ * 
+ * 二、左外连接
+ * 规则：以左边的表为准，右边如果没有对应的记录用null显示
+ * 语法：
+ *  select * from 表1 left join 表2 on 表1.公共字段=表2.公共字段
+ * 
+ * select stuname,writtenexam,labexam from stuinfo left join stumarks on stuinfo.stuno=stumarks.stuno;
+ * 
+ * 问：select * from 表1 left join 表2 on 表1.公共字段=表2.公共字段和select * from 表2 left join 表1 on 表1.公共字段=表2.公共字段一样吗？
+ * 答：不一样，第一个SQL以表1为准，第二个SQL以表2为准
+ * 
+ * 三、右外连接
+ * 规则：以右边的表为准，右边如果没有对应的记录用null显示
+ * 语法：
+ * select * from 表1 right join 表2 on 表1.公共字段=表2.公共字段
+ * 
+ * select stuname,writtenexam,labexam from stuinfo right join stumarks on stuinfo.stuno=stumarks.stuno;
+ * 问：select * from 表1 left join 表2 on 表1.公共字段=表2.公共字段和select * from 表2 right join 表1 on 表1.公共字段=表2.公共字段一样吗？
+ * 答：一样
+ * 
+ * 
+ * 四、交叉连接
+ * 语法：返回笛卡尔积 
+ * select * from 表1 cross join 表2
+ * 
+ * select * from stuinfo cross join stumarks;
+ * 
+ * select * from stuinfo cross join stumarks on stuinfo.stuno=stumarks.stuno;
+ * 
+ * 小结：
+ * （1）交叉连接如果没有连接条件返回笛卡尔积
+ * （2）如果有条件和内连接是一样的
+ * 
+ * 五、自然连接
+ * 自动判断条件连接，判断的条件是依据同名字段
+ * 1、自然内连接    natural join
+ * select * from stuinfo natural join stumarks on stuinfo.stuno=stumarks.stuno;
+ * 
+ * 
+ * 2、自然左外连接  natural left join  
+ * select stuname,writtenexam,labexam from stuinfo natural left join stumarks on stuinfo.stuno=stumarks.stuno;
+ * 
+ * 
+ * 
+ * 3、自然右外连接  natural right join 
+ * select stuname,writtenexam,labexam from stuinfo natural right join stumarks on stuinfo.stuno=stumarks.stuno;
+ * 
+ * 
+ * 小结
+ * （1）表连接是通过同名字段来连接的
+ * （2）如果没有同名字段就是返回笛卡尔积
+ * （3）同名的连接字段只显示一个，并且该字段放在最前面
+ * 
+ * 4、using
+ * using用来指定连接字段
+ * 
+ * select * from stuinfo inner join stumarks using(stuno);
+ * 
+ * using 的结果也会对公共字段进行优化，优化的规则和自然连接是一样的
+ *  
+ * 
+ * 
+ */
+
+
+/**
+ * 
+ * 子查询
+ * 
+ * 语法：select * from 表1 where （子查询）
+ * 
+ * 外面的查询称为父查询
+ * 子查询为父查询提供查询条件
+ * 
+ * 1、标量子查询
+ * 特点：子查询返回的值是一个
+ * 
+ * select * from stuinfo where stuno=(select stuno from stumarks where writtenexam=80);
+ * 
+ * select * from stuinfo where stuno=(select stuno from stumakrs order by wwrittenexam desc limit 1);    
+ * 
+ * 2、列子查询
+ * 特点：子查询的结果是一列         
+ * 
+ * 如果子查询的结果返回多条记录，不能使用等于，用in或not in
+ * select * from stuinfo where stuno in (select stuno from stumarks where writtenexam>=60);
+ * 
+ * 3、行子查询
+ * 特点：子查询返回的结果是多个字段组成
+ * select * from stu where (stusex,ch) in (select stusex,max(ch) from stu group by stusex);
+ * 
+ * 4、表子查询
+ * 特点：将子查询的结果作为表
+ * select * from (select * from stu order by ch desc) t group by stusex;
+ * 
+ * 注意：from后面跟的是数据源，如果将子查询当成表来看，必须给结果集取别名
+ * 
+ * 5、exists子查询
+ * 如果笔试成绩有人超过80，就显示所有学生信息
+ * select * from stuinfo where exists (select * from stumarks where writtenexam>=80)
+ * 
+ * 作用：提高查询效率
+ * 
+ * 
+ */
+
+
+/**
+ * 视图
+ * 1、概述
+ * （1）视图是一张虚拟表，它表示一张表的部分数据或多张表的综合数据，其结构和数据是建立在对表的查询基础上
+ * （2）视图中并不存放数据，而是存放在视图所引用的原始表（基表）中
+ * （3）同一张原始表，根据不同用户的不同需求，可以创建不同的视图
+ * 
+ * 2、作用
+ * （1）筛选表中的行
+ * （2）防止未晶许可的用户访问敏感数据
+ * （3）隐藏数据表的结构
+ * （4）降低数据表的复杂度
+ * 
+ * 3、创建视图
+ * 语法 
+ * create view 视图1 as select 语句;
+ * 
+ * 例子
+ * --创建视图
+ * create view view1 as select * from stu where stusex='男';
+ * 
+ * --查询
+ * select * from view1;
+ * 
+ * create view view2 as select stuno,writtenexam,labexam from stuinfo natural join stumarks;
+ * 
+ * 4、修改视图
+ * 语法
+ * alter view 视图名 as select 语句
+ * 
+ * 例子
+ * alter view view2 as select stuname from stuinfo;
+ * 
+ * 5、删除视图
+ * 语法
+ * drop view [if exists] 视图1，视图2.。。
+ * 
+ * 
+ * 6、查看视图信息
+ * show tables; --- 显示所有的表和视图
+ * 
+ * 精确查找
+ * show * from information_schema.view;
+ * show table_name from information_schema.view;
+ * 
+ * 通过
+ * show table status where comment='view'\G;
+ * 
+ * 查询视图结构
+ * desc view1；
+ * 
+ * 查询创建视图的语法
+ * show create view view1\G;
+ * 
+ * 
+ * 7、视图算法
+ * 找出语文成绩最高的男生和女生
+ * select * from (select * from stu order by ch desc) t group by stusex;
+ * 
+ * create view view3 as select * from stu order by ch desc;
+ * select * from view3 group by stusex;
+ * 两种方法结果不一样，这是因为视图的算法造成的
+ * 
+ * 视图的算法有
+ * （1）merge：合并算法（将视图语句和外层语句合并后再执行）
+ * （2）temptable：临时表算法（将视图作为一个临时表来执行）
+ * （3）undefined：未定义算法（用哪一种算法由Mysql决定，这是默认算法，一般会选merge）
+ * 
+ * create or replace algorithm=temptable view view3 as select * from stu order by ch desc;
+ * 
+ * 
+ */
+
+
+/**
+ * 
+ * 事务
+ * 1、概述
+ * （1）事务（TRANSACTION）是一个整体，要么一起执行，要么一起不执行
+ * 
+ * 2、事务特性
+ * （1）事务必须具备以下四个属性，检查ACID属性：
+ * 原子性（Atomicity）:事务是一个完整的操作，事务的各步骤操作是不可分的（原子的）；要么都执行，要么都不执行
+ * 一致性（Consistency）：当事务完成时，数据必须处于一致状态
+ * 隔离性（Isolcation）：对数据进行修改的所有并发事务是彼此隔离的
+ * 永久性（Durability）:事务完成后，它对数据库的修改被永久保持
+ * 
+ * 3、事务处理
+ * 开启事务
+ * start transaction   或 begin [work]
+ * 
+ * 提交事务
+ * commit
+ * 
+ * 回滚事务
+ * rollback
+ * 
+ * 例子
+ * 创建表
+ * create table bank(card char(4) primary key comment '卡号',money decimal(10,2) not null)engine=innodb charset=utf8;
+ * 插入数据
+ * insert into bank values ('1001', 1000),('1002', 1);
+ * 
+ * 开启事务
+ * begin;  或者start transaction;
+ * 
+ * 修改结束符 将;改为//
+ * delimiter //
+ * 
+ * 数据处理
+ * update  bank set money=money-100 where card='1001';
+ * update  bank set money=money+100 where card='1002' //
+ * 
+ * //提交事务 （若提交则无法回滚）
+ * commit
+ * 
+ * 事务回滚
+ * rollback//
+ * 
+ * //设置事务的回滚点
+ * savepoint a1//
+ * 
+ * rollback to a1//
+ * 
+ * 自动提交事务
+ * 每一个SQL语句都是一个独立的事务
+ * 
+ * 小结：
+ * 1、事务是事务开启的时候开始
+ * 2、提交事务，回滚事务后事务都结束
+ * 3、只有innodb支持事务
+ * 4、一个SQL语句就是一个独立的事务，开启事务就是将多个SQL语句放到一个事务中执行
+ * 
+ * 
+ */
+
+
+/**
+ * 
+ * 索引
+ * 1、概述
+ * 优点：加快查询的速度
+ * 缺点：带索引的表在数据库中需要更多的存储空间
+ * 增、删、改命令需要更长的处理时间，因为它们需要对索引进行更新
+ * 
+ * 2、创建索引的指导原则
+ * 适合创建索引的列
+ * （1）该列用于频繁搜索
+ * （2）该列用于对数据进行排序
+ * （3）在WHERE子句中出现的列，在join子句中出现的列
+ * 
+ * 请不要使用下面的列创建索引
+ * （1）列中仅包含几个不同的值
+ * （2）表中仅包含几行，为小型表创建索引可能不太划算，因为mysql在索引中搜索数据所花的时间比在表中逐行搜索花的时间更长
+ * 
+ * 
+ * 3、创建索引
+ * （1）主键索引：只要创建了主键就会自动的创建主键索引
+ * 
+ * （2）唯一索引：创建了唯一键就创建了唯一索引
+ * create table t1( id int primary key, name varchar(20), unique ix)name(name));
+ * 
+ * create unique index ix_name on t1(name);
+ * 
+ * alter table t1 add unique index ix_addr(addr);
+ * 
+ * （3）普通索引
+ * create table t1( id int primary key, name varchar(20), index ix_name(name));
+ * 
+ * create index ix_name on t1(name);
+ * 
+ * alter table t1 add index ix_addr(addr);
+ * 
+ * （4）创建索引后，数据库根据查询语句自动选择索引
+ * 
+ * 4、删除索引
+ * drop index 索引名 on 表名
+ * drop index ix_name on t1;
+ * 
+ */
+
+
+
+/**
+ * 
+ * 函数
+ * 1、数字类
+ * --获取随机数
+ * select rand();
+ * --随机排序
+ * select * from stuinfo order by rand() limit 1;
+ * --四舍五入，向上取整，向下取整
+ * select round(3.141596, 3) '四舍五入',truncate(3.141596, 3) '截取数据',ceil(3.1) '向上取整',floor(3.9) '向下取整';
+ * 四舍五入     截取数据        向上取整        向下取整
+ * 3.142        3.141       4               3
+ * 
+ * 
+ * 2、字符串类
  * 
  * 
  * 
