@@ -1,5 +1,21 @@
 <?php  
 
+//clone和__clone()
+//思考创建对象的方式有哪些
+//方法一：实例化
+//方法二：克隆
+class Student{
+	//执行clone指令的时候自动执行
+	public function __clone(){
+		echo '正在克隆对象<br>';
+	}
+
+}
+
+$stu1 = new Student;
+$stu2 = clone $stu1;
+var_dump($stu1, $stu2);
+
 $engine = new stdClass();
 $engine->num = 4;
 
