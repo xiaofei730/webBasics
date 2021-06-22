@@ -1,5 +1,54 @@
 <?php  
 
+/**
+ * 序列化与反序列化
+ * 在PHP中，数组和对象无法保存，如果需要保存就要将数组或对象转换成一个序列
+ * 序列化：将数组或对象转换成一个序列（serialize）
+ * 反序列化：将序列化的字符串转换成数组或对象。（unserialize）
+ * 
+ * 数组序列化
+ * $stu = ['tom', 'berry', 'ketty'];
+ * $str = serialize($stu);
+ * file_put_contents('./stu.text', $str);
+ * 
+ * 
+ * 数组反序列化
+ * $str = file_get_contents('./stu.text');
+ * $stu = unserialize($str);
+ * print_r($stu);
+ * 
+ * 
+ * 对象的序列化和反序列化
+ * 注意：对象的反序列化需要有类的参与，如果没有类在反序列时候无法确定类
+ * 
+ * class Stundent{
+ * 		public $name;
+ * 		protected $sex;
+ * 		private $add;
+ * 
+ * 		public function __construct($name, $sex, $add) {
+ * 			$this->name = $name;
+ * 			$this->sex = $sex;
+ * 			$this->add = $add;
+ * 		}
+ * 
+ * }
+ * 
+ * $stu = new Student('tom', '男', '北京');
+ * 
+ * $str = serialize($stu);
+ * 
+ * file_put_contents('./stu2.text', $str);
+ * 
+ * $str = file_get_contents('./stu2.text');
+ * $stu = unserialize($str);
+ * var_dump($stu);
+ * 
+ * 
+ * 
+ */
+
+
 class Car
 {
 	protected $brand;
