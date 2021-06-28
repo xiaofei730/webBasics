@@ -1,5 +1,130 @@
 <?php  
 
+/**
+ * 
+ * trait (原型)
+ * 
+ * trait为类减少单继承语言的限制，可以在不同层次结构独立的类中复用类的方法集
+ * 
+ * 原型
+ * trait A {
+ * 
+ * 		public function getInfo1() {
+ * 			echo '锄禾日当午<br>';
+ * 		}
+ * 
+ * }
+ * trait B {
+ * 
+ * 		public function getInfo2() {
+ * 			echo '床前明月光<br>';
+ * 		}
+ * 
+ * }
+ * 
+ * 使用原型
+ * class Student {
+ * 		use A,B;		代码复用，引入多个trait
+ * }
+ * 
+ * 
+ * $stu = new Student;
+ * $stu->getInfo();
+ * 
+ * 
+ * trait A {
+ * 
+ * 		public function getInfo() {
+ * 			echo '这是原型<br>';
+ * 		}
+ * }
+ * 
+ * class Person {
+ * 		
+ * 	public function getInfo() {
+ * 		echo '这是person类<br>';
+ * 	}
+ * 
+ * }
+ * 
+ * class Student extends Person {
+ * 		use A; 		//继承类getInfo，又被A中的getInfo覆盖
+ * }
+ * 
+ * $stu = new Student;
+ * $stu->getInfo();
+ * 
+ * 命名冲突解决，使用别名,替换
+ * trait A {
+ * 
+ * 		public function getInfo() {
+ * 			echo '锄禾日当午<br>';
+ * 		}
+ * 
+ * }
+ * trait B {
+ * 
+ * 		public function getInfo() {
+ * 			echo '床前明月光<br>';
+ * 		}
+ * 
+ * }
+ * class Student {
+ * 		use A,B {
+ * 			方法替换
+ * 			A::getInfo insteadof B;			将A中的getInfo替换B中的getInfo
+ * 			B::getInfo insteadof A;			将B中的getInfo替换A中的getInfo
+ * 			改名
+ * 			A::getInfo insteadof B;
+ * 			B::getInfo as show;
+ * 		}
+ * }
+ * 
+ * $stu = new Student();
+ * 
+ * $stu->getInfo();
+ * $stu->show();
+ * 
+ * 
+ * 更改权限
+ * trait A {
+ * 
+ * 		private function show() {
+ * 			echo '锄禾日当午<br>';
+ * 		}
+ * 
+ * }
+ * 
+ * class Student {
+ * 		use A{
+ * 
+ * 			show as public;   将private方法权限设为public
+ * 			show as public show2; 将show方法改为public并改名为show2；
+ * 		}
+ * 
+ * }
+ * 
+ * $stu = new Student;
+ * $stu->show();
+ * 
+ * 
+ * 多学一招
+ * （1）多个trait可以组成一个trait
+ * （2）trait可以定义抽象成员
+ * （3）trait可以定义静态成员
+ * （4）trait可以定义属性
+ * 
+ * 
+ * 
+ * 
+ * 
+ */
+
+
+
+
+
+
 //Trait 和类相似，支持定义方法和属性，但不是类，不支持定义构造函数，因而不能实例化，只能被其他类使用，要在一个类中使用 Trait，可以通过 use 关键字引入，然后就可以在类方法中直接使用 trait 中定义的方法了
 //
 //Trait 和类一样，支持属性和方法以及可见性设置（private、protected、public），并且即使是 private 级别的方法和属性，依然可以在使用类中调用：

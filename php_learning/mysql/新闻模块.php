@@ -12,7 +12,7 @@
     require_once './inc/conn.php';
     //2、获取数据
     $rs = $mysqli->query("select * from news");   //返回结果集对象
-    $list = $mysqli->fetch_all(MYSQLI_ASSOC);
+    $list = $rs->fetch_all(MYSQLI_ASSOC);
 
 
 ?>

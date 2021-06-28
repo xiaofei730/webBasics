@@ -158,14 +158,89 @@
  * 
  *      连接数据库
  *      private function initConnect() {
- *          $this->link = @mysqli_connect($this->host, $this->user, $this->pwd, $this->dbname, $this->port);
+ *          $this->link =  new mysqli($this->host, $this->user, $this->pwd, $this->dbname, $this->port);
  *          if (mysqli_connect_error()) {
  *              echo '数据库连接失败<br>';
  *              echo '错误信息：'.mysqli_connect_error(),'<br>';
  *              echo '错误码：'.mysqli_connect_errno(),'<br>';
  *              exit;
  *          }
- *          mysqli_set_charset($this->link, $this->charset);
+ *          $this->link->set_charset($this->charset);
+ *       
+ *      }
+ * 
+ *      执行数据库的增、删、改、查
+ *      private function execute($sql) {
+ *          if (!$rs = $this->link->query($sql)) {
+ *            
+ *              echo 'SQL语句执行失败';
+ *              echo '错误码：'.mysqli_errno($this->link),'<br>';
+ *              echo '错误信息：'.mysqli_error($this->link); 
+ *              exit;
+ *          }
+ *          return $rs;
+ *      }
+ * 
+ *      public function exec($sql) {
+ *          $key = substr($sql, 0, 6);
+ *          if (in_array($key, array('insert', 'update', 'delete'))) {
+ *              return $this->execute($sql);
+ *          } else {
+ *              echo '非法访问<br>';
+ *              exit;
+ *          }
+ * 
+ *      }
+ * 
+ *      public function getLastInsertId() {
+ *          return $this->link->insert_id;
+ *      }
+ * 
+ *      返回对象
+ *      public function query($sql) {
+ *          if(substr($sql, 0, 6) == 'select' || ubstr($sql, 0, 4) == 'show' || ubstr($sql, 0, 4) == 'desc') {
+ *              return $this->execute($sql);
+ *          } else {
+ *              echo '非法访问<br>';
+ *              exit;
+ *          }
+ *      }
+ * 
+ *      返回二维数组
+ *      public function fetchAll($sql, $type = 'assoc') {
+ *          $rs = $this->query($sql);
+ *          $type = $this->getType($type);
+ *          retrun $rs->fetch_all($type);
+ *      }
+ * 
+ *      匹配一维数组
+ *      public function fetchRow($sql, $type = 'assoc') {
+ *           $list = $this->fetchAll($sql, $type);
+ *           if (!empty($list)) 
+ *              return $list[0];
+ *            return array();
+ * 
+ *       }
+ *      
+ *      返回一行一列
+ *      public function fetchColumn($sql) {
+ *          $list = $this->fetchRow($sql, 'num');
+ *          if (!empty($list))
+ *              return $list[0];
+ *          return null;
+ *      }
+ *          
+ * 
+ *      public function getType($type) {
+ *          switch($type) {
+ *              case 'num':
+ *                  return MYSQLI_NUM;
+ *              case 'both':
+ *                  return MYSQLI_BOTH;
+ *              default:
+ *                  return MYSQLI_ASSOC;
+ *          }
+ * 
  *      }
  * 
  * }

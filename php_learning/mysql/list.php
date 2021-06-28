@@ -9,7 +9,7 @@ if (!empty($_POST)) {
     $title = $_POST['title'];
     $content=$_POST['content'];
     $sql="update news set title='$title',content='$content' where id=$id";
-    if ($mysqli->query($sql);) {
+    if ($mysqli->query($sql)) {
         header('location:./list.php');
     }else{
         echo '错误';
