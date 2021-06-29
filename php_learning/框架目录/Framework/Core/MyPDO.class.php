@@ -1,4 +1,5 @@
-<?PHP
+<?php
+namespace Core;
 
 class MyPDO 
 {
@@ -100,13 +101,13 @@ class MyPDO
     private function fetchType($type) {
         switch ($type) {
             case 'num':
-                return PDO::FETCH_NUM;
+                return \PDO::FETCH_NUM;
             case 'both':
-                return PDO::FETCH_BOTH;
+                return \PDO::FETCH_BOTH;
             case 'obj':
-                return PDO::FETCH_OBJ;
+                return \PDO::FETCH_OBJ;
             default:
-                return  PDO::FETCH_ASSOC;
+                return  \PDO::FETCH_ASSOC;
         }
 
     }
