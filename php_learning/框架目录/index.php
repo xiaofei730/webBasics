@@ -43,7 +43,7 @@
 
 require './Framework/Core/Framework.class.php';
 
-Framework::run();
+\Core\Framework::run();
 
 
 
