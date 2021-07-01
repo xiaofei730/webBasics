@@ -3,15 +3,15 @@ namespace Model;
 
 class ProductsModel extends \Core\Model
 {
-    //获取products表的数据
-    public function getList() 
-    {
-        return $this->mypdo->fetchAll('select * from products');
-    }
+    // //获取products表的数据
+    // public function getList() 
+    // {
+    //     return $this->mypdo->fetchAll('select * from products');
+    // }
 
-    //删除商品
-    public function del($proid)
-    {
-        return $this->mypdo->exec("delete from products where proid=$proid");
-    }
+    // //删除商品
+    // public function del($proid)
+    // {
+    //     return $this->mypdo->exec("delete from products where proid=$proid");
+    // }
 }
