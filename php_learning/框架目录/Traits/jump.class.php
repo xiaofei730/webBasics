@@ -54,7 +54,7 @@ trait Jump
                 setInterval(() => {
                     document.getElementById('t').innerHTML == --t;
                     if (t == 0) {
-                        location.href = 'index.php';
+                        location.href = '{$url}';
                     }
                 }, interval);
             }

@@ -2,13 +2,12 @@
 namespace Controller\Admin;
 
 //商品模块
-class ProductsController
+class ProductsController extends \Core\Controller  
 {
-    use \Traits\Jump;
 
     //获取商品列表
     public function listAction()
-    {
+    {  
         //实例化模型
         $model = \Model\ProductsModel();
         // $list = $model->getList();

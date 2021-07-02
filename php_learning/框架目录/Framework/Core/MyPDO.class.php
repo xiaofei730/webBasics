@@ -153,12 +153,6 @@ class MyPDO
     }
 }
 
-$mypdo = new MyPDO();
-var_dump($mypdo);
-
-if($mypdo->exec("insert into news values (null, '11', '1111111', unix_timestamp())"))
-    echo '自动增长的编号是：'.$mypdo->lastInsertId();
-
 
 
 

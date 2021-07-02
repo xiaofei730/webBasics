@@ -119,8 +119,11 @@ class Model
                             break;
                         
                     }
+                    //防止SQL注入
+                    $v[1] = str_replace("'", "", $v[1]);
                     $sql.=" and `$k` $op '{$v[1]}'";
                 } else {
+                    $v = str_replace("'", "", $v);
                     $sql.=" and `$k`='$v'";
                 }
             
