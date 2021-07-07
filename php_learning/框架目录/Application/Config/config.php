@@ -5,6 +5,9 @@ return array(
     'database' => array(),
     //应用程序配置
     'app' => array(
+        'path' => './Public/Uploads',
+        'size' => 12345,
+        'type' => ['image/png', 'image/jpg', 'image/gif'],
         'key' => 'itcast',      //加密秘钥
         'dp' => 'Admin',        //默认平台
         'dc' => 'Login',     //默认控制器
