@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    {config_load file='smarty.conf'}
+    {config_load file='smarty.conf' section='spring'}
+    <style>
+        body{
+            color: {#color#};
+            font-size: {$smarty.config.size}px
+        }
+    </style>
+</head>
+<body>
+    {$title}
+
+    {assign var='age' value=20}
+
+    {$age}<br>
+
+    {$add='北京'}
+
+    {config_load file='smarty.conf'}
+    {#color#}
+    {$smarty.config.color}
+
+    {if is_numeric($smarty.get.score)}
+        {if $smarty.get.score gte 90}
+        A
+        {elseif $smarty.get.score gte 80}
+        B
+        {else}
+        C
+        {/if}
+    {else}
+        不是数字
+    {/if}
+
+    <hr>
+    {if $smarty.get.score is even}
+        是偶数
+    {elseif $smarty.get.score is odd}
+        是奇数
+    {/if}
+
+
+    <!-- 数组 -->
+    学生：{$stu[0]}--{$stu.1}      <br>
+    雇员：{$emp['name']} ---{$emp.sex}  <br>
+
+    <ul>
+        <li>{$goods[0]['name']}</li>
+        <li>{$goods[0].price}</li>
+        <li>{$goods.1['name']}</li>
+        <li>{$goods.1.price}</li>
+    </ul>
+
+    <!--  循环  -->
+    {for $i=1 to 5}
+        {$i}：锄禾日当午<br>
+    {/for}
+    <hr>
+    {for $i=1 to 5 step 2}
+        {$i}：锄禾日当午<br>
+    {/for}
+
+</body>
+</html>
