@@ -16,10 +16,25 @@ $goods = array(
 
 );
 
+
 $smarty->assign('stu', $stu);
 
 $smarty->assign('emp', $emp);
 
+$smarty->assign('stu2', array('first'=>'tom', 'second'=>'berry', 'third'=>'ketty', 'forth'=>'rose'));
+
+$smarty->assign('stu3', array('tom', 'berry'));
+
 $smarty->assign('title', $title);
 $smarty->assign('name', 'tom');
+$smarty->caching =true;         //开启缓存
+$smarty->force_cache = true;    //强制更新缓存
 $smarty->display('1-demo.html');
+
+
+$smarty->display('1-demo.html', $_GET['pageno']);       //缓存分页
+
+$color = $_GET['color'];
+$size = $_GET['size'];
+
+$smarty->display('1-demo.html', "$color|$size"); 

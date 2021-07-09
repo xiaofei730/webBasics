@@ -283,9 +283,18 @@ $smarty->display('index.html');
  *     {/for}
  * 
  * 
+ * 2、while
+ * {while 条件}
+ * 
+ * {/while}
+ *    {$i=1}
+ *    {while $i<=5}
+ *        {$i++}：锄禾日当午<br>
+ *    {/while}
  * 
  * 
  * 
+ * 3、foreach
  * 
  * 语法：
  * {foreach 数组 as $k=$v}
@@ -299,6 +308,117 @@ $smarty->display('index.html');
  * @iteration:从1开始的编号
  * @first:是否是第一个元素
  * @last:是否是最后一个元素
+ * 
+ * 
+ * 4、section
+ * section不支持关联数组，只能遍历索引数组
+ * 
+ * 语法：
+ * {section name=自定义名字 loop=数组}
+ * 
+ * {/section}
+ * 
+ *  
+ * 
+ * 
+ * 
+ */
+
+
+
+/**
+ * 
+ * 函数
+ * 函数有两种，自定义函数和内置函数
+ * smarty的内置函数就是封装的PHP的关键字
+ * 
+ * 
+ */
+
+/**
+ * 变量修饰符
+ * 1、变量修饰器
+ * 变量修饰器的本质就是PHP函数，用来转换数据 
+ * 
+ * 注意：
+ * （1）将PHP的关键字或函数封装成标签称为函数，将PHP关键字封装成smarty关键字称为修饰器，内部的本质都是PHP函数或PHP关键字
+ * （2）｜称为管道运算符，将前面的参数传递给后面的修饰器使用
+ * 
+ * 2、自定义变量修饰器
+ * 变量修饰器存放在plugins目录中
+ * 规则：
+ * （1）文件的命名规则：modifier.变量修饰器名称.php
+ * （2）文件内方法命名规则：smarty_modifier_变量修饰器名称(形参..){}
+ * 
+ * <?php
+ * function smarty_modifier_cal($num1, $num2, $num3)
+ * {
+ *     return $num1 + $num2 + $num3;
+ * }
+ * 
+ * {10|cal:20:30}
+ * 
+ * 
+ */
+
+
+
+/**
+ * 
+ * 避免Smarty解析
+ * 
+ * smarty的定界符和css、js的大括号产生冲突的时候，css、js中的大括号不要被smarty解析
+ * 
+ * 方法一：更换定界符
+ * 方法二：左大括号后面添加空白字符
+ * 方法三：{literal}{/literal}
+ * smarty不解析{literal}中的内容
+ * 
+ * 
+ * 
+ */
+
+
+/**
+ * 
+ * 缓存
+ * 缓存：页面缓存、空间缓存、数据缓存。smarty中的缓存就是页面缓存
+ * 
+ * 1、开启缓存
+ * $smarty->caching=true|1;
+ * 
+ * 
+ * 
+ * 2、缓存的更新
+ * 方法一：删除缓存，系统会重新生产新的缓存文件
+ * 方法二：更新了模板文件，配置文件，缓存自动更新
+ * 方法三：过了缓存的生命周期，默认是3600秒
+ * 方法四：强制更新
+ * 
+ * 3、缓存的生命周期
+ * $samrty->cache_lifetime = -1 | 0 |N
+ * -1:永远不过期
+ * 0：立即过期
+ * N:有效期是N秒，默认是3600秒
+ * 
+ * 
+ * 4、局部不缓存
+ * 局部不缓存有两种方法
+ * （1）变量不缓存      {$变量名 nocache}
+ * （2）整个块不缓存        {nocache}  {/nocache}
+ * 
+ * 
+ * 5、缓存分页
+ * 通过$smarty->display(模板, 识别id)。通过识别id来缓存集合
+ * 
+ * $smarty->display('1-demo.html', $_GET['pageno']);       //缓存分页
+ * 
+ * 
+ * 6、清除缓存
+ * $samrty->clearCache(模板, [识别id])；
+ * $samrty->clearAllCache()；       //清除所以缓存
+ * 
+ * 
  * 
  * 
  * 

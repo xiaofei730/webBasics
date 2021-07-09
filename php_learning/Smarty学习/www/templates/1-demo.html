@@ -8,10 +8,12 @@
     {config_load file='smarty.conf'}
     {config_load file='smarty.conf' section='spring'}
     <style>
+        {literal}
         body{
             color: {#color#};
             font-size: {$smarty.config.size}px
         }
+        {/literal}
     </style>
 </head>
 <body>
@@ -67,5 +69,75 @@
         {$i}：锄禾日当午<br>
     {/for}
 
+    {$i=1}
+    {while $i<=5}
+        {$i++}：锄禾日当午<br>
+    {/while}
+
+    <table border='1' bordercolor='#000' width='780'>
+        <tr>
+            <th>是否是第一个元素</th>
+            <th>索引</th>
+            <th>编号</th>
+            <th>键</th>
+            <th>值</th>
+            <th>是否是最后一个元素</th>
+        </tr>
+        {foreach $stu2 as $k=$v}
+        <tr>
+            <td>{$v@first}</td>
+            <td>{$v@index}</td>
+            <td>{$v@iteration}</td>
+            <td>$k</td>
+            <td>$v</td>
+            <td>{$v@last}</td>
+        </tr>
+        {foreachelse}
+            没有输出
+        {/foreach}
+    </table>
+
+    <table border='1' bordercolor='#000' width='780'>
+        <tr>
+            <th>是否是第一个元素</th>
+            <th>索引</th>
+            <th>编号</th>
+            <th>值</th>
+            <th>是否是最后一个元素</th>
+        </tr>
+        {section name=s loop=$stu3}
+        <tr>
+            <td>{$smarty.section.s.first}</td>
+            <td>{$smarty.section.s.index}</td>
+            <td>{$smarty.section.s.iteration}</td>
+            <td>$stu3[s]</td>
+            <td>{smarty.section.s.last}</td>
+        </tr>
+        {sectionelse}
+            没有输出
+        {/section}
+    </table>
+
+    <!-- 变量修饰符-->
+    转成大写：{'abc'|upper} <br>
+    转成小写：{'ABC'|lower} <br>
+
+    默认值：{$add|default:'地址不详'} <br>
+
+    去除标签：{'<b>你好吗</b>' | strip_tags} <br>
+    去除标签：{'<b>你好吗</b>' | escape} <br>
+
+    日期：{$smarty.now|date_format:'%Y-%m-%d %H:$M:%S'}
+
+    去除标签：{'<b>absc</b>' | strip_tags | upper} <br>
+
+    {10|cal:20:30}
+
+    <!-- 局部不缓存 -->
+    {$smarty.now nocache}
+
+    {nocache}
+        $smarty.now
+    {/nocache}
 </body>
 </html>
