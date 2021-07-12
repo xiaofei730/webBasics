@@ -140,25 +140,117 @@
  * 
  * 3、路由别名
  * 
+ * Route::请求类型（路由地址,响应方法）->name（别名）
+ * 
+ * Route::get('user/{id?}', function ($id = 1) {
+ *     return "用户ID: " . $id;
+ * })->name('user.profile');
+ * 
+ * <a href="{{ route('user.profile', ['id' => 100]) }}">
+ * // 输出：http://blog.test/user/100
+ * 
+ * 查看系统所有的路由：php artisan route:list
+ * 
+ * 4、路由群组（理解）
+ * 有后台路由如下：
+ * /admin/login
+ * /admin/logout
+ * /admin/index
+ * /admin/user/add
+ * /admin/user/del
+ * ....
+ * 他们的共同点是，都有admin/前缀，为了管理方便，可以把他们放到一个路由分组中，这个分组称之为路由群组
+ * 
+ * 使用prefix属性指定路由前缀，也就是其路由中都 具备的相同部分
+ * 
+ * 语法：Route::group(公共属性数组，回调函数);    回调函数中放的剔除公共属性之后的路由
+ * 
+ * 比如：响应为所有路由URLs前面添加前缀admnin
+ * 
+ * Route::group(['prefix' => 'admin'], function(){
+ *      Route::get('login', function(){});
+ *      Route::get('logout', function(){});
+ * })
+ * 
+ * Route::prefix('admin')->group(function () {
+ *      Route::get('login', function(){});
+ *      Route::get('logout', function(){});
+ * }); 
+ * 
+ * 
+ * 中间件
+ * 
+ * Route::group(['middleware' => 'auth'], function () { 
+ *     Route::get('dashboard', function () { 
+ *         return view('dashboard'); 
+ *     }); 
+ *     Route::get('account', function () { 
+ *         return view('account'); 
+ *     }); 
+ * });
+ * 
+ * Route::middleware('auth')->group(function () {
+ *     Route::get('dashboard', function () {
+ *         return view('dashboard');
+ *     });
+ *     Route::get('account', function () {
+ *         return view('account');
+ *     });
+ * });
  * 
  * 
  * 
  * 
+ */
+
+
+
+/**
+ * 
+ * M 代表模型（Model），V 代表视图（View），C 代表控制器（Controller），
+ * 
+ * 控制器负责组织路由和业务逻辑（当然，对于更加复杂的业务逻辑还会引入 Service 层），
+ * 模型类负责底层数据存取与处理，
+ * 而视图层负责数据渲染与页面交互
+ * 
+ * 1、控制器使用
+ * 
+ * 控制器主要作用负责接收用户输入请求，调度模型处理数据最后利用视图展示数据
  * 
  * 
+ * 创建控制器：artisan指令
+ * 默认在controller文件夹下
+ * php artisan make:controller [目录路径/]控制器名(大驼峰)Controller
+ * 
+ * 2、控制器路由（项目以该方式为主）
+ * 
+ * 即。如何使用路由规则调用控制器下的方法，而不再走回调函数
+ * 路由设置格式基本相同，只是将匿名函数缓存‘控制器类名@方法名’
+ * 定义格式如下：
+ * Route::请求方法("路由表达式", 控制器@方法名)
+ * 
+ * Route::get('task/create', 'TaskController@create');
+ * 
+ * Route::get('task/create', 'Admins\TaskController@create');
  * 
  * 
+ * 3、接收用户输入
+ * 
+ * 接收用户输入的类：Illuminate\Support\facades\Input       【门面】
+ * Facades：“门面”的思想。门面介于一个类的实例化与没有实例化中间的一个状态。
+ * 其实是类的一个接口实现。在这个状态可以不实例化类但是可以调用类中的方法，说白了就是静态方法调用
  * 
  * 
+ * input::all();        获取所有的用户输入
+ * input::get('参数的名字');    获取单个的用户的输入
+ * input::only(['id', 'age']);        获取指定几个用户的输入
+ * input::except(['id', 'age']);      获取指定用户的输入以外的所有的参数
+ * input::has('name');          判断某个输入的参数是否村镇
  * 
+ * 4、在laravel中如果需要使用facades的话，但是又不想写那么长的引入操作
  * 
- * 
- * 
- * 
- * 
- * 
- * 
- * 
+ * use Illuminate\Support\facades\Input
+ * 则可以在config/app.php中定义长串的别名（在aliases数组中定义别名）
  * 
  * 
  * 
