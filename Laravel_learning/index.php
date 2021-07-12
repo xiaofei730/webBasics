@@ -252,7 +252,93 @@
  * use Illuminate\Support\facades\Input
  * 则可以在config/app.php中定义长串的别名（在aliases数组中定义别名）
  * 
+ * 在laravel中友好输出函数：dd(需要打印的内容)
+ * dd=dump+die;
+ * 
+ * dd函数之后的内容将不会继续执行
+ * 
+ * dump方法可以打印，但是后续代码会继续执行
+ * 
+ * dump(Input::get('addr', '北京市顺义区京顺路99号'))
+ * dump($_GET['mobile'])
+ * 
+ * 
+ */
+
+
+/**
+ * 
+ * DB类操作数据库（重点）
+ * 
+ * 按照MVC的架构，对数据的操作应该放在Model中完成，但如果不使用Model，
+ * 我们也可以用laravel框架提供的DB类操作数据库，而且，对于某些极其复杂的sql
+ * 用Model已经很难完成，需要开发者自己手写sql语句，使用DB类去执行原生sql。laravel中
+ * DB类的基本用法DB::table('tableName')获取操作tableName表的实例（对象）
+ * 
+ * 1、数据表的创建与配置
+ * 
+ * 建立数据库
+ * （1）sql语句
+ * （2）图形节目   phpAdmin   Navicat
+ * 
+ * 
+ * 数据库的连接配置文件位于 config/database.php，
+ * 和很多其他 Laravel 配置一样，你可以为数据库配置多个「连接」，然后决定将哪个「连接」作为默认连接。
+ * 
+ * 'default' => env('DB_CONNECTION', 'mysql'),
+ * 
+ * 当然，默认数据库连接、数据库名称以及数据库用户名和密码等敏感信息都保存到 .env 文件中了，然后通过 env 辅助函数读取：
+ * 
+ * 
+ * 2、增加信息（insert）
+ * 
+ * 对数据库中的某个表增加数据主要有两个函数可以实现，分别是insert()和insertGetId();
+ * 
+ * insert(数组)可以同时添加一条或多条，返回值是布尔类型
+ * 
+ * insertGetId(一维数组)，只能添加一条数据，返回自增的id。
+ * 
+ * 说明：数组里的元素要求是键值对的关系（关联数组）
+ * 
+ * 语法：
+ * DB::table('表名')->insert();      连贯操作/链式操作
+ * 
+ * 
+ * 3、修改数据（update）
+ * 数据修改可以使用update(), increment()和decrement()方法来实现
+ * 
+ * （1）Update方法可以修改整个记录中的全部字段
+ * （2）increment()和decrement()表示修改数字字段的数值（递增或者递减），典型的应用：记录登录次数、积分的增加
+ * 
+ * 语法：
+ * DB::table('表名')->where()->update([]);
+ * 
+ *  注意：where方法之后可以继续调用where之类的方法
+ * ->where()->where()->where()..这个语法是并且(and)关系语法
+ * ->where()->orWhere()->orWhere()...       这个语法是或者（or）关系语法
+ * orwhere方法的参数与where一致
+ * Where参数顺序:
+ * ->where(字段名，运算符，字段值)。例如id=1，则可以写成:where('id', '=', '1'),简写成where('id',1);
+ * 只有=号可以简写
+ * 
+ * 
+ * 注意：where和update方法的顺序是不能颠倒的，update必须在最后
+ * 
+ * DB::table('member')->increment('age');       每次加1
+ * DB::table('member')->increment('age', 5);        每次加5
+ * 
+ * DB::table('member')->decrement('age');       每次减1
+ * DB::table('member')->decrement('age', 5);        每次减5
+ * 
+ * 
+ * 
+ * 4、查询数据（get）
+ * （1）
+ * 
+ * 
+ * 
  * 
  * 
  * 
  */
+
