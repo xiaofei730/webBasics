@@ -518,7 +518,54 @@
  * 
  * 
  * 
+ * 继承语法：
+ * 子模板中按以下语法书写：
+ * @extends('需要继承的模板文件名')其名称要是完整的路径，类似view视图路径
+ * 通过section标签绑定区块/部件到父级页面yield标签的参数名。
+ * @section(区块名称)
+ * 代码
+ * @ensection
  * 
+ * 
+ * @yield 用于指定需要子视图继承实现的内容区块，我们可以通过传递第二个参数给该指令用于指定子视图未继承时的默认值，
+ * section/@show 也用于指定子视图需要继承实现的内容区块，
+ * 并且提供了默认区块内容，与 @yield 不同之处在于，
+ * @section/@show 指定的默认内容子视图可以通过 @parent 访问，而 @yield 指定的默认内容对子视图不可见。
+ * 
+ * 模板包含：
+ * 语法：@include(模板文件名)   文件名不含后缀，语法类型view方法参数
+ * 
+ */
+
+
+
+/**
+ * 
+ * CSRF攻击
+ * 1、什么是CSRF攻击？
+ * CSRF是跨站请求伪造（Cross-site request forgery）的英文缩写
+ * 
+ * Laravel 通过自带的 CSRF 保护中间件让避免应用遭到跨站请求伪造攻击变得简单：
+ * Laravel 会自动为每一个被应用管理的有效用户会话生成一个 CSRF “令牌”，
+ * 然后将该令牌存放在 Session 中，该令牌用于验证授权用户和发起请求者是否是同一个人。
+ * 
+ * Laravel提供来一个全局帮助函数csrf_token来获取该Token值，因此只需在视图提交
+ * 表单中添加如下HTML代码即可在请求中带上Token
+ * <input type='hidden' name="_token" value="<?php echo csrf_token();?>">
+ * 
+ * 
+ * Laravel框架默认开启来csrf认证
+ * 
+ * {{csrf_token}}   表示直接输出token值；
+ * {{csrf_field()}}     表示的是直接输出整个隐藏域的input框
+ * 
+ * csrf验证机制与图形验证码的原理是一致的，都是将用户提交的值与session中的值进行对比
+ * 如果一致则通过，否则不通过
+ * 
+ * 针对从csrf_token与csrf_field()的选择问题
+ * 如果只需要使用值（例如，在ajax的post提交的时候），则使用csrf_token，如果需要的是隐藏域（在表单里），则使用csrf_field()
+ * 
+ * 2、从CSRF
  * 
  * 
  * 
