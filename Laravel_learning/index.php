@@ -333,7 +333,190 @@
  * 
  * 
  * 4、查询数据（get）
- * （1）
+ * （1）取出基本数据
+ * 案例1:获取member表中所有数据
+ * DB::table['member']->get();      //相当于select * from member
+ * 返回值是一个集合对象
+ * 
+ * 注意：由于一条记录都是一个对象，因此在循环或者访问字段的值的时候需要使用对象调用
+ * 属性的方法进行访问，不能再用数组形式进行访问，否则会报错
+ * 
+ * （2）获取id<3
+ * DB::table['member']->where('id', '<', 3)->get();
+ * 
+ * （3）查询id>2 且年龄<25
+ * 
+ * select * from memeber where id>2 and age<25
+ * 
+ * DB::table['member']->where('id', '>', 2)->where('age', '<', 25)->get();
+ * 
+ * 
+ * （4）取出单行数据
+ * DB::table['member']->where('id', 1)->first();   返回值是一个对象
+ * first方法等价于limit 1
+ * 
+ * 注意：first和get的区别，first返回的是一个对象，get即便其查询出只有一条记录，其也是一个collection结果集
+ * 
+ * 总结常见：
+ * 使用first的场景：登录页面、详情页面、修改功能等
+ * 使用get的场景：列表页面、设计接口等
+ * 
+ * （5）获取某个具体的值（一个字段）
+ * DB::table['member']->where('id', 1)->value('name');
+ * 
+ * 案例1:查询出id为1的用户的名字（只想要名字）
+ * 
+ * （6）获取某些字段数据（多个字段）
+ * 
+ * DB::table['member']->select(['name', 'email'])->get();
+ * 
+ * DB::table['member']->select([name as user_name])->get();   //  起别名
+ * 
+ * $db->select(DB::raw('name,age'))->get();     //不解析字段，原样使用，例如count(*)
+ * 
+ * 
+ * DB::table['member']->select(['name', 'email'])->where('id', 1)->get();
+ * 
+ * 
+ * 
+ * （7）排序操作
+ * DB::table['member']->orderBy('age', 'desc')->get();
+ * 
+ * 语法：orderBy(排序字段，排序规则)
+ * 
+ * 案例：查询列表，要求按照age字段降序排列
+ * 
+ * asc：升序
+ * desc：降序
+ * 
+ * （8）分页操作
+ * DB::table['member']->limit(3)->offset(2)->get();
+ * limit:表示限制输出的条数（分页中每页显示记录数）
+ * 
+ * offset：从什么地方开始
+ * 组合起来等价于limit 2,3       limit 2(offset),3(length)
+ * 
+ * 归纳：具体的查询等操作方法一般都是放在连贯操作的最后，辅助方法可以放在中间，并且其先后顺序是无所谓的
+ * 
+ * （9）删除数据（delete）
+ * 在删除中，有两种方式：物理删除（本质就是删除），逻辑删除（本质是修改）
+ * 
+ * 数据删除可以通过delete函数和truncate函数实现
+ * 
+ * delete 表示删除记录
+ * truncate 表示清空整个数据表
+ * DB::table['member']->where('id',1)->delete()
+ * 
+ * 
+ * 
+ * (10)执行任意的SQL语句（补充了解）
+ * 
+ * （1）执行原生查询语句
+ * DB::select("select 语句");
+ * 
+ * (2)执行原生插入语句
+ * DB::insert("insert 语句");
+ * 
+ * （3）执行原生修改语句
+ * DB::update("update 语句");
+ * 
+ * （4）执行原生删除语句
+ * 
+ * DB::delete("delete 语句");
+ * 
+ * （5）执行一个通用语句（没有返回值的语句，例如create table 等）
+ * DB::statement("语句");
+ * 
+ */
+
+
+/**
+ * 
+ * 视图操作
+ * 
+ * 视图可以分目录管理
+ * 视图的后缀在laravel中一般都是“blade.php”
+ * 视图的创建无法通过artisan来实现
+ * 
+ * 1、视图文件的命名和渲染
+ * 
+ * （1）文件名习惯小写（建议小写）
+ * （2）文件名的后缀是blade.php（因为laravel里面有一套模板引擎就是使用blade，可以直接使用标签语法{{$title}},也可以使用原生的PHP语法显示数据 ）
+ * （3）需要注意的是也可以使用.php结尾，但是这样的话就不能使用laravel提供的标签{{$title}}语法显示数据，只能使用原生语法
+ * <?php echo $title ?>显示数据
+ * 两个文件视图同时存在，则blade.php后缀的优先显示
+ * 
+ * 展示视图的方法：
+ * return view('视图文件的名称');
+ * 
+ * 视图可以进行分目录管理的，例如需要展示home/test/test2视图，
+ * 则可以写成return view('home/test/test2');当然也支持点写法：view('home.test.test2');
+ * 
+ * 
+ * 2、变量的分配与展示
+ * 语法：
+ * （1）view(模板文件名称，数组)     数组就是需要分配的变量集合，数组是一个键值数组，其键与变量名尽量一致
+ * （2）view(模板文件名称)->with(数组)
+ * （3）view(模板文件名称)->width(名称，值)->width(名称，值)
+ * 使用view()方式渲染一个视图后，在blade.php的视图文件中，模板中输出变量使用“{{$变量名}}” （变量名就是分配过来数组的键）
+ * $data = time();
+ * view('admin.test.test3', ['data' => $data]);
+ * 
+ * 3、扩展：compact函数使用（传参）
+ * compact函数，是PHP内置函数跟laravel框架没有关系，作用主要是用于打包数组的
+ * 语法：compact('变量名1', '变量名2',....)
+ * 
+ * $data = time();
+ * $data2 = 'aaa';
+ * $data3 = 'ccc';
+ * $data4 = ['1', '3'];
+ * 
+ * var_dump(compact('data', 'data2', 'data3', 'data4'));
+ * 
+ * view('admin.test.test3', compact('data', 'data2', 'data3', 'data4'));
+ * 
+ * 4、循环与分支语法标签
+ * 在视图里面遍历数据
+ * //PHP的写法
+ * foreach($variable as $key => $value){
+ * 
+ * }
+ * 
+ * //laravel中视图的写法
+ * @foreach($variable as $key => $value)
+ * 
+ * @endforeach
+ * 
+ * //在视图里面可以执行if判断
+ * //PHP写法
+ * if() {
+ * 
+ * }elseif() {
+ * 
+ * }elseif() {
+ * 
+ * }else{
+ * }
+ * 
+ * //laravel中视图if语句
+ * @if() 
+ * 
+ * @elseif() 
+ * 
+ * @elseif() 
+ * 
+ * @else
+ * 
+ * @endif
+ * 
+ * 
+ * 5、模板继承/包含
+ * 
+ * 继承不仅仅在PHP类中存在，在视图中同样存在。一般用于做有公共部分的页面。
+ * 以上图为例，可以将头和为单独的放到一个页面中去（父页面），可变的区域称之为子页面
+ * 如果子页面需要用到父页面的东西，则需要使用继承
+ * 
+ * 
  * 
  * 
  * 
@@ -341,4 +524,6 @@
  * 
  * 
  */
+
+
 
