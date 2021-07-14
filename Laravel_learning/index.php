@@ -565,12 +565,229 @@
  * 针对从csrf_token与csrf_field()的选择问题
  * 如果只需要使用值（例如，在ajax的post提交的时候），则使用csrf_token，如果需要的是隐藏域（在表单里），则使用csrf_field()
  * 
- * 2、从CSRF
+ * 2、从CSRF验证中排除例外路由
+ * 并不是所有请求都需要避免CSRF攻击，比如去第三方API获取数据的请求
+ * 可以通过在VerifyCsrfToken(App\Http\Middleware\VerifyCsrfToken.php)中间件将要排除的
+ * 请求URL添加到$except属性数组中
  * 
  * 
  * 
  * 
  */
+
+/**
+ * 
+ * 模型操作（AR模式）
+ * 
+ * Laravel 内置的 Eloquent ORM 提供了一个美观、简单的与数据库打交道的 ActiveRecord 实现，
+ * 每张数据表都对应一个与该表进行交互的模型（Model），
+ * 通过模型类，你可以对数据表进行查询、插入、更新、删除等操作。
+ * 
+ * AR模式三个核心（映射关系）
+ * 每个数据表               与数据表进行交互的Model模型映射(实例化模型)
+ * 记录中的字段             与模型类的属性映射（给属性赋值，字段名就是属性名）
+ * 表中的每个记录           与一个完整的请求实例映射（具体的CURD操作）
+ * 
+ * 
+ * 1、定义模型
+ * 
+ * 模型类通常位于 app 目录下，你也可以将其放在其他可以被 composer.json 文件自动加载到的地方。
+ * 所有 Eloquent 模型都继承自 Illuminate\Database\Eloquent\Model 类
+ * 
+ * 命名规则
+ * 本身laravel对模型的命名没有严格的要求，一般采用 表名（首字母大写）.php
+ * 比如：Member.php  User.php   Goods.php
+ * 
+ * 创建模型实例最简单的办法就是使用 Artisan 命令 make:model：（模型也可以分目录管理）
+ * php artisan make:model Member
+ * 
+ * 
+ * 注意我们并没有告诉 Eloquent 我们的 Member 模型使用哪张表，
+ * 默认规则是小写的模型类名复数格式作为与其对应的表名（除非在模型类中明确指定了其它名称）。
+ * Eloquent 认为 Member 模型存储记录在 members 表中。你也可以在模型中定义 table 属性来指定自定义的表名：
+ * 
+ * 注意事项
+ * 第一：（必做）定义一个$table属性，值是不要前缀的表名（真实表名），如果不指定则使用类名的复数形式作为表名
+ * 如果模型为Member模型在不知道table属性的情况下，其默认会去找members表，修饰词：protected
+ * 
+ * 第二：（可选）定义$primaryKey属性，值是主键名称，如果需要使AR模式的find方法，则可能需要指定主键（Model::find(n)）,
+ * 在主键字段不是id的时候需要指定主键。修饰词：protected
+ * 
+ * 第三：（可选）定义$timestamps属性，值是false，如果不设置为false，则默认会操作表中的created_at和updated_at字段
+ * 我们表中一般没有这两个字段，所以设置为false，表示不要操作这两个字段。修饰词：public
+ * 
+ * 第四：（可选）定义$fillable属性，表示使用模型插入数据时，允许插入到数据库的字段信息。格式是一维数组形式
+ * 修饰词：protected（当使用模型的create、save方法的时候最好就得写上这个属性）反向指定的属性：$guarded
+ * 
+ * 
+ * 2、模型控制器中调用
+ * （1）直接像使用DB门面一样的操作方式，以调用静态方法为主的形式，该形式下模型不需要实例化
+ * 例如：Member::get() 等价于 DB::table('member')->get()
+ * （2）实例化模型然后再去使用模型类（普通）
+ * 例如：$model = new Member(); $model->get();
+ * 
+ * 两种形式的选择标准：
+ * 如果使用的方法都是laravel框架自带的，则任意选择
+ * 如果使用的方法有用户自己在模型中定义的，则选择第二种
+ * 
+ * 3、基本操作    
+ * 
+ * （1）添加数据
+ * 在laravel里面完成数据的添加可以使用两种方式
+ * 方式一（AR模式）：使用AR模式必须要实例化模型
+ * 注意：在laravel里面添加数据的时候，需要先实例化模型，然后为模型设置属性，最后调用save方法即可
+ * 
+ * $member = new Member();
+ * $member->name = value;   
+ * $member->age = value;  
+ * $member->save();
+ * 
+ * 方式二：（隐性的效果）  
+ * 
+ * Member::create($request->all())      //返回值是一个对象
+ * 
+ * 注意：Member模型一定要设置$fillable，否则会报错
+ * $fillable = ['name', 'age', 'email'];
+ * 
+ * 
+ * 
+ * 
+ * Request类的使用：
+ * （1）对象的传递，需要在方法的括号里以形参的形式接收Request类，只有接收类才能在方法中使用
+ * 
+ * （2）request语法（与input门面有点类似，方法名一致，但是input调用的是静态方法，而request不是）
+ * $request->all();         //获取全部传递数据
+ * $request->input('name');     //获取指定
+ * $request->only(['name1', 'name2',...]);
+ * $request->except(['name1', 'name2'...]);
+ * $request->has('name');
+ * $request->get('name');
+ * 
+ * 注意：a：DB类中的insert方法，在模型中也是可以使用的（其他方法也是如此）
+ * b：insert方法必须要求先排除不写入数据表的字段，模型中的fillable属性对insert不生效，如果不事先排除如‘token’字段，则会报错
+ * 
+ * 
+ * （2）查询操作
+ * 获取指定主键的一条数据
+ * $info = Member::find(4);     //静态方法调用，获取主键为4的数据【等价与条件where id=4】
+ * 
+ * 其结果集默认是一个对象
+ * 
+ * 如果需要在laravel中对象的结果集转化成数组，则需要在最终添加方法的调用：
+ * ->get()->toArray()
+ * $data = Member::find(4)->toArray();
+ * 
+ * 
+ * 查询多行并且指定字段
+ * Member::all()        //查询全部的数据，类似与get()
+ * Member::all([字段1，字段2])          //与get方法的区别，all不支持其他的辅助查询方法
+ * Member::get();
+ * Member::get([字段1，字段2]) 
+ * 
+ * 按条件查询指定多个字段
+ * Member::where('id', '>', 2)->get(['列1', '列2'])     //数组选列 
+ * Member::where('id', '>', 2)->select(['列1', '列2'])->get()     //字符串选列 
+ * Member::where('id', '>', 2)->selec(['列1', '列2'])->get()      //数组选列 
+ * 
+ * 
+ * （3）修改数据
+ * 注意：在laravel里面如果需要更新数据（ORM模型方式），需要先调用模型的find方法获取对应的记录，返回一个模型对象，
+ * 然后为该模型对象设置要更新的数据（对象的属性）。最后调用save方法即可
+ * 例如
+ * $user = User::find($id);
+ * $user->title = $_POST['title'];
+ * $user->content = $_POST['content'];
+ * $user->save() ? 'OK' : 'Fail'
+ * 
+ * Member::where('id', 2)->update(['age' => 55]) 
+ * 
+ * （4）删除数据
+ * 注意：在laravel里面如果要删除数据，如果需要使用AR模式删除数据必须先根据主键id查询对应的记录，
+ * 返回一个模型对象，然后调用模型对象的delete方法即可
+ * $user = User::find($id);
+ * $user->delete() ? 'OK' : 'Fail'
+ * 
+ * 比较常见的使用模型的场景
+ * a、可能在数据入表之前需要对数据进行比较的处理步骤，
+ * 这个时候建议在模型中自定义方法对数据进行处理
+ * b、如果需要使用关联模型的话，则必须要定义与使用模型
+ * 
+ * 
+ * 
+ */
+
+
+
+/**
+ * 
+ * 自动验证
+ * 自动验证：前端会有一些对表单的验证操作（通过JavaScript），但是JavaScript有些情况下
+ * 是不好用的（例如禁用JavaScript）。因此后端也需要有一套类似的机制，能够在后端实现对用户提交的数据进行验证，
+ * 这个就是后端的自动验证
+ * 
+ * 1、编写验证逻辑
+ * 
+ * 现在我们准备用验证新博客文章输入的逻辑填充 store 方法。我们使用 Illuminate\Http\Request 对象提供的 validate 方法来实现这一功能，
+ * 如果验证规则通过，代码将会继续往下执行；
+ * 反之，如果验证失败，将会抛出一个异常，相应的错误响应也会自动发送给用户。
+ * 在这个传统的 HTTP 请求案例中，将会生成一个重定向响应，如果是 AJAX 请求则会返回一个 JSON 响应。
+ * 
+ * 
+ * 存储博客文章
+ *
+ * @param  Request  $request
+ * @return Response
+ *
+ * public function store(Request $request){
+ *     $validatedData = $request->validate([
+ *         'title' => 'required|unique:posts|max:255',
+ *         'body' => 'required',
+ *         'filesize' => 'required|integer|min:1|max:100',
+ *         'email' => 'required|email',
+ * 
+ *     ]);
+ * 
+ *     // 验证通过，存储到数据库...
+ * }
+ * 
+ * 验证规则还可以通过数组方式指定，而不是通过 | 分隔的字符串：
+ * 
+ * $validatedData = $request->validate([
+ *     'title' => ['required', 'unique:posts', 'max:255'],
+ *     'body' => ['required'],
+ * ]);
+ * 
+ * 实际执行代码之前，需要在数据库中创建 posts 数据表，因为这里用到了 unique:posts 这个验证规则，
+ * 该规则会去数据库中查询传入标题是否已存在以保证唯一性。
+ * 
+ * 首次验证失败后中止后续规则验证
+ * 
+ * 有时候你可能想要在首次验证失败后停止检查该属性的其它验证规则，要实现这个功能，可以在规则属性中分配 bail 作为首规则：
+ * 
+ * $request->validate([
+ *     'title' => 'bail|required|unique:posts|max:255',
+ *     'body' => 'required',
+ * ]);
+ * 
+ * 
+ * 
+ * 2、显示验证错误信息
+ * 
+ * 再次强调，我们并没有在 GET 路由中显式绑定任何错误信息到视图。
+ * 这是因为 Laravel 总是从 Session 数据中检查错误信息，而且如果有的话会自动将其绑定到视图。
+ * 所以，值得注意的是每次请求返回的响应视图中总是存在一个 $errors 变量，你可以通过它获取表单验证错误信息。
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ */
+
+
+
+
 
 
 
