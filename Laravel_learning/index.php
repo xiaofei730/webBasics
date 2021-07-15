@@ -769,7 +769,7 @@
  *     'body' => 'required',
  * ]);
  * 
- * 
+ * $validator = Validator::make($input, $rules, $messages);
  * 
  * 2、显示验证错误信息
  * 
@@ -778,6 +778,139 @@
  * 所以，值得注意的是每次请求返回的响应视图中总是存在一个 $errors 变量，你可以通过它获取表单验证错误信息。
  * 
  * 
+ * 3、把输出效果转成中文
+ * 方法一：
+ * 可以在自定义验证的时候，给validate方法传递第三个参数，第三个参数即错误提示
+ * 
+ * 
+ * $this->validate($request,[
+ *     'title' => 'bail|required|unique:posts|max:255',
+ *     'body' => 'required',
+ * ],[
+ *      'title.required' => '标题不能为空',
+ *      'title.max' => '标题不能超过255'
+ * ]);
+ * 
+ * 该方式比较繁琐，每个规则都有自己定义错误信息
+ * 
+ * 方法二：借助于第三方语言包
+ * 在官网搜索laravel-lang
+ * 
+ * （1）需要寻找下载命令
+ * （2）使用composer进行安装，在项目根目录下允许上述命令
+ * （3）语言包文件在vendor/caoue/laravel-lang中，将你需要的语言目录复制到resources/lang目录下即可
+ * （4）在文件(config/app.php)中修改locale的值，改成你需要使用的语言简称
+ * 
+ * 注意：并不是所有的字段都有对应的反应（或者有的翻译可能不是很准确），如果想自己定义翻译，则需要去修改语言包文件代码
+ * 
+ * 
+ * 
+ * 
+ */
+
+
+
+/**
+ * 
+ * 文件上传
+ * 在laravel里面实现文件的上传是很简单的，压根不用引入第三方的类库，
+ * 作者把上传作为一个简单的http请求看待的
+ * 
+ * 问题：请你说出文件上传的本质（核心思想）？
+ * 就是临时文件的移动，move_upload_file
+ * a、先去判断文件是否正常和存在
+ * b、先获取相关的信息（可选）
+ * c、保存文件
+ * 
+ * 获取文件的方式：既可以通过file方法来获取也可以通过动态属性来获取，二选一
+ * 可以使用 Illuminate\Http\Request 实例提供的 file 方法或者动态属性来访问上传文件， 
+ * file 方法返回 Illuminate\Http\UploadedFile 类的一个实例，
+ * 该类继承自 PHP 标准库中提供与文件交互方法的 SplFileInfo 类：
+ * 
+ * $file = $request->file('photo');
+ * $file = $request->photo;
+ * 
+ * 
+ * 创建上传文件的保存路径：（一定要在public下，确保浏览器能够访问）
+ * 
+ * //判断文件是否上传正常与存在
+ * if ($request->hasFile('photo') && $request->file('photo')->isValid()) {
+ *     //对文件进行重新的命名
+ *      $name = sha1(time().rand(100000, 999999)).'.'.$request->photo->extension();
+ *      //文件的移动操作
+ *      $request->file('photo') -> move('statics/upload', $name);
+ *      $path = '/statics/upload'.$name;
+ * }
+ * 
+ * $data = $request->except(["_token", "photo"]);
+ * $data['avatar'] = isset($path) ? $path : '';
+ * $result = Member::insert($data);
+ * 
+ * 注意：关于项目中使用路径（"./"与“/”）的说明：
+ * 如果一个路径是给PHP代码使用的则建议使用“./”，如果路径是给前端浏览器使用的则使用“/”
+ * 
+ * 
+ */
+
+
+/**
+ * 
+ * 数据分页
+ * 在laravel里面完成分页是很简单的，它的思想与之前的框架有些不一样，
+ * 之前框架使用的是分页类完成分页，laravel是直接调用模型的分页方法，返回对应的数据和分页的字符串
+ * 
+ * 案例：使用分页功能实现当前member数据表的分页效果，由于数据量较，可以考虑每页显示一个记录
+ * a、查询符合分页条件的总的记录数
+ * b、计算总的页数（总记录数/每页记录数，并且向上取整）
+ * c、拼凑分页的链接
+ * d、（核心）使用limit语法来限制分页的记录数
+ * e、展示分页的页码和分页数据
+ * f、如果可以，建议去考虑下分页的样式显示问题
+ * 
+ * 在laravel中分页有2个提供者：DB查询构建器，另外可以使用模型来实现
+ * 用法基本一致
+ * 
+ * 
+ * 让我们先来看看如何在查询中调用 paginate 方法。
+ * 在本例中，传递给 paginate 的唯一参数就是你每页想要显示的数目，这里我们指定每页显示 15 个：
+ * 
+ * $users = DB::table('users')->paginate(15);
+ * 
+ * 基于 Eloquent 结果集进行分页
+ * 
+ * 分页的基本语法：
+ * Model::paginate(每页显示的记录数)        同样，paginate和get一样，支持使用where以及orderBy等辅助查询的方法
+ * 
+ * $users = App\Models\User::paginate(15);
+ * 
+ * 显示分页结果
+ * 
+ * <div class="container">
+ *     @foreach ($users as $user)
+ *         {{ $user->name }}
+ *     @endforeach
+ * </div>
+ *     
+ * {{ $users->links() }}
+ * 
+ * 通过数据对象调用links方法显示分页码
+ * 语法：   {{ $保存数据的对象 -> links() }} 生成的链接（使用render方法替代也可以）
+ * 
+ * 
+ */
+
+
+
+
+/**
+ * 
+ * 验证码：captcha，全自动区分人与计算机的图灵测试
+ * 
+ * 回顾：生产验证码需要经过：画画布、生成干扰线、生成噪点、生成验证码、生成验证码存入session、输出图片
+ * 
+ * 常见的验证码类型：字符验证码、短信验证码、电话验证码、12306类型验证码、拖拽验证码等。
+ * 1、验证码依赖安装
+ * 去packageist(http://packagist.p2hp.com)网站搜索验证码的代码依赖：关键词：captcha mews/captcha
  * 
  * 
  * 
@@ -791,3 +924,10 @@
 
 
 
+
+
+
+
+
+
+ 
