@@ -913,6 +913,132 @@
  * 去packageist(http://packagist.p2hp.com)网站搜索验证码的代码依赖：关键词：captcha mews/captcha
  * 
  * 
+ *  注意：验证码有校性验证规则，captcha
+ * 
+ * $request->validate([
+ *     'title' => 'bail|required|unique:posts|max:255',
+ *     'body' => 'required',
+ *     'code' => 'required|captcha'
+ * ]);
+ * 
+ */
+
+
+/**
+ * 
+ * 数据表的迁移与填充
+ * 迁移：创建数据表的操作+删除数据表的操作
+ * 填充：往数据表里填充写入测试的数据（数据的插入操作）
+ * 
+ * 1、数据的迁移操作
+ * 在迁移过程中，操作可以分为两个部分：创建与编写迁移文件、执行迁移文件
+ * 
+ * 迁移文件的创建与编写
+ * 
+ * 生成迁移
+ * 使用 Artisan 命令 make:migration 就可以创建一个新的迁移：
+ * php artisan make:migration 迁移文件名
+ * 
+ * php artisan make:migration create_users_table
+ * 
+ * 迁移文件不需要分目录进行管理，可以直接书写名称即可
+ * 
+ * 新的迁移位于 database/migrations 目录下，每个迁移文件名都包含时间戳从而允许 Laravel 判断其顺序。
+ * 
+ * 
+ * 迁移文件结构
+ * 迁移类包含了两个方法：up 和 down。up 方法用于新增表，列或者索引到数据库，
+ * 而 down 方法就是 up 方法的逆操作，和 up 里的操作相反。
+ * 
+ * public function up()
+ *     {
+ *         Schema::create('flights', function (Blueprint $table) {
+ *             $table->increments('id');
+ *             $table->string('name');
+ *             $table->string('airline');
+ *             $table->timestamps();
+ *         });
+ *    }
+ * 
+ * 在创建数据表的列的时候遵循语法：
+ * $table 表示整表的实例
+ * 语法：$table->列类型方法(字段名, [长度/值范围]) -> 列修饰方法([修饰的值])
+ * 
+ * 列类型方法的作用：指定列的名称并且设置列的类型长度或者其值范围（针对枚举类型）
+ * 修饰方法：主要补充列的一些特征，例如有些列不能为空，或者有默认值等等
+ * 
+ * 
+ * 2、 运行迁移文件
+ * 执行分为up执行和down执行
+ * up方法的执行：
+ * 如果当前项目中第一次执行迁移文件的话，则需要先去执行：
+ * php artisan migrate:install
+ * 
+ * 在执行过上述的命令之后，在数据表中会多出一个数据表：migrations
+ * 
+ * migrations中的字段migration代表已经执行过的迁移文件名
+ * 字段batch代表批次号，执行的序号
+ * 
+ * 作用：用于创建记录迁移文件的记录数据表（可以看作类似于SVN的版本控制机制）
+ * 需要执行up方法，则需要执行命令：（注意：需要删除系统自带的迁移文件，只保留自己的）
+ * 删除的原因，默认迁移操作会执行迁移文件中所有没有被执行的迁移文件。
+ * 
+ * 运行应用中所有未执行的迁移文件，可以使用 Artisan 命令 migrate：
+ * php artisan migrate
+ * 
+ * 问题：如果再一次执行php artisan migrate会怎么样？
+ * 不会怎么样，不会有任何操作（在执行迁移的时候系统会将迁移文件夹里面文件于数据表的迁移记录进行匹配，匹配上则不执行，匹配不上则执行）
+ * 
+ * 
+ * down方法执行：（回滚操作，删除数据表）
+ * php artisan migrate:rollback （想要回滚最新的一次迁移”操作“，可以使用 rollback 命令，注意这将会回滚最后一批运行的迁移，可能包含多个迁移文件：）
+ * 
+ * 
+ * 回滚操作只删除迁移表中的记录和对应的数据表，其他操作不执行
+ * 
+ * 注意：删除（回滚）之后会删除上一个批次的迁移记录，并且同批次建立的数据表也会删除
+ * 但是迁移文件依旧存在，方便后期继续迁移（创建数据表）
+ * 
+ * 批次号：同一次被执行的多个迁移文件其批次号相同
+ * 
+ * 针对迁移文件名的提示：如果迁移文件已经创建好并且执行了，就不要去修改迁移文件的名称，容易出错
+ * 
+ * 
+ * 迁移操作与sql语句操作类似，区别在于迁移文件将原先的sql语句从标准查询语言形式转化成了面向对象的形式
+ * 
+ * 
+ * 
+ * 数据表填充器
+ * 
+ * 填充操作就是往数据表中写测试数据的操作（增加操作），在开发阶段是很实用的功能
+ * Laravel 使用填充类提供了一个简单方法来填充测试数据到数据库。所有的填充类都位于 database/seeds 目录
+ * 
+ * 1、填充器（种子文件）的创建于编写
+ * 要生成一个填充器，可以通过 Artisan 命令 make:seeder。所有框架生成的填充器都位于 database/seeds 目录：
+ * 
+ * php artisan make:seeder 填充器名称  【约定俗成的写法：大写表名+TableSeeder】
+ * 
+ * php artisan make:seeder UserSeeder
+ * 
+ * 
+ * 2、编写填充器代码，实现往数据表中写入数据
+ * 注意：在填充器文件中可以使用DB门面去新增数据，但是需要注意，DB门面在使用时候不需要用户自己引入，
+ * 一旦引入则报错，可以直接使用，建议使用DB门面方法写入新的数据
+ * 
+ * 
+ * 3、运行填充器
+ * 命令：
+ * 
+ * 编写好填充器类之后，需要通过 dump-autoload 命令重新生成 Composer 的自动加载器：
+ * 
+ * composer dump-autoload
+ * 运行之后可以使用 Artisan 命令 db:seed 来填充数据库。默认情况下，db:seed 命令运行 DatabaseSeeder 类，
+ * 不过，你也可以使用 --class 选项来指定你想要运行的独立的填充器类：
+ * 
+ * php artisan db:seed
+ * php artisan db:seed --class=需要执行的种子文件名（不需要） php artisan db:seed --class=UserSeeder
+ * 
+ * 
  * 
  * 
  * 
