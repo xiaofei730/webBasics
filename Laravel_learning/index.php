@@ -1046,6 +1046,103 @@
 
 
 
+/**
+ * 
+ * 响应
+ * 
+ * 在laravel中，响应正常情况下有2个类型：常规的直接响应，另外一个ajax的响应
+ * 其中展示视图以及直接响应字符串都属于常规的响应
+ * 
+ * 例如：常规响应
+ * 展示视图
+ * 
+ * return view('welcome')
+ * 
+ * 直接返回某个字符串
+ * 
+ * return 'hello world'
+ * 
+ * 提示：在laravel框架中，不允许响应布尔值
+ * 
+ * 
+ * 1、ajax请求的响应
+ * 
+ * 语法：return response()->json(需要json输出的数据)  //数据是数组格式，对象也可以
+ * 
+ * 注意：在框架中建议不要再去使用php自带json_encode 方法 对数据进行json编码
+ * 
+ * 两者的区别，框架自带的json输出方式不会解析当前页面中其它的所有Html代码，只会原样输出，
+ * PHP自带的json_encode，则会解析当前页面的其它html标记
+ * 
+ * 
+ * 2、跳转响应（重定向）
+ * 
+ * 在有一些页面，例如同步添加操作，完成操作之后不能停留在当前页面，最好做一个跳转操作，
+ * 也就是需要一个跳转的响应
+ * 
+ * 以之前的“上传操作代码”为例：后续比较理想的情况应该是在处理完成之后需要一个跳转提示，
+ * 告知用户是否成功，成功则应该返回上一页，失败则应该输出错误提示
+ * 
+ * 两个跳转方式任选一个：
+ * return redirect(路由)->withErrors([])        该参数的路由可以是完整的请求路由，也可以是通过route方法+别名获取的路由
+ * 
+ * return redirect()->to(路由)   简写成redirect(路由)
+ * 
+ * 错误信息的获取与之前自动验证那里的方式一样，通过$errors变量来获取即可
+ * 
+ * 
+ */
+
+
+/**
+ * 
+ * 会话控制
+ * 
+ * 常见应用--增删改查
+ * 
+ * session默认存到文件中
+ * session文件的目录：storage/framework/sessions
+ * 
+ * Session 配置文件位于 config/session.php。默认情况下，Laravel 使用的 Session 驱动为 file 驱动，
+ * 这对许多应用而言是没有什么问题的。
+ * 在生产环境中，你可能考虑使用 memcached 或者 redis 驱动以便获取更佳的 Session 性能，
+ * 尤其是线上同一个应用部署到多台机器的时候，这是最佳实践。
+ * 
+ * Session 的 driver 配置项用于定义请求的 Session 数据存放在哪里，Laravel 可以处理多种类型的驱动：
+ * 
+ * file – Session 数据存储在 storage/framework/sessions 目录下。
+ * cookie – Session 数据存储在经过安全加密的 Cookie 中。
+ * database – Session 数据存储在数据库中。
+ * memcached / redis – Session 数据存储在 Memcached/Redis 缓存中，访问速度最快。
+ * array – Session 数据存储在简单 PHP 数组中，在多个请求之间是非持久化的。
+ * 
+ * 
+ * 1、使用session类
+ * 
+ * 控制器头部引用 use Illuminate\Support\Facades\Session;
+ * 
+ * 由于session类在app.php中已经定义好别名，所以在控制器中引入的时候可以直接use Session
+ * 
+ * Session::put('key', 'value');            Session中存储一个变量
+ * $value = Session::get('key');            Session中获取一个变量
+ * $value = Session::get('key', 'default');     Session中获取一个变量或返回一个默认值（如果变量不存在）
+ * 
+ * $value = Session::get('key', function(){ return 'default'})
+ * 
+ * Session::all()       Session中获取所有变量
+ * 
+ * Session::forget('key')       Session中删除一个变量
+ * 
+ * Session::flush()         Session中删除所有变量
+ * 
+ * 补充：session()方法也可以在视图中使用，如： {{ Session::get('code') }}
+ * 
+ * 
+ * 
+ */
+
+
+
 
 
 
