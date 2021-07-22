@@ -1137,9 +1137,114 @@
  * 
  * 补充：session()方法也可以在视图中使用，如： {{ Session::get('code') }}
  * 
+ * 在后期如果使用laravel框架自带的验证功能模块（Auth）的话，则session就可以不需要使用了
+ * 
+ */
+
+
+/**
+ * 
+ * 缓存操作
+ * 
+ * laravel为不同的缓存系统提供了统一的API，缓存配置于config/cache.php。
+ * 该文件中你可以指定应用中默认使用哪个缓存驱动。laravel目前支持的缓存后端如：
+ * Memcached和redis等
+ * 
+ * 主要方法：
+ * Cache::put()
+ * Cache::get()
+ * Cache::add()
+ * Cache::pull()
+ * Cache::forever()
+ * Cache::forget()
+ * Cache::has()
+ * 
+ * 系统默认是使用文件缓存，其缓存文件存储的位置位于（storage/framework/cachae/data）
+ * 
+ * 1、设置缓存
+ * 语法：Cache::put('key', 'value', $minutes);
+ * key:键
+ * Value：值
+ * $minutes:有效期，单位是分钟
+ * 注意：如果该键已经存在，则直接覆盖原来的值，有效期必须设置，单位是分钟
+ * 
+ * 语法：Cache::add('key', 'value', $minutes);
+ * 
+ * add方法只会在缓存项不存在的情况下添加数据到缓存，如果数据被成功添加到缓存返回true，否则，返回false
+ * 
+ * 永久存储
+ * forever方法用于持久化存储数据到缓存，这些值必须通过forget方法手动从缓存中移除：
+ * Cache::forever('key', 'value')       //永久存储并不是真的永久只不过其截止时间是比较大的值（到2286年）
+ * 
+ * 
+ * 
+ * 2、获取缓存数据
+ * Cache门面的get方法用于从缓存中获取缓存项，如果缓存项不存在，返回null，如果
+ * 需要的话你可以传递第二个参数到get方法指定缓存项不存在时返回的自定义默认值
+ * $value = Cache::get('key');      //获取指定的key值
+ * $value = Cache::get('key', 'default');           //获取指定的key值，如果不存在，则使用默认值
+ * 
+ * 可以传递一个匿名函数作为默认值，如果缓存项不存在的话闭包的结果会被返回，传递匿名函数
+ * 允许你可以从数据库或其它外部服务获取默认值
+ * $value = Cache::get('key', function(){
+ *      return DB::table(...)->get();
+ * });   
+ * 
+ * 检查缓存项是否存在
+ * has 方法用于判断缓存项是否存在：
+ * if(Cache::has('key')) {
+ *      //
+ * }
+ * 
+ * 3、删除缓存数据
+ * 语法：
+ * $value = Cache::pull('key')  从缓存中获取缓存项然后删除，如果缓存项不存在的话，返回null，
+ * 一般设置一次性的存储的数据
+ * 
+ * Cache::forget('key')     使用forget方法从缓存中移除缓存项数据
+ * Cache::flush('key')          清除所有缓存，并且删除对应的目录 
+ * 
+ * 
+ * 4、缓存数值增加/减少
+ * 
+ * increment 和 decrement 方法可用于调整缓存中的整型数值。
+ * 这两个方法都可以接收第二个参数来指明缓存项数值增加和减少的数目：一般会用作计数器
+ * 
+ * Cache::increment('key');
+ * Cache::increment('key', $amount);
+ * Cache::decrement('key');
+ * Cache::decrement('key', $amount);
+ * 
+ * 
+ * 例子：
+ * Cache::add('count', '0', 1000);
+ * Cache::increment('count');
+ * 
+ * 如果用计数器，则在初始化的时候不能使用put和forever，因为这2个方法都会重复的初始化计数器
+ * 
+ * 
+ * 5、获取并存储
+ * 有时候你可能想要获取缓存项，但如果请求的缓存项不存在时给它存储一个默认值。
+ * 例如，你可能想要从缓存中获取所有用户，或者如果它们不存在的话，从数据库获取它们并将其添加到缓存中，
+ * 你可以通过使用 Cache::remember 方法实现：
+ * 
+ * $value = Cache::remember('users', $seconds, function() {
+ *     return DB::table('users')->get();
+ * });
+ * 
+ * 如果缓存项不存在，传递给 remember 方法的闭包被执行并且将结果存放到缓存中。
+ * 
+ * 你还可以使用 rememberForever 方法从缓存中获取数据或者将其永久存储起来：
+ * 
+ * $value = Cache::rememberForever('users', function() {
+ *     return DB::table('users')->get();
+ * });
  * 
  * 
  */
+
+
+
 
 
 
