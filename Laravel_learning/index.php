@@ -1245,6 +1245,35 @@
 
 
 
+/**
+ * 
+ * 联表查询
+ * 内连接，左、右外连接，自然连接，交叉连接
+ * 
+ * 
+ * 
+ * 联表要求至少有2张表（除了自己连接自己，自联查询），并且还是存在关系的两张表
+ * 
+ * 左外连接
+ * 
+ * sql:
+ * select t1.id,t1.article_name as article_name,t2.author_name as author_name from article as t1 left join author as t2 on t1.author_id = t2.id
+ * 
+ * 将上述的sql语句改成链式操作：
+ * 语法：DB门面/模型->join联表方式名称（关联的表名，表1的字段，运算符，表2的字段）
+ * 
+ * $data = DB::table('article as t1')->leftJoin('author as t2', 't1.author_id', '=', 't2.id')->select('t1.id','t1.article_name as article_name','t2.author_name as author_name')->get();
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ */
+
+
+
 
 
 
