@@ -1266,6 +1266,139 @@
  * 
  * 
  * 
+ */
+
+
+/**
+ * 
+ * 关联模型
+ * 关联模型就是绑定模型（表）的关系（关联表），后续需要使用联表的时候就可以直接使用关联模型。注意，关联模型必须要创建模型
+ * 
+ * 1、一对一的关系
+ * 
+ * 例如：一篇文章只有一个作者
+ * 
+ * 关联模型的关联方法
+ * 注意：在写关联模型的时候要分析出是谁关联谁（类似于联表查询的主、从表），谁做主动
+ * 关联的模型？当前的案例是文章关联作者，需要关联代码写在主模型中（文章模型中）
+ * 语法：
+ * public function 被关联的模型名小写()
+ * {
+ *     return $this->hasOne('需要关联模型的命名间','被关联模型的关系字段','本模型的关系字段');
+ * }
+ * 
+ * 例如：
+ * 
+ * <?php
+ *     
+ * namespace App\Models;
+ *     
+ * use Illuminate\Database\Eloquent\Model;
+ *     
+ * class User extends Model{
+ *     
+ *    //获取关联到用户的手机
+ *     
+ *     public function phone()
+ *     {
+ *         return $this->hasOne('App\Models\Phone');
+ *         //return $this->hasOne('App\Phone', 'user_id', 'id');
+ *     }
+ * }
+ * 
+ * 关联关系定义好之后，我们可以通过访问动态属性phone来获取一条手机号信息
+ * 动态属性名称就是先前定义的关联方法名称
+ * 
+ * $phone = User::find(1)->phone;
+ * 
+ * 使用一对一关联关系之后，其可以替代之前写join联表操作
+ * 
+ * 
+ * 
+ * 
+ * 2、一对多关系
+ * 例如：一篇文章有多个评论
+ * 
+ * 语法：
+ * public function 被关联的模型名小写()
+ * {
+ *     return $this->hasMany('需要关联模型的命名间','被关联模型的关系字段','本模型的关系字段');
+ * }
+ * 
+ * 
+ * <?php
+ *     
+ * namespace App\Models;
+ *     
+ * use Illuminate\Database\Eloquent\Model;
+ *     
+ * class Post extends Model{
+ *     
+ *     获取博客文章的评论
+ *     
+ *     public function comments()
+ *     {
+ *          return $this->hasMany('App\Models\Comment');
+ *     }
+ * }
+ * 
+ * 
+ * 3、多对多关系
+ * 例如：一个文章可能有多个关键词，一个关键词可能被多个文章使用
+ * 
+ * 多对多关联比 hasOne 和 hasMany 关联关系要稍微复杂一些。
+ * 这种关联关系的一个例子就是在权限管理中，一个用户可能有多个角色，同时一个角色可能被多个用户共用。
+ * 例如，很多用户可能都有一个“Admin”角色。
+ * 
+ * 多对多的关系经过拆分之后就是两个一对多的关系。由于是双向一对多的关系，
+ * 因此光靠2张表是无法建立的关系的，需要依靠第三张表建立关系
+ * 
+ * 要定义这样的关联关系，需要三张数据表：users、roles 和 role_user，role_user 表按照关联模型名的字母顺序命名，
+ * 并且包含 user_id 和 role_id 两个列：
+ * 
+ * users
+ *     id - integer
+ *     name - string
+ * 
+ * roles
+ *     id - integer
+ *     name - string
+ * 
+ * role_user
+ *     user_id - integer
+ *     role_id - integer
+ * 
+ * 语法：
+ * return $this->hasMany('被关联模型的元素空间路径', '多对多模型的关系表名','关系表中当前模型中的关系键','关系表中被关联模型的关系键');
+ * 
+ * 
+ * <?php
+ *     
+ * namespace App\Models;
+ *     
+ * use Illuminate\Database\Eloquent\Model;
+ *     
+ * class User extends Model{
+ *     
+ *      //用户角色
+ *     public function roles()
+ *     {
+ *         return $this->belongsToMany('App\Models\Role');
+ *     }
+ * }
+ * 
+ * 
+ * 关联关系被定义之后，可以使用动态属性 roles 来访问用户的角色：
+ * 
+ * $user = App\Models\User::find(1);
+ *     
+ * foreach ($user->roles as $role) {
+ *     //
+ * }
+ * 
+ * 
+ * 
+ * 
  * 
  * 
  * 
