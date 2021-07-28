@@ -254,7 +254,11 @@
  * hincrby key field step   步长可以为负数
  * 
  * 
+ * 返回所有key对应的field字段
+ * hkeys key
  * 
+ * 返回所有key对应的field字段对应的值
+ * hvals key
  * 
  * 
  * 
