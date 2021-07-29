@@ -261,6 +261,249 @@
  * hvals key
  * 
  * 
+ */
+
+
+/**
+ * 集合（set）操作命令
+ * 
+ * redis的set是无序集合。集合里不允许有重复的元素
+ * 
+ * set元素最大可以包含（2的32次方-1）个元素
+ * 
+ * Redis 集合中所有元素都是互异的，即任意一个元素都是唯一的，当我们尝试向集合中添加相同元素时，会忽略后续添加的值，
+ * 
+ * 场景：存放用户id，不重复的信息   抽奖，好友关系 
+ * 
+ * 想集合key中添加元素
+ * 
+ * sadd key value1 value2
+ * 
+ * 
+ * 返回key集合中所有的元素
+ * smembers key
+ * 
+ * 返回key集合中元素的个数
+ * scard key
+ * 
+ * 删除key集合中为value1的元素
+ * srem key value1
+ * 
+ * 随机删除key集合中的一个元素并返回
+ * spop key
+ * 
+ * 
+ * 判断value是否存在于key集合中
+ * sismember key value
+ * 
+ * 把源集合中value删除，并添加到目标集合中（移动）
+ * smove sSet dSet value
+ * 
+ * 求出key1，key2两个集合的交集，并返回
+ * sinter key1 key2
+ * 求出key1，key2的两个集合的并集，并返回
+ * sunion key1 key2
+ * 
+ * 求出key1 与key2 的差集
+ * sdiff key1 key2  以key1集合为主，求出key1中和key2不同的元素并返回
+ * 
+ * 
+ * 有序集合（zset）操作命令
+ * 和set一样有序集合，元素不允许重复，不同的是每个元素都会关联一个分值。
+ * 可以通过它的分值来进行排序。如实现手机APP市场的软件排名等需求的实现
+ * 
+ * 给key有序集合中添加元素
+ * zadd key score（分值） value
+ * 
+ * 删除key有序集合中指定的元素
+ * zrem key value1
+ * 
+ * 返回有序集合中，指定区间位置内的成员
+ * zrange key start end [withscores]        //从小到大排列
+ * zrevrange key start end [widthscores]        //从大到小排列
+ * 
+ * 按照分值来删除元素，删除score 在min<=score<=max之间的
+ * zremrangebyscore key min max
+ * 
+ * 返回集合的个数
+ * zcard key
+ * 
+ * 返回min<=score<=max分值区间元素的数量
+ * zcount key minScore maxScore
+ * 
+ * 
+ * 返回有序集合中，成员的分数值
+ * zscore key value
+ * 
+ * 对有序集合中指定成员的分数加上增量  把value的分数+score值
+ * zincrby key score 元素
+ * 
+ * 
+ * 
+ * 
+ */
+
+
+/**
+ * 
+ * 发布与订阅
+ * 
+ * Redis 发布订阅（publish/subscribe）是一种消息通信模式
+ * 发送者（publish）发送消息，订阅者（subscribe）订阅后接受频道消息
+ * 
+ * 
+ * 订阅频道
+ * subscribe 频道1[,频道2..]
+ * 支持通配符
+ * psubscribe 名称*
+ * 
+ * 
+ * 发布频道
+ * publish 频道 发送消息
+ * 
+ * 
+ */
+
+
+/**
+ * 
+ * 数据持久化操作
+ * 
+ * 数据持久化就是在服务重启或服务器重启后数据不丢失。实现持久化，就需要把数据
+ * 存储到磁盘中
+ * 
+ * Redis的持久化有2种方式
+ * （1）快照（rdb）默认开启
+ * （2）aof日志方式（需要手动开启）
+ * 两种持久化的机制不相同，rdb在某一个时间点把内存中的数据整体保存下来。aof是把用户
+ * 操作的命令全部记录下来。记录全部命令会对性能有一定的损耗，所以默认redis就没有开启，
+ * 有条件化建议开启
+ * 
+ * 
+ * rdb快照
+ * 
+ * 相关配置选项 vi /usr/local/redis/redis.conf
+ * 
+ *      秒      命令次数
+ * save 500     1           //500秒内，有1条写入，则产生快照
+ * save 300     10          //300秒内，有10次写入，则产生快照
+ * save 60      10000           //60秒内有10000次写入，则产生快照
+ * 
+ * dbfilename dump.rdb      //导出来rdb的默认文件名
+ * dir ./       //持久化文件存放路径
+ * 
+ * 使用redis提供的压测命令来生成10001个key
+ * ./bin/redis-benchmark -n 10001
+ * 
+ * 
+ * aof日志持久化
+ * 
+ * 相关配置 vi /usr/local/redis/redis.conf
+ * 
+ * appendonly no        #是否打开aof日志功能no不打开，yes打开
+ * 
+ * #appendfsync always          #每一个命令，都立即同步到aof，安全，速度慢
+ * appendfsync everysec         //推荐方案，每秒写一次
+ * #appendfsync no              //写入工作交给操作系统，数据同步性没有保证，同步频率低，速度快
+ * 
+ * 
+ * 
+ */
+
+
+
+/**
+ * 
+ * Redis中的事务
+ * 
+ * Redis支持简单的事务，事务就是：当同一个操作需要多条命令执行，一条执行有误，
+ * 其它操作回滚到之前的状态
+ * 
+ * 例如：银行转账工作，从一个账号扣款并在另一个账户增款，要么都执行，要么都不执行
+ * 
+ * 执行的步骤
+ * 开始事务
+ * 命令入列
+ * 执行事务
+ * 
+ * Redis事务实现
+ * 
+ * watch key1 key2      //监听key的变化
+ * muti     //事务开始
+ *  普通命令（string list hash set zset中的命令）
+ * exec  //执行/    discard  //取消     exec和discard两个只能执行一个
+ * unwatch      //解除监听
+ * 
+ * 如果执行的命令没有错，只是业务有问题则不会自动回滚，会执行可以操作的队列中的命令
+ * 如果命令有错，则自动回滚
+ * 
+ * 
+ * key的监听
+ * 
+ * 
+ */
+
+
+/**
+ * Redis密码安全
+ * 
+ * IP限制
+ * vi /usr/local/redis/etc/redis.conf  文件来通过配置文件限制IP访问，多个ip用空格隔开
+ * 
+ * bind  0.0.0.0
+ * 
+ * 密码
+ * requirepass admin
+ * 
+ * 重启redis服务，测试
+ * 
+ * 使用auth 操作登录
+ * 
+ */
+
+
+/**
+ * 
+ * Redis主从设置
+ * 
+ * 当数据量变得庞大的时候，读写分离还是很有必要的。redis提供了主从复制的机制
+ * 从服务器可以复制主服务器的数据信息，就可以实现读写分离，从而降低单台服务器的压力
+ * 
+ * 1、主服务器配置
+ * 开启rdb和aof日志记录，还有密码认证登录
+ * 
+ * 2、从服务器
+ * 使用端口模拟服务器
+ * 首先复制redis.conf  文件2个
+ * cp redis.conf redis6380.conf
+ * cp redis.conf redis6381.conf
+ * 
+ * 修改端口
+ * port 6380
+ * 
+ * 修改pid文件
+ * pidfile /var/run/redis_6380.pid
+ * 
+ * 修改rdb文件名称
+ * 
+ * 设置从服务器中连接主服务器IP和端口号
+ * replicaof 127.0.0.1 6379
+ * 
+ * 
+ * 设置主服务器连接口令
+ * masterauth admin123
+ * 
+ * 关闭aof
+ * 
+ * 
+ * vi /usr/local/redis/etc/redis6781.conf
+ * 修改从那个主服务器中复制数据
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
  * 
  * 
  * 
