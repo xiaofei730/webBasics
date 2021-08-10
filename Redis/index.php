@@ -528,6 +528,21 @@
  * $redis = new Redis();
  * 
  * //连接redis
+ * $redis->connect('127.0.0.1', 6379, 5);
+ * 
+ * //认证
+ * $redis->auth('admin123');
+ * 
+ * //获取
+ * $name = $redis->get('name');
+ * 
+ * var_dump($redis->keys('*'));
+ * 
+ * $redis->set('age', 20, ['ex' => 300, 'nx'] );
+ * var_dump($name);
+ * 
+ * 
+ * 
  * 
  * 
  * 
