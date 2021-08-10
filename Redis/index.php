@@ -502,6 +502,45 @@
  * 
  * 
  * 
+ */
+
+
+
+/**
+ * 
+ * PHP操作Redis
+ * 
+ *   Linux下安装redis扩展
+ * 
+ * 
+ * （1）yum安装php所支持的扩展
+ * yum search redis|grep ^php
+ * 
+ * （2）使用源码来安装，在php官网上下载对应的redis扩展源码
+ * http://pecl.php.net/package/redis
+ * 
+ * $ wget https://pecl.php.net/get/redis-5.3.4.tgz
+ * $ tar xzf redis-6.2.5.tar.gz
+ * $ cd redis-6.2.5
+ * $ make
+ * 
+ * 实例化redis对象
+ * $redis = new Redis();
+ * 
+ * //连接redis
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
  * 
  * 
  * 
