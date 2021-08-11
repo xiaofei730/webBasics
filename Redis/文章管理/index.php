@@ -22,7 +22,21 @@
  * 账号、密码
  * 
  * 
+ * 3、设计文章key
+ * 列表 zset crc32
+ * 记录  hash
+ * id  string
  * 
+ * article:id        string  key
+ * article:id:1     字段 
+ * 
+ * 以ID来排序
+ * article:zset:id
+ * 
+ * 4、消费队列发邮件
+ * 安装发送邮件类库  phpmailer
+ * 
+ * composer require phpmailer/phpmailer
  * 
  * 
  * 
